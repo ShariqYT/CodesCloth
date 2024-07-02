@@ -1,0 +1,32 @@
+{
+  "name": "codescloth",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
+    "firebase": "^10.12.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.4.4",
+    "next": "14.2.4",
+    "nextjs-toploader": "^1.6.12",
+    "razorpay": "^2.9.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.4"
+  }
+}

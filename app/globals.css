@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  transition: all .5s ease;
+}
+@layer base {
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(16px); 
+  backdrop-filter: blur(16px);
+}
+
+::-webkit-scrollbar {
+  background-color: rgba(255,255,255,1);
+  width: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background-color: rgb(100, 0, 150);
+  border-radius: 3px;
+}
+
+.page_404 {
+  @apply py-10 bg-white;
+}
+
+.four_zero_four_bg {
+  @apply bg-cover bg-center h-96;
+  background-image: url('https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif');
+}
+
+.four_zero_four_bg h1 {
+  @apply text-7xl;
+}
+
+.contant_box_404 {
+  @apply -mt-12;
+}
+
+.link_404 {
+  @apply text-white py-2 px-4 mt-5 inline-block;
+}
+
+img{
+  color: black !important;
+}
