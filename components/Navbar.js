@@ -13,20 +13,6 @@ const Logo = () => (
   </Link>
 );
 
-const SearchBar = () => (
-  <div className='flex justify-center mt-4 md:mt-0 items-center gap-2'>
-    <input
-      className='outline-none border-2 placeholder:text-gray-600 border-purple-400 focus:border-purple-700 md:w-[50vh] md:h-[4vh] h-[5vh] w-[40vh] px-3 rounded-full bg-[rgba(0,0,0,0.1)]'
-      placeholder='Search our product'
-      type='text'
-      aria-label='Search products'
-    />
-    <button className='bg-purple-700 px-2 py-2 rounded-full' aria-label='Search'>
-      <Image unoptimized src='/search.svg' priority={true} width={1} height={1} className='w-5 invert' alt='search' />
-    </button>
-  </div>
-);
-
 const MenuItems = () => {
   const categories = ['tshirts', 'hoodies', 'mugs', 'mousepads', 'caps'];
   return (
@@ -106,7 +92,6 @@ const Navbar = () => {
   return (
     <nav className='flex justify-between z-50 items-center flex-col md:flex-row md:px-8 md:py-4 py-2 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 bg-[rgba(255,255,255,0.4)] backdrop-blur shadow-lg'>
       <Logo />
-      <SearchBar />
       <MenuItems />
       <div className='flex justify-center gap-5 items-center'>
         <svg className='w-8' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'>
