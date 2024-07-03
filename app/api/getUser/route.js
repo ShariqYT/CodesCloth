@@ -8,7 +8,6 @@ export async function POST(request) {
         const { userPhone } = await request.json();
         const user = await User.findOne({ phone: userPhone });
         const { name, email, address, pincode } = user;
-        console.log( name, email, address, pincode )
 
         return NextResponse.json({ success: true, name, email, address, pincode} , { status: 200 });
     } catch (err) {

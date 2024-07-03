@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const page = () => {
+const Forgot = () => {
     return (
         <div className="py-20">
             <div className="flex h-full items-center justify-center">
@@ -52,4 +52,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Forgot

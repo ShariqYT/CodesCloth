@@ -1,6 +1,6 @@
 import React from 'react'
 
-const page = () => {
+const TermsAndConditions = () => {
   return (
     <div>
       terms and conditions
@@ -8,4 +8,4 @@ const page = () => {
   )
 }
 
-export default page
+export default TermsAndConditions

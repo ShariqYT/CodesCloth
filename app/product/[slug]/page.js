@@ -1,9 +1,9 @@
 import React from 'react';
 import Pincode from '@/components/Pincode';
 import Image from 'next/image';
-import AddtoCart from '@/components/AddtoCart';
-import SizeandColor from '@/components/SizeandColor';
-import BuyNow from '@/components/BuyNow';
+import AddtoCart from '@/components/extra/AddtoCart';
+import SizeandColor from '@/components/extra/SizeandColor';
+import BuyNow from '@/components/extra/BuyNow';
 import ErrorPage from '@/app/not-found';
 
 async function oneProduct(slug) {
@@ -23,7 +23,7 @@ async function oneProduct(slug) {
   }
 }
 
-const page = async ({ params }) => {
+const ProductSlug = async ({ params }) => {
   const { product, variants } = await oneProduct(params.slug);
   const { slug } = params;
 
@@ -85,4 +85,11 @@ const page = async ({ params }) => {
   )
 }
 
-export default page
+export default ProductSlug
+
+export async function generateMetadata({ params }) {
+  const { product } = await oneProduct(params.slug);
+  return {
+    title: product ? `${product.title} (${product.size}/${product.color}) | CodesCloth` : 'Product not found',
+  };
+}
