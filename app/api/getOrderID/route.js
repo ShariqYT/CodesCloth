@@ -7,7 +7,7 @@ export async function GET(req) {
         await connectDB();
 
         const url = new URL(req.url);
-        const orderId = url.searchParams.get('id');
+        const orderId = url.search.split('=')[1];
 
         if (!orderId) {
             return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });
