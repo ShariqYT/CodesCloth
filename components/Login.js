@@ -38,7 +38,7 @@ const LoginPage = () => {
                 toast.error('Recaptcha expired', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } })
             }
         }, auth)
-        recaptchaVerifier.render()
+        window.recaptchaVerifier.render()
     }, [auth])
 
     const handlePhoneNumberChange = (e) => {
@@ -87,7 +87,7 @@ const LoginPage = () => {
             <Toaster position="bottom-center" reverseOrder={false} />
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <Image unoptimized quality={100} className="mx-auto" src={'/logo-2.png'} width={100} height={100} alt="Workflow" />
-                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold">
                     Sign in to your account
                 </h2>
             </div>
@@ -95,9 +95,9 @@ const LoginPage = () => {
                 <div className="py-8 px-4 sm:px-10">
                     <div className="mt-1 relative rounded-md shadow-sm">
                         {!otpSent ? (
-                            <input id="number" name="number" placeholder="Enter your 10 digit phone number" type="tel" value={phoneNumber} onChange={handlePhoneNumberChange} required className="appearance-none block w-full px-3 py-2 border-2 border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-purple-700 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                            <input id="number" name="number" placeholder="Enter your 10 digit phone number" type="tel" value={phoneNumber} onChange={handlePhoneNumberChange} required className="appearance-none bg-transparent block w-full px-3 py-2 border-2 border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-purple-700 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                         ) : (
-                            <input type="number" value={otp} onChange={handleOtpChange} placeholder='Enter OTP' className='appearance-none mb-4 block w-full px-3 py-2 border-2 border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-purple-700 transition duration-150 ease-in-out sm:text-sm sm:leading-5' />
+                            <input type="number" value={otp} onChange={handleOtpChange} placeholder='Enter OTP' className='appearance-none mb-4 block w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-transparent placeholder-gray-400 focus:outline-none focus:border-purple-700 transition duration-150 ease-in-out sm:text-sm sm:leading-5' />
                         )}
                     </div>
                     {!otpSent ? (

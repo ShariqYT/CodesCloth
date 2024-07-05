@@ -22,19 +22,19 @@ const Footer = () => {
             <h2 className="title-font font-bold text-purple-700 tracking-widest text-sm mb-3">SHOP</h2>
             <nav className="list-none mb-10">
               <li>
-                <Link href={'/tshirts'} className="text-gray-500 hover:text-gray-800">Tshirts</Link>
+                <Link href={'/tshirts'} className="text-gray-500 hover:text-purple-700">Tshirts</Link>
               </li>
               <li>
-                <Link href={'/hoodies'} className="text-gray-500 hover:text-gray-800">Hoodies</Link>
+                <Link href={'/hoodies'} className="text-gray-500 hover:text-purple-700">Hoodies</Link>
               </li>
               <li>
-                <Link href={'/mugs'} className="text-gray-500 hover:text-gray-800">Mugs</Link>
+                <Link href={'/mugs'} className="text-gray-500 hover:text-purple-700">Mugs</Link>
               </li>
               <li>
-                <Link href={'/mousepads'} className="text-gray-500 hover:text-gray-800">Mousepads</Link>
+                <Link href={'/mousepads'} className="text-gray-500 hover:text-purple-700">Mousepads</Link>
               </li>
               <li>
-                <Link href={'/caps'} className="text-gray-500 hover:text-gray-800">Caps</Link>
+                <Link href={'/caps'} className="text-gray-500 hover:text-purple-700">Caps</Link>
               </li>
             </nav>
           </div>
@@ -42,16 +42,16 @@ const Footer = () => {
             <h2 className="title-font font-bold text-purple-700 tracking-widest text-sm mb-3">CUSTOMER SERVICE</h2>
             <nav className="list-none mb-10">
               <li>
-                <Link href={'/contact'} className="text-gray-500 hover:text-gray-800">Contact Us</Link>
+                <Link href={'/contact'} className="text-gray-500 hover:text-purple-700">Contact Us</Link>
               </li>
               <li>
-                <Link href={'/about'} className="text-gray-500 hover:text-gray-800">About Us</Link>
+                <Link href={'/about'} className="text-gray-500 hover:text-purple-700">About Us</Link>
               </li>
               <li>
-                <Link href={'/return-policy'} className="text-gray-500 hover:text-gray-800">Return Policy</Link>
+                <Link href={'/return-policy'} className="text-gray-500 hover:text-purple-700">Return Policy</Link>
               </li>
               <li>
-                <Link href={'/shipping-policy'} className="text-gray-500 hover:text-gray-800">Shipping Policy</Link>
+                <Link href={'/shipping-policy'} className="text-gray-500 hover:text-purple-700">Shipping Policy</Link>
               </li>
             </nav>
           </div>
@@ -59,10 +59,10 @@ const Footer = () => {
             <h2 className="title-font font-bold text-purple-700 tracking-widest text-sm mb-3">POLICY</h2>
             <nav className="list-none mb-10">
               <li>
-                <Link href={'/privacy-policy'} className="text-gray-500 hover:text-gray-800">Privacy Policy</Link>
+                <Link href={'/privacy-policy'} className="text-gray-500 hover:text-purple-700">Privacy Policy</Link>
               </li>
               <li>
-                <Link href={'/terms-and-conditions'} className="text-gray-500 hover:text-gray-800">Terms and Conditions</Link>
+                <Link href={'/terms-and-conditions'} className="text-gray-500 hover:text-purple-700">Terms and Conditions</Link>
               </li>
             </nav>
           </div>
