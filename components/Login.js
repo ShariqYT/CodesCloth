@@ -35,6 +35,7 @@ const LoginPage = () => {
             },
             'expired-callback': () => {
                 // handle recaptcha expiration
+                toast.error('Recaptcha expired', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } })
             }
         }, auth)
         recaptchaVerifier.render()
@@ -49,7 +50,7 @@ const LoginPage = () => {
     }
 
     const showToast = (message, type) => {
-        const style = { border: `2px solid ${type === 'success' ? 'green' : 'red'}`, padding: '15px 20px' }
+        const style = { border: `2px solid ${type === 'success' ? 'green' : 'red'}`, padding: '15px 20px', marginBottom: '40px' }
         type === 'success' ? toast.success(message, { duration: 5000, style }) : toast.error(message, { duration: 5000, style })
     }
 
@@ -78,11 +79,11 @@ const LoginPage = () => {
             })
             router.push('/myaccount')
         } catch (err) {
-            showToast(err.message, 'error')
+            showToast('Wrong OTP entered', 'error')
         }
     }
     return (
-        <div className="min-h-screen flex flex-col mt-32 sm:px-6 lg:px-8 px-6">
+        <div className="min-h-screen flex flex-col mt-32 sm:px-6 md:px-8 px-6">
             <Toaster position="bottom-center" reverseOrder={false} />
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <Image unoptimized quality={100} className="mx-auto" src={'/logo-2.png'} width={100} height={100} alt="Workflow" />

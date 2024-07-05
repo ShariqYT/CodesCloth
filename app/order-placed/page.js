@@ -7,7 +7,7 @@ export const metadata = {
 
 const OrderPlaced = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <OrderDetails />
     </Suspense>
   );

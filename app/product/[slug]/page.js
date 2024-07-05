@@ -5,6 +5,14 @@ import AddtoCart from '@/components/extra/AddtoCart';
 import SizeandColor from '@/components/extra/SizeandColor';
 import BuyNow from '@/components/extra/BuyNow';
 import ErrorPage from '@/app/not-found';
+import { useDarkMode } from '@/context/DarkModeContext';
+
+export async function generateMetadata({ params }) {
+  const { product } = await oneProduct(params.slug);
+  return {
+    title: product ? `${product.title} (${product.size}/${product.color}) | CodesCloth` : 'Product not found',
+  };
+}
 
 async function oneProduct(slug) {
   try {
@@ -26,6 +34,7 @@ async function oneProduct(slug) {
 const ProductSlug = async ({ params }) => {
   const { product, variants } = await oneProduct(params.slug);
   const { slug } = params;
+  const {isDarkMode} = useDarkMode;
 
   if (!product) {
     return <ErrorPage />;
@@ -33,14 +42,14 @@ const ProductSlug = async ({ params }) => {
 
   return (
     <>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="body-font overflow-hidden min-h-screen">
 
         <div className="container px-5 md:py-24 py-16 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <Image unoptimized quality={100} priority={true} alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto px-24 object-cover object-center rounded" width={1} height={1} src={product.img} />
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">CODESCLOTH</h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.title} ({product.size}/{product.color})</h1>
+          <div className="md:w-4/5 mx-auto flex flex-wrap">
+            <Image unoptimized  priority={true} alt="ecommerce" className="md:w-1/2 w-full md:h-fit md:px-24  object-cover object-center rounded-lg" width={1} height={1} src={product.img} />
+            <div className="md:w-1/2 w-full md:pl-10 md:py-6 mt-6 md:mt-0">
+              <h2 className="text-sm title-font tracking-widest">CodesCloth</h2>
+              <h1 className="md:text-3xl text-2xl title-font font-medium mb-1">{product.title} ({product.size}/{product.color})</h1>
 
               {/* <div className="flex mb-4">
                 <span className="flex items-center">
@@ -64,11 +73,11 @@ const ProductSlug = async ({ params }) => {
 
               </div> */}
 
-              <p className="leading-relaxed">{product.desc}</p>
+              <p className="leading-relaxed my-2 text-sm md:text-base">{product.desc}</p>
               <SizeandColor product={product} variants={variants} />
-              {product.availableQty > 0 ? <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span> : <span className="title-font font-medium text-3xl text-red-500">Out of Stock!</span>}
+              {product.availableQty > 0 ? <span className="title-font font-semibold text-purple-600 text-3xl">₹{product.price}</span> : <span className="title-font font-medium text-3xl text-red-500">Out of Stock!</span>}
               <Pincode />
-              <div className="flex gap-4 mt-8 items-center">
+              <div className="flex gap-4 mt-8 justify-center md:justify-normal items-center">
                 <AddtoCart slug={slug} product={product} />
                 <BuyNow slug={slug} product={product} />
                 {/* <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -86,10 +95,3 @@ const ProductSlug = async ({ params }) => {
 }
 
 export default ProductSlug
-
-export async function generateMetadata({ params }) {
-  const { product } = await oneProduct(params.slug);
-  return {
-    title: product ? `${product.title} (${product.size}/${product.color}) | CodesCloth` : 'Product not found',
-  };
-}

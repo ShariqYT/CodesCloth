@@ -13,7 +13,7 @@ export async function POST(request) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        const orders = await Order.find({ phone: user.phone, status: "Paid" });
+        const orders = await Order.find({ phone: user.phone, status: "Paid" }).sort({ createdAt: -1 });
 
         return NextResponse.json({ orders }, { status: 200 });
     } catch (err) {

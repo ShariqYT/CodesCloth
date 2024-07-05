@@ -2,7 +2,7 @@ import React from 'react';
 import LoginPage from '@/components/Login';
 
 export const metadata = {
-    title: 'Login | CodesCloth',
+    title: 'Sign In | CodesCloth',
 }
 
 const Login = () => {

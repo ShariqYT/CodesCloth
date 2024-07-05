@@ -41,7 +41,7 @@ const Forgot = () => {
                             </form>
                             <div className="min-w-[270px]">
                                 <div className="mt-4 text-center text-black">Know your password?
-                                    <Link href={"/login"} className="text-purple-700 underline hover:text-purple-800">Login here</Link>
+                                    <Link href={"/sign-in"} className="text-purple-700 underline hover:text-purple-800">Login here</Link>
                                 </div>
                             </div>
                         </div>

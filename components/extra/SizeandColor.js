@@ -28,14 +28,14 @@ const SizeandColor = ({ product, variants }) => {
             <div className="flex ml-6 items-center">
                 <span className="mr-3">Size</span>
                 <div className="relative">
-                    <select value={size} onChange={(e) => { refreshVaraint(e.target.value, color) }} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none ${color === 'white' ? 'border-black' : 'border-gray-300'} focus:ring-2 focus:ring-purple-700 focus:border-purple-700 text-base pl-3 pr-10">
-                        {Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
-                        {Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
-                        {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
-                        {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
-                        {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
+                    <select value={size} onChange={(e) => { refreshVaraint(e.target.value, color) }} className="rounded border appearance-none bg-transparent border-gray-300 py-2 focus:outline-none ${color === 'white' ? 'border-black' : 'border-gray-300'} focus:ring-2 focus:ring-purple-700 focus:border-purple-700 text-base pl-3 pr-10">
+                        {Object.keys(variants[color]).includes('S') && <option className='text-black' value={'S'}>S</option>}
+                        {Object.keys(variants[color]).includes('M') && <option className='text-black' value={'M'}>M</option>}
+                        {Object.keys(variants[color]).includes('L') && <option className='text-black' value={'L'}>L</option>}
+                        {Object.keys(variants[color]).includes('XL') && <option className='text-black' value={'XL'}>XL</option>}
+                        {Object.keys(variants[color]).includes('XXL') && <option className='text-black' value={'XXL'}>XXL</option>}
                     </select>
-                    <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                    <span className="absolute right-0 top-0 h-full w-10 text-center pointer-events-none flex items-center justify-center">
                         <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
                             <path d="M6 9l6 6 6-6"></path>
                         </svg>

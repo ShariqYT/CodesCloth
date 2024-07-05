@@ -3,6 +3,8 @@ import "./globals.css";
 import Footer from '@/components/Footer';
 import { CartProvider } from '@/context/CartContext';
 import NextTopLoader from "nextjs-toploader";
+import MobileNav from "@/components/MobileNav";
+import { DarkModeProvider } from '@/context/DarkModeContext';
 
 export const metadata = {
   title: 'CodesCloth - Wearable Codes',
@@ -44,26 +46,30 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
       </head>
       <body>
+
         <NextTopLoader
           color="#41008c"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
           crawl={true}
-          showSpinner={true}
+          showSpinner={false}
           easing="ease"
           speed={200}
           shadow="0 0 10px #7700ff,0 0 5px #7700ff"
           template='<div class="bar" role="bar"><div class="peg"></div></div> 
   <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
-          zIndex={3000}
+          zIndex={9000}
           showAtBottom={false}
         />
-        <CartProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </CartProvider>
+        <DarkModeProvider>
+          <CartProvider>
+            <Navbar />
+            {children}
+            <Footer />
+            <MobileNav />
+          </CartProvider>
+        </DarkModeProvider>
       </body>
     </html>
   );

@@ -1,19 +1,18 @@
 "use client"
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'react-hot-toast'
-import { CartContext } from '@/context/CartContext';
+import { useDarkMode } from '@/context/DarkModeContext';
 
 const MyAccount = () => {
-    const { user } = useContext(CartContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState(0);
     const [pincode, setPincode] = useState('');
-    const [disabled, setDisabled] = useState(true);
+    const { isDarkMode } = useDarkMode();
     const auth = getAuth(app);
     const router = useRouter();
 
@@ -25,7 +24,7 @@ const MyAccount = () => {
                 setPhone(user.phoneNumber.split('+91')[1] || '');
                 getUser(user.phoneNumber.split('+91')[1] || '');
             } else {
-                router.push('/login');
+                router.push('/sign-in');
                 setPhone('');
             }
         });
@@ -89,9 +88,9 @@ const MyAccount = () => {
         });
         let res = await u.json();
         if (res.success) {
-            toast.success(res.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px' } });
+            toast.success(res.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
         } else {
-            toast.error(res.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px' } });
+            toast.error(res.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
         }
     }
     return (
@@ -100,30 +99,32 @@ const MyAccount = () => {
                 position="bottom-center"
                 reverseOrder={false}
             />
-            <div className="bg-white items-center gap-10 flex flex-col min-h-screen relative">
-                <h3 className="text-2xl text-center mt-32 font-semibold">My Account</h3>
-
-                <div className="w-full container ">
+            <div className="mb-20 md:mb-0 items-center gap-10 flex flex-col min-h-screen relative">
+                <div className='flex flex-col items-center gap-1 justify-center'>
+                    <h3 className="text-2xl text-center mt-10 md:mt-32 font-semibold">My Account</h3>
+                    <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
+                </div>
+                <div className="md:w-full w-80 container ">
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="name" className="text-sm font-medium text-gray-900 block mb-2">Full Name</label>
-                            <input value={name} onChange={handleChange} type="text" name="name" id="name" className="shadow-sm outline-none bg-gray-50 border-2 border-gray-300 focus:border-purple-700 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder=" John Doe" required />
+                            <label htmlFor="name" className="text-sm font-medium block mb-2">Full Name</label>
+                            <input value={name} onChange={handleChange} type="text" name="name" id="name" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} placeholder=" John Doe" required />
                         </div>
                         <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">Email <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                            <input value={email} onChange={handleChange} type="email" name="email" id="email" className="shadow-sm outline-none bg-gray-50 border-2 border-gray-300 focus:border-purple-700 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder="email@example.com" required />
+                            <label htmlFor="email" className="text-sm font-medium block mb-2">Email <span className='text-sm font-normal'>(cannot be updated)</span></label>
+                            <input value={email} onChange={handleChange} type="email" name="email" id="email" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} placeholder="email@example.com" required />
                         </div>
                         <div className="col-span-full">
-                            <label htmlFor="address" className="text-sm font-medium text-gray-900 block mb-2">Address</label>
-                            <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className="bg-gray-50 border-2 focus:border-purple-700 resize-none border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5" placeholder="Your address"></textarea>
+                            <label htmlFor="address" className="text-sm font-medium block mb-2">Address</label>
+                            <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className={`${isDarkMode? "bg-black":"bg-white"} border-2 focus:border-purple-700 resize-none border-gray-300 sm:text-sm rounded-lg outline-none block w-full p-2.5`} placeholder="Your address"></textarea>
                         </div>
                         <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="phone" className="text-sm font-medium text-gray-900 block mb-2">Phone Number <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                            <input type="number" name="phone" id="phone" className="shadow-sm outline-none bg-gray-50 border-2 border-gray-300 focus:border-purple-700 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" value={phone} onChange={handleChange} readOnly />
+                            <label htmlFor="phone" className="text-sm font-medium block mb-2">Phone Number <span className='text-sm font-normal'>(cannot be updated)</span></label>
+                            <input type="number" name="phone" id="phone" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} value={phone} onChange={handleChange} readOnly />
                         </div>
                         <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="pincode" className="text-sm font-medium text-gray-900 block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
-                            <input type="number" name="pincode" id="pincode" className="shadow-sm outline-none bg-gray-50 border-2 border-gray-300 focus:border-purple-700 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" value={pincode} onChange={handleChange} required />
+                            <label htmlFor="pincode" className="text-sm font-medium block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
+                            <input type="number" name="pincode" id="pincode" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} value={pincode} onChange={handleChange} required />
                         </div>
                     </div>
                 </div>

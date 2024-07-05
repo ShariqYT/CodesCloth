@@ -6,9 +6,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
-  transition: all .5s ease;
 }
+
+body.dark{
+  background-color: black;
+  color: white;
+  transition: all .25s ease;
+}
+
+
 @layer base {
 
   input::-webkit-inner-spin-button,
@@ -56,4 +62,16 @@
 
 img{
   color: black !important;
+}
+
+.icon {
+  transition: filter 0.3s;
+}
+
+.bg-purple-700 .icon {
+  filter: invert(1);
+}
+
+.cart-svg{
+  filter: brightness(100);
 }
