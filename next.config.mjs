@@ -1,11 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     images: { // add more domains if needed
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'm.media-amazon.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'via.placeholder.com',
             },
         ]
     },

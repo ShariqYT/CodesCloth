@@ -1,10 +1,9 @@
-import Navbar from "@/components/Navbar";
 import "./globals.css";
-import Footer from '@/components/Footer';
 import { CartProvider } from '@/context/CartContext';
 import NextTopLoader from "nextjs-toploader";
 import MobileNav from "@/components/MobileNav";
 import { DarkModeProvider } from '@/context/DarkModeContext';
+import ClientOnlyLayout from "@/components/ClientOnlyLayouts";
 
 export const metadata = {
   title: 'CodesCloth - Wearable Codes',
@@ -42,31 +41,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta charSet="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
       </head>
       <body>
-
         <NextTopLoader
           color="#41008c"
-          initialPosition={0.08}
-          crawlSpeed={200}
           height={3}
-          crawl={true}
           showSpinner={false}
-          easing="ease"
-          speed={200}
-          shadow="0 0 10px #7700ff,0 0 5px #7700ff"
-          template='<div class="bar" role="bar"><div class="peg"></div></div> 
-  <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
-          zIndex={9000}
-          showAtBottom={false}
+          zIndex={10000}
         />
         <DarkModeProvider>
           <CartProvider>
-            <Navbar />
-            {children}
-            <Footer />
+            <ClientOnlyLayout>{children}</ClientOnlyLayout>
             <MobileNav />
           </CartProvider>
         </DarkModeProvider>

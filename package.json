@@ -15,11 +15,13 @@
     "firebase": "^10.12.2",
     "mongodb": "^6.8.0",
     "mongoose": "^8.4.4",
+    "multer": "^1.4.5-lts.1",
     "next": "14.2.4",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.12",
     "razorpay": "^2.9.4",
     "react": "^18",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1"
   },
