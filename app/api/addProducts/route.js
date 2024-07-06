@@ -20,11 +20,6 @@ const uploadMiddleware = upload.single('image');
 // Convert middleware to promise to use in async function
 const runMiddleware = promisify(uploadMiddleware);
 
-export const config = {
-    api: {
-        bodyParser: false, 
-    },
-};
 
 export async function POST(request) {
     const req = request;
