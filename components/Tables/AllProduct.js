@@ -5,24 +5,27 @@ import { formatIndianCurrency } from "../extra/FormatAmount";
 import { useState } from "react";
 
 const AllProduct = ({ products }) => {
+  // Check if products is an array, and fallback to an empty array if not
+  const productList = Array.isArray(products) ? products : [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  const currentProducts = productList.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const totalPages = Math.ceil(productList.length / itemsPerPage);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+      setCurrentPage(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
+      setCurrentPage(currentPage + 1);
     }
   };
 
