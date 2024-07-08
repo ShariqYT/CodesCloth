@@ -23,7 +23,7 @@ export async function POST(request) {
         const order = await razorpay.orders.create(options);
 
         if(!Object.keys(pincodes).includes(pincode)){
-            return NextResponse.json({ success: false, error: 'This pincode is not serviceable', clearCart: false }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'This pincode is not serviceable', clearCart: false }, { status: 200 });
         }
 
         let product, sumTotal = 0;
@@ -32,22 +32,22 @@ export async function POST(request) {
             product = await Product.findOne({ slug: item });
 
             if (!product) {
-                return NextResponse.json({ success: false, error: 'Product not found. Please try again later' }, { status: 404 });
+                return NextResponse.json({ success: false, error: 'Product not found. Please try again later' }, { status: 200 });
             }
 
             if (product.availableQty < cart[item].qty) {
-                return NextResponse.json({ success: false, error: 'Product out of stock. Please try again later', clearCart: true }, { status: 404 });
+                return NextResponse.json({ success: false, error: 'Product out of stock. Please try again later', clearCart: true }, { status: 200 });
             }
 
             if (product.price !== cart[item].price) {
-                return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 404 });
+                return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 200 });
             }
         }
         if (sumTotal !== subTotal) {
-            return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 200 });
         }
         if (pincode.length !== 6) {
-            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter valid pincode', clearCart: false }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter valid pincode', clearCart: false }, { status: 200 });
         }
 
         let newOrder = new Order({

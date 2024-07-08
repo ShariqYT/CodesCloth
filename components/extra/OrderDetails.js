@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState, useContext } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, redirect } from 'next/navigation';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 import { CartContext } from '@/context/CartContext';
 import { useDarkMode } from '@/context/DarkModeContext';
@@ -19,9 +19,9 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if(!user){
-      router.push('/');
+      return redirect('/');
     }
-  }, [user, router]);
+  }, [user]);
 
   useEffect(() => {
     const orderCreatedAt = order?.createdAt || 0;
@@ -31,7 +31,7 @@ const OrderDetails = () => {
     setTime(d.toLocaleTimeString());
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getOrderID?id=${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getOrderID?id=${id}`);
         const data = await response.json();
         setOrder(data.order);
       } catch (error) {
@@ -49,7 +49,7 @@ const OrderDetails = () => {
   const inrTotal = formatIndianCurrency(total);
 
   return (
-    <section className="my-20 relative">
+    <section className="my-20 relative min-h-screen">
       <div className="w-full max-w-7xl px-4 md:px-5 lg-px-6 mx-auto">
         <h2 className="font-manrope font-bold text-3xl md:text-4xl leading-10  text-center">
           Payment Successful
@@ -77,9 +77,9 @@ const OrderDetails = () => {
             return (
               <div key={key} className="w-full px-3 min-[400px]:px-6">
                 <div className="flex flex-col md:flex-row items-center py-6 border-b border-gray-200 gap-6 w-full">
-                  <div className="img-box">
-                    <Image unoptimized width={1} height={1} priority={true} src={product[key].img} alt="Premium Watch image"
-                      className="aspect-square w-52" />
+                  <div className="img-box relative w-32 h-32 overflow-hidden">
+                    <Image sizes='100%' fill={true} priority={true} src={product[key].img} alt="Product"
+                      className="object-contain rounded-lg" />
                   </div>
                   <div className="flex flex-row items-center w-full ">
                     <div className="flex flex-col md:flex-row justify-between w-full">

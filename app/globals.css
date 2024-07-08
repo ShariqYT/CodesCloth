@@ -53,7 +53,7 @@ body.dark{
 }
 
 .contant_box_404 {
-  @apply -mt-12;
+  @apply mt-0;
 }
 
 .link_404 {

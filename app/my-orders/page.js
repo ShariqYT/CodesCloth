@@ -7,9 +7,9 @@ export const metadata = {
 const Myorders = () => {
   
   return (
-    <>
+    <div className='min-h-screen'>
       <MyOrders/>
-    </>
+    </div>
   )
 }
 

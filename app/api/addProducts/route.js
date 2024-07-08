@@ -1,53 +1,25 @@
 import { NextResponse } from "next/server";
 import Product from "@/models/Product";
 import connectDB from "@/db/connectDB";
-import multer from 'multer';
-import { promisify } from 'util';
-
-// Setup multer storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads'); // Adjust path as needed
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage });
-const uploadMiddleware = upload.single('image');
-
-// Convert middleware to promise to use in async function
-const runMiddleware = promisify(uploadMiddleware);
-
 
 export async function POST(request) {
-    const req = request;
-    const res = new NextResponse();
-
     try {
         // Connect to MongoDB
         await connectDB();
 
-        // Run the multer middleware to handle file upload
-        await runMiddleware(req, res);
+        const body = await request.json();
+        console.log(body);
 
-        // Extract form data from request body
-        const formData = await new Promise((resolve, reject) => {
-            const chunks = [];
-            req.on('data', chunk => chunks.push(chunk));
-            req.on('end', () => resolve(Buffer.concat(chunks)));
-            req.on('error', err => reject(err));
-        });
-
-        const body = JSON.parse(formData.toString());
-
+        const product = await Product.findOne({ slug: body.productSlug });
+        if (product) {
+            return NextResponse.json({ success: false, error: "Product already exists" }, { status: 200 });
+        }
         // Create a new product instance
         let p = new Product({
             title: body.productTitle,
             desc: body.description,
             slug: body.productSlug,
-            img: req.file.path,  // Store the file path in the img field
+            img: body.image,  // Store the file path in the img field
             category: body.productType,
             size: body.size,
             color: body.color,
@@ -56,7 +28,7 @@ export async function POST(request) {
         });
 
         // Validate required fields
-        if(p.title && p.desc && p.slug && p.img && p.category && p.size && p.color && p.price && p.availableQty) {
+        if (p.title && p.desc && p.slug && p.img && p.category && p.size && p.color && p.price && p.availableQty) {
             await p.save();
             return NextResponse.json({ success: true }, { status: 200 });
         } else {

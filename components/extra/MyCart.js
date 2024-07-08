@@ -39,8 +39,8 @@ const MyCart = () => {
                             {Object.keys(cart).map((k) => {
                                 return <li className='list-none' key={k}>
                                     <div className="md:flex flex items-strech py-8 md:py-10 ">
-                                        <div className="md:w-4/12 flex justify-center 2xl:w-1/4 w-full">
-                                            <Image unoptimized quality={100} src={cart[k].img} priority={true} alt="Product Image" width={100} height={100} className="md:w-[6vw] object-center object-cover md:block" />
+                                        <div className="md:w-48 md:h-48 relative overflow-hidden 2xl:w-1/4 w-full">
+                                            <Image fill={true} src={cart[k].img} priority={true} sizes='100%' alt="Product Image" className="object-contain rounded-lg" />
                                         </div>
                                         <div className="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
                                             <div className="flex items-center justify-between w-full">

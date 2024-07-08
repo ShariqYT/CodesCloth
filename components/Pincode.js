@@ -1,4 +1,5 @@
 "use client"
+import { pincodesData } from '@/actions/pincodes'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
@@ -11,9 +12,8 @@ const Pincode = () => {
     }
 
     const handlePin = async () => {
-        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
-        let pinJson = await pins.json()
-        if (Object.keys(pinJson).includes(pin)) {
+        let pins = pincodesData()
+        if (Object.keys(pins).includes(pin)) {
             toast.success('Service Available!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })
             setService(true)
         } else {

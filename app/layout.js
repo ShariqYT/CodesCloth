@@ -4,6 +4,7 @@ import NextTopLoader from "nextjs-toploader";
 import MobileNav from "@/components/MobileNav";
 import { DarkModeProvider } from '@/context/DarkModeContext';
 import ClientOnlyLayout from "@/components/ClientOnlyLayouts";
+import SessionWrapper from "@/components/SessionWrapper";
 
 export const metadata = {
   title: 'CodesCloth - Wearable Codes',
@@ -18,7 +19,7 @@ export const metadata = {
     siteName: 'CodesCloth',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_HOST}/img/logo-2.png`,
+        url: `${process.env.NEXT_PUBLIC_URL}/img/logo-2.png`,
         width: 800,
         height: 600,
       },
@@ -41,8 +42,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta charSet="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>{metadata.title}</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={metadata.description} />
+        <meta name="keywords" content={metadata.keywords} />
+        <meta name="author" content={metadata.author} />
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        <meta property="og:site_name" content={metadata.openGraph.siteName} />
+        <meta property="og:image" content={metadata.openGraph.images[0].url} />
+        <meta property="og:image:width" content={metadata.openGraph.images[0].width} />
+        <meta property="og:image:height" content={metadata.openGraph.images[0].height} />
+        <meta name="robots" content={`${metadata.robots.index ? 'index' : 'noindex'},${metadata.robots.follow ? 'follow' : 'nofollow'}`} />
+        <meta name="googlebot" content={`index=${metadata.robots.googleBot.index}, follow=${metadata.robots.googleBot.follow}, max-video-preview=${metadata.robots.googleBot['max-video-preview']}, max-image-preview=${metadata.robots.googleBot['max-image-preview']}, max-snippet=${metadata.robots.googleBot['max-snippet']}`} />
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
       </head>
@@ -55,7 +69,11 @@ export default function RootLayout({ children }) {
         />
         <DarkModeProvider>
           <CartProvider>
-            <ClientOnlyLayout>{children}</ClientOnlyLayout>
+            <ClientOnlyLayout>
+              <SessionWrapper>
+                {children}
+              </SessionWrapper>
+            </ClientOnlyLayout>
             <MobileNav />
           </CartProvider>
         </DarkModeProvider>

@@ -53,12 +53,12 @@ const Checkoutpage = () => {
             case 'pincode':
                 setPincode(value);
                 if (e.target.value.length === 6) {
-                    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+                    let pins = await fetch(`https://api.postalpincode.in/pincode/` + e.target.value)
                     let pinJson = await pins.json()
-                    if (Object.keys(pinJson).includes(e.target.value)) {
-                        setState(pinJson[e.target.value][1])
-                        setCity(pinJson[e.target.value][0])
-                    } else {
+                    if (Object.keys(pinJson[0].PostOffice).length > 0) {
+                        setState(pinJson[0].PostOffice[0].State)
+                        setCity(pinJson[0].PostOffice[0].Block)
+                    }else{
                         setState('')
                         setCity('')
                     }
@@ -92,7 +92,7 @@ const Checkoutpage = () => {
     const createOrderId = async () => {
         try {
             let oid = Math.floor(Math.random() * Date.now());
-            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/razorpayOrder`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpayOrder`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const Checkoutpage = () => {
                         razorpaySignature: response.razorpay_signature,
                     };
 
-                    const result = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/razorpayVerify`, {
+                    const result = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpayVerify`, {
                         method: 'POST',
                         body: JSON.stringify({ ...data, cart, subTotal }),
                         headers: { 'Content-Type': 'application/json' },
@@ -264,6 +264,7 @@ const Checkoutpage = () => {
                                 name='pincode'
                                 value={pincode}
                                 onChange={handleChange}
+                                maxLength={6}
                                 type='number'
                                 id='pincode'
                                 placeholder='211004'
@@ -407,15 +408,16 @@ const Checkoutpage = () => {
                             <li className='list-none' key={k}>
                                 <div className='justify-between flex items-center px-4 py-8 md:p-10 md:py-8'>
                                     <div className='flex gap-4 md:justify-center items-center'>
+                                        <div className='overflow-hidden relative w-32 h-32'>
                                         <Image
-                                            unoptimized
                                             src={cart[k].img}
                                             priority={true}
                                             alt='Product Image'
-                                            width={100}
-                                            height={100}
-                                            className='md:w-[7vw] rounded-lg object-cover md:block'
+                                            fill={true}
+                                            sizes='100%'
+                                            className='rounded-lg object-cover'
                                         />
+                                        </div>
                                         <div className='md:px-8'>
                                             <p className='md:text-lg font-bold leading-none '>{cart[k].name}</p>
                                             <p className='text-sm leading-3  font-semibold pt-2'>Size: {cart[k].size}</p>

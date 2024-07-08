@@ -33,7 +33,7 @@ const MyAccount = () => {
     }, [auth, router]);
 
     const getUser = async (userPhone) => {
-        let u = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUser`, {
+        let u = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const MyAccount = () => {
             pincode,
             phone
         }
-        let u = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateUser`, {
+        let u = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/updateUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

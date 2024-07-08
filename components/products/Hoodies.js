@@ -37,8 +37,8 @@ const Hoodies = ({ products }) => {
                     )}
                     {Object.keys(products).map((item) => (
                         <Link key={item} href={`/product/${products[item].slug}`} className="md:w-1/5 shadow-lg m-6 border rounded-lg border-gray-200 p-4 w-full">
-                            <div className="flex justify-center items-center relative rounded overflow-hidden">
-                                <Image unoptimized quality={100} width={1} height={1} className="w-52 rounded" priority={true} src={products[item].img} alt="tshirt" />
+                            <div className="flex h-60 justify-center items-center relative rounded-lg overflow-hidden">
+                                <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={products[item].img} alt="tshirt" />
                             </div>
                             <div className="mt-4">
                                 <h3 className="text-xs tracking-widest title-font mb-1">Hoodies</h3>
