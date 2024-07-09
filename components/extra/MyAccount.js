@@ -63,7 +63,9 @@ const MyAccount = () => {
                 setAddress(value);
                 break;
             case 'pincode':
-                setPincode(value);
+                if(value.length <= 6) {
+                    setPincode(value);
+                }
                 break;
             default:
                 break;
@@ -124,7 +126,7 @@ const MyAccount = () => {
                         </div>
                         <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="pincode" className="text-sm font-medium block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
-                            <input type="number" name="pincode" id="pincode" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} value={pincode} onChange={handleChange} required />
+                            <input type="number" maxLength={6} name="pincode" id="pincode" className={`shadow-sm outline-none ${isDarkMode? "bg-black":"bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} value={pincode} onChange={handleChange} required />
                         </div>
                     </div>
                 </div>

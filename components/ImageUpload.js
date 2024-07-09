@@ -28,7 +28,7 @@ const ImageUpload = ({ setImage }) => {
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           // Do something with the response
-          console.log("Files: ", res);
+          
           if(res[0].url === imageUrl) {
             toast.error('Upload Failed, File Already Exist', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
           }else{

@@ -28,7 +28,7 @@ const Home = () => {
                 position="bottom-center"
                 reverseOrder={false}
             />
-            <Image priority={true} className='w-full h-full object-cover' src={Banner} alt="banner" />
+            <Image priority={true} placeholder='blur' className='w-full h-full object-cover' src={Banner} alt="banner" />
             <section className='container flex justify-center items-center flex-col md:min-h-screen mx-auto mt-20 md:mt-72'>
                 <div className='flex flex-col items-center justify-center'>
                     <h1 data-aos="fade-down" className='text-3xl md:text-4xl font-bold'>COLLECTIONS</h1>
@@ -39,27 +39,27 @@ const Home = () => {
 
                     <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2 `}`}>
                         <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Cap} className=' transition-all ease-in-out duration-300 hover:scale-110 rounded-md' priority={true} alt="caps" />
+                            <Image src={Cap} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="caps" />
                         </div>
                     </Link>
                     <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
                     <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Mug} className=' transition-all ease-in-out duration-300 hover:scale-110 rounded-md' priority={true} alt="mugs" />
+                            <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
                     <Link href={'/mousepads'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
                     <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Mousepad} className=' transition-all ease-in-out duration-300 hover:scale-110 rounded-md' priority={true} alt="mousepad" />
+                            <Image src={Mousepad} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mousepad" />
                         </div>
                     </Link>
                     <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
                     <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Tshirt} className=' transition-all ease-in-out duration-300 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
+                            <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
                         </div>
                     </Link>
                     <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
                     <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Hoodie} className=' transition-all ease-in-out duration-300 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
+                            <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
                     </Link>
 

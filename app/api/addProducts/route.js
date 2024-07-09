@@ -4,36 +4,45 @@ import connectDB from "@/db/connectDB";
 
 export async function POST(request) {
     try {
-        // Connect to MongoDB
         await connectDB();
 
         const body = await request.json();
-        console.log(body);
+        const { variants } = body;
 
-        const product = await Product.findOne({ slug: body.productSlug });
-        if (product) {
-            return NextResponse.json({ success: false, error: "Product already exists" }, { status: 200 });
+        // Check for existing product for each variant's slug
+        for (let variant of variants) {
+            const existingProduct = await Product.findOne({ slug: variant.slug });
+            if (existingProduct) {
+                return NextResponse.json({ success: false, error: `Product already exists` }, { status: 200 });
+            }
         }
-        // Create a new product instance
-        let p = new Product({
-            title: body.productTitle,
-            desc: body.description,
-            slug: body.productSlug,
-            img: body.image,  // Store the file path in the img field
-            category: body.productType,
-            size: body.size,
-            color: body.color,
-            price: body.price,
-            availableQty: body.availableQty,
-        });
 
-        // Validate required fields
-        if (p.title && p.desc && p.slug && p.img && p.category && p.size && p.color && p.price && p.availableQty) {
+        if (!variants || variants.length === 0) {
+            return NextResponse.json({ success: false, error: "At least one variant is required" }, { status: 200 });
+        }
+
+        // Save all variants
+        for (let variant of variants) {
+            if (!variant.size || !variant.color || !variant.price || !variant.availableQty) {
+                return NextResponse.json({ success: false, error: "All fields in each variant are required" }, { status: 200 });
+            }
+
+            let p = new Product({
+                title: body.productTitle,
+                desc: body.description,
+                slug: variant.slug,
+                img: body.image,
+                category: body.productType,
+                size: variant.size,
+                color: variant.color,
+                price: variant.price,
+                availableQty: variant.availableQty
+            });
+
             await p.save();
-            return NextResponse.json({ success: true }, { status: 200 });
-        } else {
-            return NextResponse.json({ success: false, error: "All fields are required" }, { status: 400 });
         }
+
+        return NextResponse.json({ success: true }, { status: 200 });
 
     } catch (err) {
         console.error("Internal Server Error:", err);

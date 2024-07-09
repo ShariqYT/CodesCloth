@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import Order from '@/models/Order';
 import Product from '@/models/Product';
 import connectDB from '@/db/connectDB';
-import pincodes from '../../../pincodes.json'
 
 const razorpay = new Razorpay({
     key_id: process.env.NEXT_PUBLIC_RAZORPAY_ID,
@@ -22,9 +21,7 @@ export async function POST(request) {
         };
         const order = await razorpay.orders.create(options);
 
-        if(!Object.keys(pincodes).includes(pincode)){
-            return NextResponse.json({ success: false, error: 'This pincode is not serviceable', clearCart: false }, { status: 200 });
-        }
+        
 
         let product, sumTotal = 0;
         for (let item in cart) {

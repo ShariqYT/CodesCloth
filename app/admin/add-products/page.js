@@ -1,6 +1,6 @@
 "use client"
 import ImageUpload from '@/components/ImageUpload';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const addProducts = async (productData) => {
@@ -34,6 +34,10 @@ const AddProducts = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useLayoutEffect(() => {
+    document.title = 'Admin - Add Products | CodesCloth';
+  }, []);
+
   const handleVariantChange = (index, field, value) => {
     const newVariants = [...variants];
     newVariants[index][field] = value;
@@ -49,16 +53,16 @@ const AddProducts = () => {
     setLoading(true);
 
     const productData = {
-      productType,
-      productTitle,
-      description,
-      variants,
-      image,
+        productType,
+        productTitle,
+        description,
+        image,
+        variants,
     };
 
     await addProducts(productData);
     setLoading(false);
-  };
+};
 
   const clearFields = () => {
     setProductType('');
@@ -69,12 +73,16 @@ const AddProducts = () => {
   };
 
   const handleRemoveVariant = (indexToRemove) => {
+    if(variants.length === 1) {
+      toast.error('Atleast one variant is required', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+      return;
+    }
     const updatedVariants = variants.filter((_, index) => index !== indexToRemove);
     setVariants(updatedVariants);
   };
 
   return (
-    <form className="max-w-full border-2 border-purple-700 mx-auto shadow-md rounded" onSubmit={handleSubmit}>
+    <form className="border-2 m-20 border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
       <Toaster position="bottom-center" reverseOrder={false} />
       <div className="p-7">
         <h4 className="text-xl font-semibold">Add Product</h4>
@@ -214,7 +222,7 @@ const AddProducts = () => {
           <button
             type="button"
             onClick={() => handleRemoveVariant(index)}
-            className="text-red-500 hover:text-red-700 ml-2"
+            className="text-red-500 hover:underline hover:text-red-700 ml-2"
           >
             Remove
           </button>
@@ -226,7 +234,7 @@ const AddProducts = () => {
           <button
             type="button"
             onClick={addVariant}
-            className="my-2 mx-7 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 outline-none transition-all duration-200 ease-linear"
+            className="my-2 mx-7 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 outline-none transition-all duration-200 ease-in-out"
           >
             Add Another Variant
           </button>
@@ -237,7 +245,7 @@ const AddProducts = () => {
 
       <button
         type="submit"
-        className="my-10 mx-7 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 outline-none transition-all duration-200 ease-linear"
+        className="my-10 mx-7 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 outline-none transition-all duration-200 ease-in-out"
         disabled={loading}
       >
         {loading ? 'Adding Product...' : 'Add Product'}
@@ -245,7 +253,7 @@ const AddProducts = () => {
       <button
         type="reset"
         onClick={clearFields}
-        className="my-10 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 outline-none transition-all duration-200 ease-linear"
+        className="my-10 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 outline-none transition-all duration-200 ease-in-out"
       >
         Clear Fields
       </button>

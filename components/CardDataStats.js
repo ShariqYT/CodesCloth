@@ -9,7 +9,7 @@ const CardDataStats = ({
   children
 }) => {
   return (
-    <div className="rounded-sm border-2 border-purple-700 px-7 py-6 shadow-default">
+    <div className="rounded-lg border-2 border-purple-700 px-7 py-6 shadow-default">
       <div className="flex h-11 w-11 items-center justify-center rounded-full bg-purple-100">
         {children}
       </div>

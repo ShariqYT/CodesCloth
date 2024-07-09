@@ -42,10 +42,10 @@ const ProductSlug = async ({ params }) => {
     <>
       <section className="body-font overflow-hidden min-h-screen">
 
-        <div className="container mx-auto flex justify-center px-5 md:py-24 py-16">
+        <div className="container mx-auto flex justify-center items-center md:items-start flex-col md:flex-row px-5 md:py-24 py-16">
 
-          <div className="flex h-96 w-96 mt-10 justify-center items-center relative rounded-lg">
-            <Image className="rounded-lg object-cover hover:scale-[1.7] hover:shadow-lg transition-all duration-200 ease-linear" fill={true} sizes="(min-width: 780px) 369px, (min-width: 560px) calc(6.5vw + 185px), calc(100vw - 325px)" src={product.img} alt="tshirt" />
+          <div className="flex w-80 h-80 md:h-96 md:w-96 mt-10 justify-center items-center relative rounded-lg">
+            <Image className="rounded-lg object-cover md:hover:scale-[1.7] hover:shadow-lg transition-all duration-200 ease-in-out" fill={true} sizes="(min-width: 780px) 369px, 320px" src={product.img} alt="tshirt" />
           </div>
           <div className="md:w-1/2 w-full md:pl-10 md:py-6 mt-6 md:mt-0">
             <h2 className="text-sm title-font tracking-widest">CodesCloth</h2>

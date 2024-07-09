@@ -8,7 +8,7 @@ export const POST = async (req) => {
     try {
         await connectDB();
         const body = await req.json();
-        const { orderCreationId, razorpayOrderId, razorpayPaymentId, razorpaySignature, cart, subTotal } = body;
+        const { orderCreationId, razorpayOrderId, razorpayPaymentId, razorpaySignature, cart } = body;
 
         let product, sumTotal = 0;
         for (let item in cart) {

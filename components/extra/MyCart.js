@@ -38,8 +38,8 @@ const MyCart = () => {
                             )}
                             {Object.keys(cart).map((k) => {
                                 return <li className='list-none' key={k}>
-                                    <div className="md:flex flex items-strech py-8 md:py-10 ">
-                                        <div className="md:w-48 md:h-48 relative overflow-hidden 2xl:w-1/4 w-full">
+                                    <div className="flex flex-col items-center md:flex-row md:items-strech py-8 md:py-10 ">
+                                        <div className="md:w-48 md:h-48 relative overflow-hidden 2xl:w-1/4 w-32 h-32 rounded-lg">
                                             <Image fill={true} src={cart[k].img} priority={true} sizes='100%' alt="Product Image" className="object-contain rounded-lg" />
                                         </div>
                                         <div className="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
@@ -62,7 +62,7 @@ const MyCart = () => {
                                                     </svg>Add</button>
                                                     <button onClick={() => removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant)} className="text-xs font-semibold leading-3 py-2 px-6 hover:underline text-red-500 pl-5 cursor-pointer">Remove</button>
                                                 </div>
-                                                <p className={`text-xl font-bold leading-none ${isDarkMode?"text-gray-300":"text-gray-800"}`}>₹{cart[k].price}</p>
+                                                <p className={`md:text-xl text-2xl mx-8 md:mx-0 font-bold leading-none text-purple-700`}>₹{cart[k].price}</p>
                                             </div>
                                         </div>
                                     </div>

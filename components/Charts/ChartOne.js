@@ -7,8 +7,24 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false
 })
 
-const ChartOne = () => {
+const ChartOne = ({total}) => {
   const { isDarkMode } = useDarkMode()
+
+  const series = [
+    {
+      name: "Product One",
+      data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45]
+    },
+    {
+      name: "Product Two",
+      data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51]
+    }
+  ]
+
+  // Calculate total sales and total revenue
+  const totalRevenue = series[0].data.reduce((acc, value) => acc + value, 0)
+  const totalSales = total
+
   const options = {
     legend: {
       show: false,
@@ -28,7 +44,6 @@ const ChartOne = () => {
         left: 0,
         opacity: 0.1
       },
-
       toolbar: {
         show: false
       }
@@ -55,10 +70,6 @@ const ChartOne = () => {
       width: [2, 2],
       curve: "straight"
     },
-    // labels: {
-    //   show: false,
-    //   position: "top",
-    // },
     grid: {
       xaxis: {
         lines: {
@@ -116,7 +127,6 @@ const ChartOne = () => {
         show: false
       }
     },
-
     yaxis: {
       labels: {
         style: {
@@ -127,20 +137,9 @@ const ChartOne = () => {
       max: 100
     }
   }
-  const series = [
-    {
-      name: "Product One",
-      data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45]
-    },
-
-    {
-      name: "Product Two",
-      data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51]
-    }
-  ]
 
   return (
-    <div className="col-span-12 rounded-sm border-2 border-purple-700 px-5 pb-5 pt-7 shadow sm:px-7 xl:col-span-8">
+    <div className="col-span-12 rounded-lg border-2 border-purple-700 px-5 pb-5 pt-7 shadow sm:px-7 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
         <div className="flex w-full flex-wrap gap-3 sm:gap-5">
           <div className="flex min-w-52">
@@ -149,7 +148,7 @@ const ChartOne = () => {
             </span>
             <div className="w-full">
               <p className="font-semibold text-purple-700">Total Revenue</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="text-sm font-medium">{totalRevenue}</p>
             </div>
           </div>
           <div className="flex min-w-52">
@@ -158,7 +157,7 @@ const ChartOne = () => {
             </span>
             <div className="w-full">
               <p className="font-semibold text-pink-400">Total Sales</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="text-sm font-medium">{totalSales}</p>
             </div>
           </div>
         </div>

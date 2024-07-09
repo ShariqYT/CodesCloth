@@ -5,6 +5,9 @@ import MobileNav from "@/components/MobileNav";
 import { DarkModeProvider } from '@/context/DarkModeContext';
 import ClientOnlyLayout from "@/components/ClientOnlyLayouts";
 import SessionWrapper from "@/components/SessionWrapper";
+import {Roboto_Flex} from 'next/font/google';
+
+const roboto = Roboto_Flex({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'], display: 'swap' });
 
 export const metadata = {
   title: 'CodesCloth - Wearable Codes',
@@ -40,9 +43,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <head>
-        <title>{metadata.title}</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={metadata.description} />

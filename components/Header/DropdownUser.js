@@ -15,13 +15,13 @@ const DropdownUser = ({ session }) => {
         <>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center border-2 border-purple-700 hover:bg-purple-700 hover:text-white transition-all duration-300 ease-in-out rounded-lg px-4 py-2 gap-4"
+            className="w-full flex items-center border-2 border-purple-700 hover:bg-purple-700 hover:text-white transition-all duration-200 ease-in-out rounded-lg px-4 py-2 md:gap-4"
           >
-            <span className="hidden text-right lg:block">
-              <span className="block text-sm font-medium">
+            <span className=" text-right lg:block">
+              <span className="block text-[16px] md:text-sm font-medium">
                 Mohammad Shariq
               </span>
-              <span className="block text-xs">Full Stack Developer</span>
+              <span className="block text-[12px] md:text-xs">Full Stack Developer</span>
             </span>
 
             {/* <span className="h-12 w-12 rounded-full">
@@ -61,7 +61,7 @@ const DropdownUser = ({ session }) => {
                 <li>
                   <Link
                     href="/profile"
-                    className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-purple-700 lg:text-base"
+                    className="flex items-center gap-3.5 text-sm font-medium duration-200 ease-in-out hover:text-purple-700 lg:text-base"
                   >
                     <svg
                       className="fill-current"
@@ -86,7 +86,7 @@ const DropdownUser = ({ session }) => {
                 <li>
                   <Link
                     href="#"
-                    className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-purple-700 lg:text-base"
+                    className="flex items-center gap-3.5 text-sm font-medium duration-200 ease-in-out hover:text-purple-700 lg:text-base"
                   >
                     <svg
                       className="fill-current"
@@ -107,7 +107,7 @@ const DropdownUser = ({ session }) => {
                 <li>
                   <Link
                     href="/settings"
-                    className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-purple-700 lg:text-base"
+                    className="flex items-center gap-3.5 text-sm font-medium duration-200 ease-in-out hover:text-purple-700 lg:text-base"
                   >
                     <svg
                       className="fill-current"
@@ -130,7 +130,7 @@ const DropdownUser = ({ session }) => {
                   </Link>
                 </li>
               </ul>
-              <button onClick={() => signOut()} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-red-500 lg:text-base">
+              <button onClick={() => signOut()} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-200 ease-in-out hover:text-red-500 lg:text-base">
                 <svg
                   className="fill-current"
                   width="22"

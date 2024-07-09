@@ -27,7 +27,7 @@ const MenuItems = () => {
     <ul className={`md:flex justify-center flex-col ${isDarkMode ? "text-white" : "text-gray-800"} hidden md:flex-row gap-8 items-center font-bold`}>
       {categories.map(category => (
         <Link href={`/${category}`} key={category}>
-          <li className={`p-1 ${pathname === `/${category}` ? 'border-2 border-purple-700 rounded-md px-4' : ''} cursor-pointer [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800 transition-all duration-200 ease-linear`}>
+          <li className={`p-1 ${pathname === `/${category}` ? 'border-2 border-purple-700 rounded-md px-4' : ''} cursor-pointer [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800 transition-all duration-200 ease-in-out`}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </li>
         </Link>
@@ -50,7 +50,7 @@ const UserMenu = ({ auth, isDarkMode, toggleDropdown, dropdownOpen, setDropdownO
       </svg>
     </button>
     {dropdownOpen && (
-      <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] text-white' : 'bg-white'} border-2 border-purple-700 w-48 absolute top-14 md:top-16 right-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold transform transition-transform duration-300 ease-in-out`}>
+      <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] text-white' : 'bg-white'} border-2 border-purple-700 w-48 absolute top-14 md:top-16 right-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold transform transition-transform duration-200 ease-in-out`}>
         <ol className='space-y-2'>
           <li className='p-1'>
             <Link className='hover:text-purple-700 flex items-center gap-2 transition-colors duration-200 ease-in-out' href='/myaccount'>
@@ -124,7 +124,7 @@ const MobileMenu = () => {
         </svg>
       </button>
       {isOpen && (
-        <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-transform duration-300 ease-in-out`}>
+        <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-transform duration-200 ease-in-out`}>
           <ul className='flex flex-col gap-4 items-center font-bold'>
             {categories.map(category => (
               <Link href={`/${category}`} key={category}>
@@ -148,16 +148,24 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
-  const auth = getAuth(app)
+  const auth = getAuth(app);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setUser)
-    return () => unsubscribe()
-  }, [auth])
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <nav className={`flex justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>

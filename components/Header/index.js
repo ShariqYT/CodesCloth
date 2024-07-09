@@ -16,7 +16,7 @@ const Header = (props) => {
   
   return (
     <header className={`sticky top-0 z-[999] flex w-full ${isDarkMode ? 'bg-black drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'bg-white drop-shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
-      <div className={isAdminRoute ? "flex items-center justify-between px-4 py-4 w-full shadow-2 md:px-6 2xl:px-11" :`flex flex-grow items-center justify-end px-4 py-4 shadow-2 md:px-6 2xl:px-11`}>
+      <div className={isAdminRoute ? "flex items-center justify-between px-4 py-4 w-full shadow-2 md:px-6 2xl:px-11" :`flex flex-grow items-center md:justify-end justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11`}>
         <div className={isAdminRoute ? "" : `flex items-center gap-2 sm:gap-4 lg:hidden`}>
           {/* <!-- Hamburger Toggle BTN --> */}
           {isAdminRoute ? <Link href={'/'}><Image priority className="w-52" src={Logo} alt="Logo" /></Link>:(<button
@@ -58,10 +58,14 @@ const Header = (props) => {
 
         </div>
 
-        <div className="flex items-center gap-3 ">
-          <ul className="flex items-center gap-2 ">
+        <Link className="hover:underline" href={'/'} target="_blank">
+          <p className="w-full">Dashboard ↗</p>
+          </Link>
+
+        <div className="flex items-center md:gap-3 ">
+          <ul className="flex items-center gap-2 w-fit ">
             {/* <!-- Dark Mode Toggler --> */}
-            <button onClick={toggleDarkMode} className="mx-10">
+            <button onClick={toggleDarkMode} className="mx-10 hidden md:block">
               {!isDarkMode ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-7 icon' color="#000000" fill="none">
                   <path d="M21.5 14.0784C20.3003 14.7189 18.9301 15.0821 17.4751 15.0821C12.7491 15.0821 8.91792 11.2509 8.91792 6.52485C8.91792 5.06986 9.28105 3.69968 9.92163 2.5C5.66765 3.49698 2.5 7.31513 2.5 11.8731C2.5 17.1899 6.8101 21.5 12.1269 21.5C16.6849 21.5 20.503 18.3324 21.5 14.0784Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -75,7 +79,6 @@ const Header = (props) => {
             </button>
             {/* <!-- Dark Mode Toggler --> */}
           </ul>
-
           {/* <!-- User Area --> */}
           <DropdownUser session={session} />
           {/* <!-- User Area --> */}

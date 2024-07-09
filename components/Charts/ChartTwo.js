@@ -96,7 +96,7 @@ const ChartTwo = () => {
   ]
 
   return (
-    <div className="col-span-12 rounded-sm border-2 border-purple-700 p-7 shadow  xl:col-span-4">
+    <div className="col-span-12 rounded-lg border-2 border-purple-700 p-7 shadow  xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold ">

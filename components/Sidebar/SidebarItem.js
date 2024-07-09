@@ -29,7 +29,7 @@ const SidebarItem = ({ item, pageName, setPageName }) => {
           onClick={handleClick}
           className={`${
             isItemActive ? "bg-purple-700 rounded-xl text-white" : ""
-          } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-graydark `}
+          } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium transition-all duration-200 ease-in-out `}
         >
           {item.icon}
           {item.label}

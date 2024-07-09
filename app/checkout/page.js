@@ -5,8 +5,7 @@ export const metadata = {
     title: 'Checkout | CodesCloth',
 };
 
-const CheckoutPage = () => {
-
+const CheckoutPage = async() => {
     return (
         <>
             <Checkout />

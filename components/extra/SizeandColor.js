@@ -14,15 +14,19 @@ const SizeandColor = ({ product, variants }) => {
 
     const colors = Object.keys(variants)
     return (
-        <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+        <div className="flex mt-6  items-center pb-5 border-b-2 border-gray-100 mb-5">
             <div className="flex">
+                <div className="hidden
+    bg-red-500 bg-pink-500 bg-purple-500 bg-indigo-500 bg-blue-500 bg-green-500 bg-yellow-500 bg-orange-500 bg-amber-500 bg-lime-500 bg-teal-500 bg-cyan-500 bg-sky-500 bg-rose-500 bg-violet-500 bg-fuchsia-500 bg-neutral-500 bg-stone-500 bg-zinc-500 bg-gray-500 bg-slate-500
+"></div>
+
                 <span className="mr-3">Color</span>
                 {colors.map((col) => (
                     variants[col][size] && (
                         <button
                             key={col}
                             onClick={() => { refreshVariant(size, col) }}
-                            className={`border-2 ml-1 bg-${col.toLowerCase()+(col.toLowerCase() === 'black' || col.toLowerCase() === 'white' ? '' : '-500')} rounded-full w-6 h-6 focus:outline-none ${color === col ? 'border-black' : 'border-gray-300'}`}
+                            className={`border-2 ml-1 bg-${col.toLowerCase()}${(col.toLowerCase() === 'black' || col.toLowerCase() === 'white' ? '' : '-500')} rounded-full w-6 h-6 focus:outline-none ${color === col ? 'border-black' : 'border-gray-300'}`}
                         ></button>
                     )
                 ))}
