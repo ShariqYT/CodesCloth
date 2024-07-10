@@ -47,7 +47,7 @@ const Home = () => {
             <div className={`${promocode[1]?.code ? 'block' : 'hidden'} container mt-20 md:mt-60 mx-auto`}>
                 <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-10 px-20 rounded-lg shadow-md relative">
                         <h3 className="text-2xl font-semibold mb-4">Flat Rs.100 OFF on All Products</h3>
-                        <p className="text-sm mb-4">Claim Now Before It's Too Late</p>
+                        <p className="text-sm mb-4">Claim Now Before It&apos;s Too Late</p>
                         <div className="flex justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6">
                             <span id="cpnCode" className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
                             <span onClick={() => navigator.clipboard.writeText(promocode[1]?.code)} onClickCapture={ ()=> toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })} id="cpnBtn" className="border border-white bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer">Copy Code</span>
