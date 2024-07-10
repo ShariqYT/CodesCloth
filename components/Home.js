@@ -1,34 +1,65 @@
 "use client"
-import React from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
 import Banner from '@/public/banner/banner.jpg';
 import { useEffect } from 'react'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Toaster } from 'react-hot-toast';
+import { Toaster,toast } from 'react-hot-toast';
 import { useDarkMode } from '@/context/DarkModeContext';
 import Tshirt from '@/public/collections/tshirt.png';
 import Mousepad from '@/public/collections/mousepad.png';
 import Mug from '@/public/collections/mugs.png';
 import Cap from '@/public/collections/caps.png';
 import Hoodie from '@/public/collections/hoodies.png';
+import { getAllPromocodes } from '@/actions/Admin/getAllPromocodes';
 
 const Home = () => {
     const { isDarkMode } = useDarkMode()
+    const [promocode, setPromocode] = useState('');
+    useLayoutEffect( () => {
+        async function getAllPromoCodes() {
+            const promo = await getAllPromocodes();
+            setPromocode(promo);
+        }
+
+        getAllPromoCodes();
+    }, [])
     useEffect(() => {
         AOS.init({
             duration: 1000,
             once: true,
         })
+        window.scrollTo(0, 0)
     }, [])
+
+    if(Date.now() > promocode[1]?.expiry) {
+        setPromocode('');
+    }
+
     return (
         <main className='overflow-x-hidden'>
             <Toaster
                 position="bottom-center"
                 reverseOrder={false}
             />
-            <Image priority={true} placeholder='blur' className='w-full h-full object-cover' src={Banner} alt="banner" />
+            <div className={`${promocode[1]?.code ? 'block' : 'hidden'} container mt-20 md:mt-60 mx-auto`}>
+                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-10 px-20 rounded-lg shadow-md relative">
+                        <h3 className="text-2xl font-semibold mb-4">Flat Rs.100 OFF on All Products</h3>
+                        <p className="text-sm mb-4">Claim Now Before It's Too Late</p>
+                        <div className="flex justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6">
+                            <span id="cpnCode" className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
+                            <span onClick={() => navigator.clipboard.writeText(promocode[1]?.code)} onClickCapture={ ()=> toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })} id="cpnBtn" className="border border-white bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer">Copy Code</span>
+                        </div>
+                        <p className="text-sm">Valid Till: {promocode[1]?.expiry.toLocaleDateString( "en-US", { year: 'numeric', month: 'long', day: 'numeric'} )}</p>
+
+                        <div className={`w-12 h-12 ${isDarkMode? 'bg-black': 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
+                        <div className={`w-12 h-12 ${isDarkMode? 'bg-black': 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
+
+                </div>
+            </div>
+            {/* <Image priority={true} placeholder='blur' className='w-full h-full object-cover' src={Banner} alt="banner" /> */}
             <section className='container flex justify-center items-center flex-col md:min-h-screen mx-auto mt-20 md:mt-72'>
                 <div className='flex flex-col items-center justify-center'>
                     <h1 data-aos="fade-down" className='text-3xl md:text-4xl font-bold'>COLLECTIONS</h1>
@@ -43,22 +74,22 @@ const Home = () => {
                         </div>
                     </Link>
                     <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                    <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
                     <Link href={'/mousepads'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                    <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mousepad} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mousepad" />
                         </div>
                     </Link>
                     <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                    <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
                         </div>
                     </Link>
                     <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                    <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
                     </Link>

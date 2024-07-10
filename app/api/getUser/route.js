@@ -11,7 +11,6 @@ export async function POST(request) {
 
         return NextResponse.json({ success: true, name, email, address, pincode} , { status: 200 });
     } catch (err) {
-        console.error("Error updating user:", err);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: err }, { status: 500 });
     }
 }

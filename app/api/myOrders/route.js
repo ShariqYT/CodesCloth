@@ -17,7 +17,6 @@ export async function POST(request) {
 
         return NextResponse.json({ orders }, { status: 200 });
     } catch (err) {
-        console.error("Error fetching orders:", err);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: err }, { status: 500 });
     }
 }

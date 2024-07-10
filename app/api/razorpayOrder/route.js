@@ -21,8 +21,6 @@ export async function POST(request) {
         };
         const order = await razorpay.orders.create(options);
 
-        
-
         let product, sumTotal = 0;
         for (let item in cart) {
             sumTotal += cart[item].price * cart[item].qty;
@@ -67,6 +65,6 @@ export async function POST(request) {
         return NextResponse.json({ success: true, orderId: order.id }, { status: 200 });
 
     } catch (error) {
-        return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later' }, { status: 500 });
+        return NextResponse.json({ success: false, error }, { status: 500 });
     }
 }

@@ -15,8 +15,8 @@ const ECommerce = async () => {
   const total = formatIndianCurrency(orders.reduce((acc, order) => acc + order.amount, 0));
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-cols-1 mt-24 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7">
+    <div className="container mx-auto flex flex-col items-center justify-center">
+      <div className="flex flex-col mt-10 w-80 md:w-full md:flex-row justify-center items-center gap-4">
         <CardDataStats title="Total Users" total={users.length} levelUp>
           <svg
             className="fill-purple-700"
@@ -87,7 +87,7 @@ const ECommerce = async () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid w-80 md:w-full grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne total={total} />
         <ChartTwo />
         <div className="col-span-12 xl:col-span-8">

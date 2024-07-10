@@ -21,7 +21,6 @@ const addProducts = async (productData) => {
       toast.error(data.error, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
     }
   } catch (error) {
-    console.error('Error adding product:', error);
     toast.error('Failed to add product', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
   }
 };
@@ -82,7 +81,7 @@ const AddProducts = () => {
   };
 
   return (
-    <form className="border-2 m-20 border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
+    <form className="border-2 my-10 w-80 md:w-full md:m-20 border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
       <Toaster position="bottom-center" reverseOrder={false} />
       <div className="p-7">
         <h4 className="text-xl font-semibold">Add Product</h4>

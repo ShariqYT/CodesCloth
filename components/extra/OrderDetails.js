@@ -35,7 +35,7 @@ const OrderDetails = () => {
         const data = await response.json();
         setOrder(data.order);
       } catch (error) {
-        console.error('Error fetching order:', error);
+        throw new Error(error);
       }
     };
 

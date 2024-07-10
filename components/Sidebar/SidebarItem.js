@@ -2,11 +2,12 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-const SidebarItem = ({ item, pageName, setPageName }) => {
+const SidebarItem = ({ item, pageName, setPageName, setSidebarOpen }) => {
   const handleClick = () => {
     const updatedPageName =
       pageName !== item.label.toLowerCase() ? item.label.toLowerCase() : ""
-    return setPageName(updatedPageName)
+    setPageName(updatedPageName)
+    setSidebarOpen(false)  // Close the sidebar
   }
 
   const pathname = usePathname()

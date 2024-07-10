@@ -43,9 +43,9 @@ const AllProduct = ({ products }) => {
   const sortProducts = (order) => {
     products.sort((a, b) => {
       if (order === 'asc') {
-        return a.name.localeCompare(b.name);
+        return a.title.localeCompare(b.title);
       } else {
-        return b.name.localeCompare(a.name);
+        return b.title.localeCompare(a.title);
       }
     });
   };
@@ -83,17 +83,17 @@ const AllProduct = ({ products }) => {
         <div className="px-4 py-6 md:px-6 xl:px-7">
           <h4 className="text-xl font-semibold">All Products</h4>
         </div>
-        <div className="grid grid-cols-8 border-y border-purple-700 gap-8 px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+        <div className="grid grid-cols-4 md:grid-cols-8 border-y border-purple-700 gap-8 px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
           <div className="col-span-2 flex items-center">
             <p onClick={handleSortName} className="font-medium hover:underline cursor-pointer">Product Name</p>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 md:col-span-2 hidden md:flex items-center">
             <p className="font-medium">Slug</p>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1 hidden items-center md:flex">
             <p onClick={handleSortCategory} className="font-medium hover:underline cursor-pointer">Category</p>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1 hidden items-center md:flex">
             <p className="font-medium">Size/Color</p>
           </div>
           <div className="col-span-1 flex items-center">
@@ -105,11 +105,11 @@ const AllProduct = ({ products }) => {
         </div>
         {currentProducts.map((product, key) => (
           <div
-            className="grid grid-cols-8 border-b gap-8 px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7"
+            className="grid grid-cols-4 md:grid-cols-8 border-b gap-8 px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7"
             key={key}
           >
             <div className="col-span-2 truncate flex items-center">
-              <div className="flex flex-col pr-7 gap-8 sm:flex-row sm:items-center">
+              <div className="flex pr-7 md:gap-8 md:flex-row items-center">
                 <div className="h-12 w-16 rounded-md">
                   <Image
                     src={product.img}
@@ -119,20 +119,20 @@ const AllProduct = ({ products }) => {
                     alt="Product"
                   />
                 </div>
-                <p className="text-sm">{product.title}</p>
+                <p className="text-sm text-center">{product.title}</p>
               </div>
             </div>
-            <div className="col-span-2 hidden items-center sm:flex">
+            <div className="col-span-2 hidden items-center md:flex">
               <p className="text-sm font-bold">
                 <Link href={'/product/' + product.slug} target="_blank">
                   {product.slug}
                 </Link>
               </p>
             </div>
-            <div className="col-span-1 hidden items-center sm:flex">
+            <div className="col-span-1 hidden items-center md:flex">
               <p className="text-sm">{product.category}</p>
             </div>
-            <div className="col-span-1 hidden items-center sm:flex">
+            <div className="col-span-1 hidden items-center md:flex">
               <p className="text-sm">{product.size}/{product.color}</p>
             </div>
             <div className="col-span-1 flex items-center">

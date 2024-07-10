@@ -19,13 +19,11 @@ async function oneProduct(slug) {
 
     if (!res.ok) {
       const errorDetails = await res.text();
-      console.error('Fetch error details:', errorDetails);
-      throw new Error('Failed to fetch data');
+      throw new Error(errorDetails);
     }
 
     return res.json();
   } catch (error) {
-    console.error('Error fetching product:', error);
     return { product: null, variants: [] };
   }
 }

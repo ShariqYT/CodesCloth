@@ -77,7 +77,6 @@ const Checkoutpage = () => {
                             setCity('');
                         }
                     } catch (error) {
-                        console.error('Error fetching pincode data:', error);
                         setState('');
                         setCity('');
                     }
@@ -130,7 +129,7 @@ const Checkoutpage = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    amount: inrTotal,
+                    amount: subTotal - discount,
                     currency: 'INR',
                     address,
                     phone,
@@ -155,7 +154,6 @@ const Checkoutpage = () => {
             }
             return data.orderId;
         } catch (error) {
-            console.error('There was a problem with your fetch operation:', error);
             return null;
         }
     };
@@ -169,7 +167,7 @@ const Checkoutpage = () => {
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-                amount: parseFloat(inrTotal) * 100, // Apply discount
+                amount: parseFloat(subTotal - discount) * 100, // Apply discount
                 currency: 'INR',
                 name: 'CodesCloth',
                 description: 'Test Transaction',
@@ -181,6 +179,7 @@ const Checkoutpage = () => {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
+                        promocode: promocode,
                     };
 
                     const result = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpayVerify`, {

@@ -141,7 +141,7 @@ const ChartOne = ({total}) => {
   return (
     <div className="col-span-12 rounded-lg border-2 border-purple-700 px-5 pb-5 pt-7 shadow sm:px-7 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
-        <div className="flex w-full flex-wrap gap-3 sm:gap-5">
+        <div className="flex items-center w-full flex-wrap gap-3 sm:gap-5">
           <div className="flex min-w-52">
             <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-purple-700">
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-purple-700"></span>

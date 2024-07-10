@@ -32,7 +32,6 @@ const MyOrders = () => {
                 const data = await response.json();
                 setOrders(data.orders);
             } catch (error) {
-                console.error("Error fetching orders:", error);
             }
         };
 
@@ -169,7 +168,7 @@ const MyOrders = () => {
                                 </div>
                                 <div className="mt-2 flex justify-center items-center pb-2 text-base font-semibold text-gray-900 ">
                                     {Object.values(order.products).map(product => (
-                                        <div key={product.name} className='md:w-32 md:h-32 w-16 h-16 relative overflow-hidden flex justify-center items-center'>
+                                        <div key={product.title} className='md:w-32 md:h-32 w-16 h-16 relative overflow-hidden flex justify-center items-center'>
                                             <Image priority src={product.img} alt={""} sizes='(100vw - 2rem)' fill={true} />
                                         </div>
                                     ))}

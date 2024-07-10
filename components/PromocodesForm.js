@@ -10,7 +10,7 @@ export default function PromocodesForm() {
     const [expiry, setExpiry] = useState('');
     const [active, setActive] = useState(true);
     const [allProducts, setAllProducts] = useState(false);
-    const [limit, setLimit] = useState(0); // New state for limit
+    const [limit, setLimit] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -68,7 +68,7 @@ export default function PromocodesForm() {
     };
 
     return (
-        <div className='max-w-[60vw] flex flex-col justify-center gap-4 mx-auto p-8 m-20 border-2 border-purple-700 rounded-xl'>
+        <div className='md:w-[60vw] flex flex-col justify-center gap-4 mx-auto p-8 m-20 border-2 border-purple-700 rounded-xl'>
             <button onClick={() => setShow(!show)} className='flex items-center justify-center text-white bg-purple-700 border-0 py-2 px-6 focus:outline-none hover:bg-purple-800 transition-all duration-200 ease-in-out rounded-lg '>Create Promo Code</button>
             {show && (
                 <>
@@ -103,8 +103,8 @@ export default function PromocodesForm() {
                                 required
                                 className='w-full border-2 p-2 outline-none rounded-lg bg-transparent focus:border-purple-700'
                             >
-                                <option value="fixed">Fixed Amount</option>
-                                <option value="percentage">Percentage</option>
+                                <option className='text-black' value="fixed">Fixed Amount</option>
+                                <option className='text-black' value="percentage">Percentage</option>
                             </select>
                         </div>
                         <div className='flex items-center gap-4'>

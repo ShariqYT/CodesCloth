@@ -20,7 +20,6 @@ export async function GET(req) {
 
         return NextResponse.json({ order });
     } catch (err) {
-        console.error('Error fetching order:', err);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: err }, { status: 500 });
     }
 }

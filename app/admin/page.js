@@ -8,7 +8,7 @@ export const metadata = {
 
 const AdminDashboard = () => {
   return (
-    <div className='overflow-x-hidden'>
+    <div>
       <Toaster
         position="bottom-center"
         reverseOrder={false}

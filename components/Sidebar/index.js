@@ -1,6 +1,5 @@
 "use client"
 import React from "react"
-import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import SidebarItem from "@/components/Sidebar/SidebarItem"
@@ -73,7 +72,6 @@ const menuGroups = [
 ]
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const pathname = usePathname()
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard")
   const { isDarkMode } = useDarkMode()
 
@@ -130,6 +128,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <ul className="mb-6 flex flex-col gap-8">
                   {group.menuItems.map((menuItem, menuIndex) => (
                     <SidebarItem
+                      setSidebarOpen={setSidebarOpen}
                       key={menuIndex}
                       item={menuItem}
                       pageName={pageName}
