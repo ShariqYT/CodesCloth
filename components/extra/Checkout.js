@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useEffect, useState } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import Script from 'next/script';
 import Image from 'next/image';
 import { CartContext } from '@/context/CartContext';
@@ -219,10 +219,9 @@ const Checkoutpage = () => {
     const inrSubTotal = formatIndianCurrency(subTotal);
     const inrDiscount = formatIndianCurrency(discount);
     const inrTotal = formatIndianCurrency(subTotal - discount);
-
     return (
         <div className='h-fit container shadow-2xl rounded-xl mb-24 border-2 border-purple-700 m-auto my-20'>
-            <Toaster position='bottom-center' reverseOrder={false} />
+            
             <Script id='razorpay-checkout-js' src='https://checkout.razorpay.com/v1/checkout.js' />
             <h1 className='text-4xl font-bold text-center my-8'>Checkout</h1>
             <div className='flex flex-col md:flex-row my-20'>

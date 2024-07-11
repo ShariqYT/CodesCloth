@@ -6,7 +6,8 @@ import Product from "@/models/Product";
 export const getAllProducts = async () => {
     try {
         await connectDB();
-        const products = await Product.find({});
+        const productsRaw = await Product.find({});
+        const products = JSON.parse(JSON.stringify(productsRaw))
         return products
     } catch (err) {
         console.log(err)

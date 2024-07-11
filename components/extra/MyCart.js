@@ -14,13 +14,13 @@ const MyCart = () => {
     return (
         <div className="container min-h-screen mx-auto mb-20 md:mb-2 mt-10">
             <div className="sm:flex border border-purple-700 rounded shadow-lg my-10">
-                <div className='flex flex-col w-full justify-between'>
+                <div className='flex flex-col md:w-[55vw] w-full justify-between'>
                     <div className="w-full px-5 md:px-10 py-10">
                         <div className="flex justify-between border-b pb-8">
                             <h1 className="font-semibold text-2xl">Shopping Cart</h1>
                             <h2 className="font-semibold text-2xl">{Object.keys(cart).length} Items</h2>
                         </div>
-                        <ul className='overflow-y-auto overflow-x-hidden md:px-10 h-[50vh]'>
+                        <ul className='overflow-y-auto overflow-x-hidden md:px-4 h-[50vh]'>
                             {Object.keys(cart).length == 0 && (
                                 <div className='flex justify-center flex-col-reverse items-center'>
                                     <p className="text-2xl font-bold">

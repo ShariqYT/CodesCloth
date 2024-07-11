@@ -1,12 +1,11 @@
 "use client"
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
-import Banner from '@/public/banner/banner.jpg';
-import { useEffect } from 'react'
+// import Banner from '@/public/banner/banner.jpg';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Toaster,toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useDarkMode } from '@/context/DarkModeContext';
 import Tshirt from '@/public/collections/tshirt.png';
 import Mousepad from '@/public/collections/mousepad.png';
@@ -17,14 +16,18 @@ import { getAllPromocodes } from '@/actions/Admin/getAllPromocodes';
 
 const Home = () => {
     const { isDarkMode } = useDarkMode()
+    const [loading, setLoading] = useState(true);
     const [promocode, setPromocode] = useState('');
-    useLayoutEffect( () => {
+    useEffect(() => {
         async function getAllPromoCodes() {
             const promo = await getAllPromocodes();
             setPromocode(promo);
         }
-
+        
         getAllPromoCodes();
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
     }, [])
     useEffect(() => {
         AOS.init({
@@ -34,30 +37,26 @@ const Home = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    if(Date.now() > promocode[1]?.expiry) {
+    if (Date.now() > promocode[1]?.expiry) {
         setPromocode('');
     }
 
     return (
         <main className='overflow-x-hidden'>
-            <Toaster
-                position="bottom-center"
-                reverseOrder={false}
-            />
-            <div className={`${promocode[1]?.code ? 'block' : 'hidden'} container mt-20 md:mt-60 mx-auto`}>
-                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-10 px-20 rounded-lg shadow-md relative">
-                        <h3 className="text-2xl font-semibold mb-4">Flat Rs.100 OFF on All Products</h3>
-                        <p className="text-sm mb-4">Claim Now Before It&apos;s Too Late</p>
-                        <div className="flex justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6">
-                            <span id="cpnCode" className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
-                            <span onClick={() => navigator.clipboard.writeText(promocode[1]?.code)} onClickCapture={ ()=> toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })} id="cpnBtn" className="border border-white bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer">Copy Code</span>
-                        </div>
-                        <p className="text-sm">Valid Till: {promocode[1]?.expiry.toLocaleDateString( "en-US", { year: 'numeric', month: 'long', day: 'numeric'} )}</p>
-
-                        <div className={`w-12 h-12 ${isDarkMode? 'bg-black': 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
-                        <div className={`w-12 h-12 ${isDarkMode? 'bg-black': 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
-
+            <div className={`${loading ? '-translate-x-[2000px]': 'translate-x-0'} transition-all duration-1000 ease-in-out container p-4 mt-20 md:mt-60 mx-auto`}>
+                <div className="bg-gradient-to-br from-purple-900 to-purple-700 text-white text-center py-10 md:px-20 rounded-lg relative">
+                    <div className="before:blur-3xl before:opacity-80 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-br before:from-purple-900 before:to-purple-500 before:z-10"></div>
+                    <h3 className="md:text-2xl z-20 font-semibold mb-4 relative">Flat Rs.100 OFF on All Products</h3>
+                    <p className="md:text-sm z-20 text-xs mb-4 relative">Claim Now Before It&apos;s Too Late</p>
+                    <div className="flex z-20 justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6 relative">
+                        <span className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
+                        <button onClick={() => navigator.clipboard.writeText(promocode[1]?.code)} onClickCapture={() => toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })} className="border border-white -mr-8 hover:scale-[1.2] transition-all duration-300 ease-in-out bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer">Copy Code</button>
+                    </div>
+                    <p className="text-sm z-20 relative">Valid Till: {promocode[1]?.expiry.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
+                    <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
                 </div>
+
             </div>
             {/* <Image priority={true} placeholder='blur' className='w-full h-full object-cover' src={Banner} alt="banner" /> */}
             <section className='container flex justify-center items-center flex-col md:min-h-screen mx-auto mt-20 md:mt-72'>
@@ -66,30 +65,30 @@ const Home = () => {
                     <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
                 </div>
 
-                <div className='grid md:grid-cols-3 gap-10 w-fit h-fit md:mt-20 mt-10'>
+                <div className='grid md:grid-cols-3 place-items-center gap-4 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
 
                     <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2 `}`}>
-                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Cap} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="caps" />
                         </div>
                     </Link>
                     <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
                     <Link href={'/mousepads'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mousepad} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mousepad" />
                         </div>
                     </Link>
                     <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
                         </div>
                     </Link>
                     <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-60 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
                     </Link>

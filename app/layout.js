@@ -6,6 +6,7 @@ import { DarkModeProvider } from '@/context/DarkModeContext';
 import ClientOnlyLayout from "@/components/ClientOnlyLayouts";
 import SessionWrapper from "@/components/SessionWrapper";
 import {Roboto_Flex} from 'next/font/google';
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto_Flex({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'], display: 'swap' });
 
@@ -69,6 +70,7 @@ export default function RootLayout({ children }) {
           showSpinner={false}
           zIndex={10000}
         />
+        <Toaster position="bottom-center" reverseOrder={false} />
         <DarkModeProvider>
           <CartProvider>
             <ClientOnlyLayout>

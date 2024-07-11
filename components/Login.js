@@ -85,7 +85,7 @@ const LoginPage = () => {
     }
     return (
         <div className="min-h-screen flex flex-col mt-32 sm:px-6 md:px-8 px-6">
-            <Toaster position="bottom-center" reverseOrder={false} />
+            
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <Image className="mx-auto object-contain w-32" src={Logo}  alt="Logo" />
                 <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold">

@@ -14,38 +14,52 @@ export async function POST(request) {
         const { amount, currency, name, city, state, email, address, phone, pincode, oid, cart, subTotal } = await request.json();
         await connectDB();
 
-        var options = {
+        const options = {
             amount: amount * 100,
             currency: currency,
             receipt: 'rcp1',
         };
         const order = await razorpay.orders.create(options);
 
-        let product, sumTotal = 0;
-        for (let item in cart) {
-            sumTotal += cart[item].price * cart[item].qty;
-            product = await Product.findOne({ slug: item });
+        let sumTotal = 0;
+
+        // Log the cart object to inspect its structure
+        console.log('Cart:', cart);
+
+        for (let itemSlug in cart) {
+            const cartItem = cart[itemSlug];
+            console.log(`Checking item: ${itemSlug}`, cartItem);
+
+            // Check if cartItem has necessary properties
+            if (!cartItem || typeof cartItem.price !== 'number' || typeof cartItem.qty !== 'number') {
+                return NextResponse.json({ success: false, error: 'Invalid cart item structure' }, { status: 400 });
+            }
+
+            sumTotal += cartItem.price * cartItem.qty;
+            const product = await Product.findOne({ slug: itemSlug });
 
             if (!product) {
-                return NextResponse.json({ success: false, error: 'Product not found. Please try again later' }, { status: 200 });
+                return NextResponse.json({ success: false, error: `Product not found: ${itemSlug}` }, { status: 200 });
             }
 
-            if (product.availableQty < cart[item].qty) {
-                return NextResponse.json({ success: false, error: 'Product out of stock. Please try again later', clearCart: true }, { status: 200 });
+            if (product.availableQty < cartItem.qty) {
+                return NextResponse.json({ success: false, error: `Product out of stock: ${itemSlug}`, clearCart: true }, { status: 200 });
             }
 
-            if (product.price !== cart[item].price) {
-                return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 200 });
+            if (product.price !== cartItem.price) {
+                return NextResponse.json({ success: false, error: `Price changed for product: ${itemSlug}`, clearCart: true }, { status: 200 });
             }
         }
+
         if (sumTotal !== subTotal) {
-            return NextResponse.json({ success: false, error: 'Price has been changed. Please try again later', clearCart: true }, { status: 200 });
-        }
-        if (pincode.length !== 6) {
-            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter valid pincode', clearCart: false }, { status: 200 });
+            return NextResponse.json({ success: false, error: 'Subtotal mismatch. Please try again later', clearCart: true }, { status: 200 });
         }
 
-        let newOrder = new Order({
+        if (pincode.length !== 6) {
+            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter a valid pincode', clearCart: false }, { status: 200 });
+        }
+
+        const newOrder = new Order({
             orderId: order.id,
             oid: oid,
             amount: amount,
@@ -65,6 +79,7 @@ export async function POST(request) {
         return NextResponse.json({ success: true, orderId: order.id }, { status: 200 });
 
     } catch (error) {
-        return NextResponse.json({ success: false, error }, { status: 500 });
+        console.error('Error creating order:', error);
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }

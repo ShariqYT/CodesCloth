@@ -62,7 +62,7 @@ const ECommerce = async () => {
         <CardDataStats title="Total Sales" total={`₹ `+total} levelUp>
           <p className="text-purple-500 text-2xl font-normal">₹</p>
         </CardDataStats>
-        <CardDataStats title="Total Products Sold" total={orders.length} levelUp>
+        <CardDataStats title="Total Orders" total={orders.length} levelUp>
           <svg
             className="fill-purple-700"
             width="20"

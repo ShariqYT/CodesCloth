@@ -1,8 +1,8 @@
 "use client"
 import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Logo from '@/public/logo-2.png';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
@@ -33,7 +33,6 @@ const AdminLogin = () => {
 
     return (
         <div className="min-h-fit mt-20 flex flex-col justify-center">
-            <Toaster position='bottom-center' reverseOrder={false} />
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className='mx-auto h-32 w-auto relative overflow-hidden'>
                     <Image className="object-contain" priority sizes='(max-width: 768px) 100vw, 768px' fill={true} src={Logo} alt="logo" />

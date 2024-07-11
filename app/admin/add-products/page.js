@@ -29,7 +29,7 @@ const AddProducts = () => {
   const [productType, setProductType] = useState('');
   const [productTitle, setProductTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [variants, setVariants] = useState([{ slug: '', size: '', color: '', price: 0, availableQty: 0 }]);
+  const [variants, setVariants] = useState([{ slug: '', size: '', color: '', price: '', availableQty: '' }]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -39,12 +39,15 @@ const AddProducts = () => {
 
   const handleVariantChange = (index, field, value) => {
     const newVariants = [...variants];
+    if (field === 'slug') {
+      value = value.replace(/\s+/g, '-');
+    }
     newVariants[index][field] = value;
     setVariants(newVariants);
   };
 
   const addVariant = () => {
-    setVariants([...variants, { slug: '', size: '', color: '', price: 0, availableQty: 0 }]);
+    setVariants([...variants, { slug: '', size: '', color: '', price: '', availableQty: ''}]);
   };
 
   const handleSubmit = async (e) => {
@@ -67,7 +70,7 @@ const AddProducts = () => {
     setProductType('');
     setProductTitle('');
     setDescription('');
-    setVariants([{ slug: '', size: '', color: '', price: 0, availableQty: 0 }]);
+    setVariants([{ slug: '', size: '', color: '', price: '', availableQty: '' }]);
     setImage(null);
   };
 
@@ -81,8 +84,8 @@ const AddProducts = () => {
   };
 
   return (
-    <form className="border-2 my-10 w-80 md:w-full md:m-20 border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
-      <Toaster position="bottom-center" reverseOrder={false} />
+    <form className="border-2 my-10 w-80 md:w-full md:mx-auto border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
+      
       <div className="p-7">
         <h4 className="text-xl font-semibold">Add Product</h4>
       </div>
@@ -185,7 +188,6 @@ const AddProducts = () => {
               <option className='text-black' value="Purple">Purple</option>
               <option className='text-black' value="Orange">Orange</option>
               <option className='text-black' value="Pink">Pink</option>
-              <option className='text-black' value="Brown">Brown</option>
               <option className='text-black' value="Gray">Gray</option>
             </select>
           </div>
@@ -198,7 +200,7 @@ const AddProducts = () => {
               type="number"
               min="99"
               value={variant.price}
-              placeholder='e.g., 100'
+              placeholder='e.g. 100, 1000, 1000000'
               onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
               required
             />
@@ -212,7 +214,7 @@ const AddProducts = () => {
               type="number"
               value={variant.availableQty}
               min="0"
-              placeholder='e.g., 1000'
+              placeholder='e.g. 100, 1000, 1000000'
               onChange={(e) => handleVariantChange(index, 'availableQty', e.target.value)}
               required
             />

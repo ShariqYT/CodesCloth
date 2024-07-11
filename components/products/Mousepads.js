@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import { useDarkMode } from '@/context/DarkModeContext';
+import { formatIndianCurrency } from '../extra/FormatAmount';
 
 const Mousepads = ({ products }) => {
     const { isDarkMode } = useDarkMode();
@@ -42,8 +43,8 @@ const Mousepads = ({ products }) => {
                             </div>
                             <div className="mt-4">
                                 <h3 className="text-xs tracking-widest title-font mb-1">Mousepads</h3>
-                                <h2 className="title-font text-lg font-medium">{products[item].title}</h2>
-                                <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-2xl`}>₹{products[item].price}</p>
+                                <h2 className="title-font text-lg truncate font-medium">{products[item].title}</h2>
+                                <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-2xl`}>₹{formatIndianCurrency(products[item].price)}</p>
                                 <div className='mt-1'>
                                     {products[item].size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>S</span>}
                                     {products[item].size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>M</span>}

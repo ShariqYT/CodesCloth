@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation'
-import { Toaster, toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { useDarkMode } from '@/context/DarkModeContext';
 
 const MyAccount = () => {
@@ -97,10 +97,6 @@ const MyAccount = () => {
     }
     return (
         <div>
-            <Toaster
-                position="bottom-center"
-                reverseOrder={false}
-            />
             <div className="mb-20 md:mb-0 items-center gap-10 flex flex-col min-h-screen relative">
                 <div className='flex flex-col items-center gap-1 justify-center'>
                     <h3 className="text-2xl text-center mt-10 md:mt-32 font-semibold">My Account</h3>

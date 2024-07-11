@@ -8,11 +8,13 @@ const AllProduct = ({ products }) => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const maxPageButtons = 5; // Maximum number of page buttons to show
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = products.slice(startIndex, endIndex);
   const totalPages = Math.ceil(products.length / itemsPerPage);
+
   const handlePageClick = (pageNumber) => {
     if (pageNumber !== currentPage) {
       setCurrentPage(pageNumber);
@@ -23,58 +25,85 @@ const AllProduct = ({ products }) => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     sortProducts(newSortOrder);
-  }
+  };
+
   const handleSortCategory = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     sortCategory(newSortOrder);
-  }
+  };
+
   const handleSortStock = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     sortStock(newSortOrder);
-  }
+  };
+
   const handleSortPrice = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     sortPrice(newSortOrder);
-  }
+  };
 
   const sortProducts = (order) => {
     products.sort((a, b) => {
-      if (order === 'asc') {
+      if (order === "asc") {
         return a.title.localeCompare(b.title);
       } else {
         return b.title.localeCompare(a.title);
       }
     });
   };
+
   const sortCategory = (order) => {
     products.sort((a, b) => {
-      if (order === 'asc') {
+      if (order === "asc") {
         return a.category.localeCompare(b.category);
       } else {
         return b.category.localeCompare(a.category);
       }
     });
   };
+
   const sortStock = (order) => {
     products.sort((a, b) => {
-      if (order === 'asc') {
+      if (order === "asc") {
         return a.availableQty - b.availableQty;
       } else {
         return b.availableQty - a.availableQty;
       }
     });
   };
+
   const sortPrice = (order) => {
     products.sort((a, b) => {
-      if (order === 'asc') {
+      if (order === "asc") {
         return a.price - b.price;
       } else {
         return b.price - a.price;
       }
     });
+  };
+
+  const renderPageButtons = () => {
+    const pageButtons = [];
+    const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageButtons.push(
+        <li key={i}>
+          <p
+            className={`rounded-full px-4 py-2 cursor-pointer ${currentPage === i ? "bg-purple-700 text-white" : "hover:bg-purple-600 hover:text-white transition-all duration-200 ease-in-out"
+              }`}
+            onClick={() => handlePageClick(i)}
+          >
+            {i}
+          </p>
+        </li>
+      );
+    }
+    return pageButtons;
   };
 
   return (
@@ -119,13 +148,13 @@ const AllProduct = ({ products }) => {
                     alt="Product"
                   />
                 </div>
-                <p className="text-sm text-center">{product.title}</p>
+                <p className="text-sm text-center">{product.title}...</p>
               </div>
             </div>
             <div className="col-span-2 hidden items-center md:flex">
-              <p className="text-sm font-bold">
+              <p className="text-sm truncate hover:underline font-bold">
                 <Link href={'/product/' + product.slug} target="_blank">
-                  {product.slug}
+                  {product.slug}...
                 </Link>
               </p>
             </div>
@@ -147,21 +176,12 @@ const AllProduct = ({ products }) => {
         ))}
       </div>
       <div className="flex my-4 justify-center">
-        <ul className="flex bg-purple-200 rounded-full px-4 py-2 text-black gap-4 font-medium">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li key={index}>
-              <p
-                className={`rounded-full px-4 py-2 cursor-pointer ${currentPage === index + 1 ? "bg-purple-700 text-white" : "hover:bg-purple-600 hover:text-white transition-all duration-200 ease-in-out"
-                  }`}
-                onClick={() => handlePageClick(index + 1)}
-              >
-                {index + 1}
-              </p>
-            </li>
-          ))}
+        <ul className="flex flex-wrap bg-purple-200 rounded-full p-1 md:px-2 md:py-2 text-black gap-2 font-medium">
+          
+          {renderPageButtons()}
+          
         </ul>
       </div>
-
     </div>
   );
 };

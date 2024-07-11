@@ -37,7 +37,7 @@ const Pincode = () => {
 
     return (
         <div className="pin mt-6 flex flex-col justify-center items-center md:items-start text-sm">
-            <Toaster position="bottom-center" reverseOrder={false} />
+            
             <div className='flex gap-2'>
                 <input onChange={changePin} value={pin}  type="number" id="pincode" name="pincode" placeholder="Enter your Pincode" className="w-fit bg-transparent p-2 border border-purple-700 outline-none rounded" />
                 <button onClick={handlePin} className="flex text-white bg-purple-700 border-0 py-2 px-6 focus:outline-none hover:bg-purple-900 rounded">Check</button>

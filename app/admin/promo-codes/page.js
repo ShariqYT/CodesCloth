@@ -35,7 +35,7 @@ const PromoCodes = () => {
   };
   return (
     <div className='md:w-[60vw] w-80 min-h-screen mx-auto'>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      
       <PromocodesForm setPromocodes={setPromocodes} />
       <div className="border-2 border-purple-700 rounded-xl">
         <div className='py-4 px-8 flex justify-between items-center border-b border-purple-700'>

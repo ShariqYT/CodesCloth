@@ -141,7 +141,6 @@ const MobileMenu = () => {
 };
 
 
-
 const Navbar = () => {
   const { cart } = useContext(CartContext)
   const [user, setUser] = useState(null)
@@ -163,12 +162,18 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  if (loading) {
-    return null;
-  }
+  // if (loading) {
+  //   return (
+  //     <nav className={`animate-pulse flex justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+  //     <p className='w-52 h-10 bg-gray-300 icon p-2 rounded-full'></p>
+  //     <p className='w-96 h-10 bg-gray-300 icon p-2 rounded-full'></p>
+  //     <p className='w-8 h-10 bg-gray-300 icon p-2 rounded-full'></p>
+  //   </nav>
+  //   );
+  // }
 
   return (
-    <nav className={`flex justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+    <nav className={`flex ${loading ? '-translate-y-32': 'translate-y-0'} transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
       <Logo />
       <MenuItems />
       <div className='md:flex justify-center hidden gap-5 items-center'>
