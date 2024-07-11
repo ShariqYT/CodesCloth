@@ -48,9 +48,6 @@ const Footer = () => {
                 <Link href={'/contact'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">Contact Us</Link>
               </li>
               <li className='py-1 md:py-0'>
-                <Link href={'/about'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">About Us</Link>
-              </li>
-              <li className='py-1 md:py-0'>
                 <Link href={'/return-policy'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">Return Policy</Link>
               </li>
               <li className='py-1 md:py-0'>
