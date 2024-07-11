@@ -57,10 +57,11 @@ export const POST = async (req) => {
             }
             return NextResponse.json({ success: true, message: "Payment verified successfully", order }, { status: 200 });
         } else {
+            // Handle case where payment verification fails (user closed the window)
             await Order.findOneAndUpdate({ orderId: orderCreationId }, { status: "Failed" });
             return NextResponse.json({ success: false, error: "Payment verification failed" }, { status: 400 });
         }
     } catch (error) {
-        return NextResponse.json({ success: false, error: error }, { status: 500 });
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }

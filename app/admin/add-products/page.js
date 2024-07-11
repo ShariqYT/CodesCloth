@@ -1,7 +1,7 @@
 "use client"
 import ImageUpload from '@/components/ImageUpload';
 import React, { useLayoutEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const addProducts = async (productData) => {
   try {
@@ -47,7 +47,7 @@ const AddProducts = () => {
   };
 
   const addVariant = () => {
-    setVariants([...variants, { slug: '', size: '', color: '', price: '', availableQty: ''}]);
+    setVariants([...variants, { slug: '', size: '', color: '', price: '', availableQty: '' }]);
   };
 
   const handleSubmit = async (e) => {
@@ -55,16 +55,16 @@ const AddProducts = () => {
     setLoading(true);
 
     const productData = {
-        productType,
-        productTitle,
-        description,
-        image,
-        variants,
+      productType,
+      productTitle,
+      description,
+      image,
+      variants,
     };
 
     await addProducts(productData);
     setLoading(false);
-};
+  };
 
   const clearFields = () => {
     setProductType('');
@@ -75,7 +75,7 @@ const AddProducts = () => {
   };
 
   const handleRemoveVariant = (indexToRemove) => {
-    if(variants.length === 1) {
+    if (variants.length === 1) {
       toast.error('Atleast one variant is required', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
       return;
     }
@@ -85,7 +85,7 @@ const AddProducts = () => {
 
   return (
     <form className="border-2 my-10 w-80 md:w-full md:mx-auto border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
-      
+
       <div className="p-7">
         <h4 className="text-xl font-semibold">Add Product</h4>
       </div>
@@ -178,17 +178,63 @@ const AddProducts = () => {
               onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
               id={`color-${index}`}
             >
-              <option className='text-black' default hidden>---Select Product Color---</option>
-              <option className='text-black' value="Black">Black</option>
-              <option className='text-black' value="White">White</option>
-              <option className='text-black' value="Red">Red</option>
-              <option className='text-black' value="Blue">Blue</option>
-              <option className='text-black' value="Green">Green</option>
-              <option className='text-black' value="Yellow">Yellow</option>
-              <option className='text-black' value="Purple">Purple</option>
-              <option className='text-black' value="Orange">Orange</option>
-              <option className='text-black' value="Pink">Pink</option>
-              <option className='text-black' value="Gray">Gray</option>
+              <option className="text-black" default hidden>
+                ---Select Product Color---
+              </option>
+              <option className="color-option" value="Black">
+                <span className="color-swatch bg-black"></span>Black
+              </option>
+              <option className="color-option" value="Blue">
+                <span className="color-swatch bg-blue-500"></span>Blue
+              </option>
+              <option className="color-option" value="Cyan">
+                <span className="color-swatch bg-cyan-500"></span>Cyan
+              </option>
+              <option className="color-option" value="Gray">
+                <span className="color-swatch bg-gray-500"></span>Gray
+              </option>
+              <option className="color-option" value="Green">
+                <span className="color-swatch bg-green-500"></span>Green
+              </option>
+              <option className="color-option" value="Indigo">
+                <span className="color-swatch bg-indigo-500"></span>Indigo
+              </option>
+              <option className="color-option" value="Fuchsia">
+                <span className="color-swatch bg-fuchsia-500"></span>Light Pink
+              </option>
+              <option className="color-option" value="Lime">
+                <span className="color-swatch bg-lime-500"></span>Lime Green
+              </option>
+              <option className="color-option" value="Orange">
+                <span className="color-swatch bg-orange-500"></span>Orange
+              </option>
+              <option className="color-option" value="Pink">
+                <span className="color-swatch bg-pink-500"></span>Pink
+              </option>
+              <option className="color-option" value="Purple">
+                <span className="color-swatch bg-purple-500"></span>Purple
+              </option>
+              <option className="color-option" value="Red">
+                <span className="color-swatch bg-red-500"></span>Red
+              </option>
+              <option className="color-option" value="Rose">
+                <span className="color-swatch bg-rose-500"></span>Rose Red
+              </option>
+              <option className="color-option" value="Sky">
+                <span className="color-swatch bg-sky-500"></span>Sky Blue
+              </option>
+              <option className="color-option" value="Teal">
+                <span className="color-swatch bg-teal-500"></span>Teal
+              </option>
+              <option className="color-option" value="Violet">
+                <span className="color-swatch bg-violet-500"></span>Violet
+              </option>
+              <option className="color-option" value="White">
+                <span className="color-swatch bg-white border border-gray-300"></span>White
+              </option>
+              <option className="color-option" value="Yellow">
+                <span className="color-swatch bg-yellow-500"></span>Yellow
+              </option>
             </select>
           </div>
 

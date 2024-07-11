@@ -1,13 +1,14 @@
 "use client"
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CartContext } from '@/context/CartContext';
 import { useDarkMode } from '@/context/DarkModeContext';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 
 const MyCart = () => {
     const { cart, subTotal, addToCart, removeFromCart, clearCart } = useContext(CartContext);
+    const [spin, setSpin] = useState(false);
     const inrSubTotal = formatIndianCurrency(subTotal);
     const { isDarkMode } = useDarkMode();
 
@@ -100,8 +101,8 @@ const MyCart = () => {
                             <span className='font-bold text-purple-700'>₹{inrSubTotal ? inrSubTotal : 0}</span>
                         </div>
                         <Link href={'/checkout'}>
-                            <button disabled={Object.keys(cart).length === 0} className="disabled:opacity-50 disabled:hover:bg-purple-700 bg-purple-700 rounded font-semibold hover:bg-purple-800 py-3 text-sm text-white uppercase w-full">
-                                Proceed to Checkout
+                            <button onClick={() => {setSpin(true), setTimeout(() => {setSpin(false)}, 500)}} disabled={Object.keys(cart).length === 0} className="disabled:opacity-50 disabled:hover:bg-purple-700 bg-purple-700 flex justify-center items-center gap-1 rounded font-semibold hover:bg-purple-800 py-3 text-sm text-white uppercase w-full">
+                            {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}{spin?'Checking out...':'Proceed to checkout'}
                             </button>
                         </Link>
                     </div>

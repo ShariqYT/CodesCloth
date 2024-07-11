@@ -12,6 +12,7 @@ import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 
 const Checkoutpage = () => {
     const { subTotal, cart, clearCart } = useContext(CartContext);
+    const [spin, setSpin] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
@@ -121,6 +122,7 @@ const Checkoutpage = () => {
     };
 
     const createOrderId = async () => {
+        setSpin(true);
         try {
             let oid = Math.floor(Math.random() * Date.now());
             const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpayOrder`, {
@@ -159,11 +161,14 @@ const Checkoutpage = () => {
     };
     const processPayment = async (e) => {
         e.preventDefault();
+        
         try {
             const orderId = await createOrderId();
             if (!orderId) {
+                setSpin(false);
                 return;
             }
+            
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
@@ -189,12 +194,14 @@ const Checkoutpage = () => {
                     });
                     const res = await result.json();
                     if (res.success) {
+                        setSpin(false);
                         clearCart();
                         setPromocode('');
                         setDiscount(0);
                         toast.success(res.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
                         router.push('/order-placed?id=' + res.order._id);
                     } else {
+                        setSpin(false);
                         toast.error(res.error, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
                     }
                 },
@@ -211,6 +218,7 @@ const Checkoutpage = () => {
                 toast.error(response.error.description, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
             });
             paymentObject.open();
+            setSpin(false);
         } catch (error) {
             console.error(error);
         }
@@ -380,9 +388,9 @@ const Checkoutpage = () => {
                         <button
                             onClick={processPayment}
                             disabled={!subTotal || disabled}
-                            className='bg-purple-700 hover:bg-purple-900 disabled:opacity-25 flex items-center justify-center gap-2 text-white py-2 px-4 rounded-lg mt-4 w-full'
+                            className='bg-purple-700 hover:bg-purple-900 disabled:opacity-25 flex items-center justify-center gap-1 text-white py-2 px-4 rounded-lg mt-4 w-full'
                         >
-                            PAY
+                           {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}{spin?'':'Proceed to Payment'}
                         </button>
                         <div className='mt-10'>
                             <label className='font-semibold' htmlFor='promocode'>
@@ -399,7 +407,7 @@ const Checkoutpage = () => {
                                     placeholder='Enter Code'
                                     className='outline-none bg-transparent focus:border-purple-700 rounded-lg border-2 py-2 px-3'
                                 />
-                                <button type='button' onClick={checkPromocodes} disabled={discount} className='disabled:opacity-25 bg-purple-700 hover:bg-purple-900 text-white py-2 px-4 rounded-lg'>{isApplying ? 'Applying...' : 'Apply'}</button>
+                                <button type='button' onClick={checkPromocodes} disabled={discount} className='disabled:opacity-25 bg-purple-700 hover:bg-purple-900 flex justify-center items-center gap-1 text-white py-2 px-4 rounded-lg'>{isApplying && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}{isApplying?'Applying...':'Apply'}</button>
                             </div>
                         </div>
                     </div>

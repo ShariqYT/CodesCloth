@@ -23,12 +23,8 @@ export async function POST(request) {
 
         let sumTotal = 0;
 
-        // Log the cart object to inspect its structure
-        console.log('Cart:', cart);
-
         for (let itemSlug in cart) {
             const cartItem = cart[itemSlug];
-            console.log(`Checking item: ${itemSlug}`, cartItem);
 
             // Check if cartItem has necessary properties
             if (!cartItem || typeof cartItem.price !== 'number' || typeof cartItem.qty !== 'number') {

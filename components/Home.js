@@ -17,6 +17,7 @@ import { getAllPromocodes } from '@/actions/Admin/getAllPromocodes';
 const Home = () => {
     const { isDarkMode } = useDarkMode()
     const [loading, setLoading] = useState(true);
+    const [spin, setSpin] = useState(false);
     const [promocode, setPromocode] = useState('');
     useEffect(() => {
         async function getAllPromoCodes() {
@@ -27,7 +28,7 @@ const Home = () => {
         getAllPromoCodes();
         setTimeout(() => {
             setLoading(false);
-        }, 1000);
+        }, 500);
     }, [])
     useEffect(() => {
         AOS.init({
@@ -50,7 +51,11 @@ const Home = () => {
                     <p className="md:text-sm z-20 text-xs mb-4 relative">Claim Now Before It&apos;s Too Late</p>
                     <div className="flex z-20 justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6 relative">
                         <span className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
-                        <button onClick={() => navigator.clipboard.writeText(promocode[1]?.code)} onClickCapture={() => toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })} className="border border-white -mr-8 hover:scale-[1.2] transition-all duration-300 ease-in-out bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer">Copy Code</button>
+                        <button onClick={() => {navigator.clipboard.writeText(promocode[1]?.code), setSpin(true)}} onClickCapture={() => {toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } }), setTimeout(() => {
+                            setSpin(false)
+                        }, 300); }} className={`border flex items-center justify-center gap-1 border-white -mr-8 hover:scale-[1.2] transition-all duration-300 ease-in-out bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer`}>
+                        {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}
+                            Copy Code</button>
                     </div>
                     <p className="text-sm z-20 relative">Valid Till: {promocode[1]?.expiry.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
