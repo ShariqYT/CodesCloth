@@ -1,10 +1,9 @@
 "use client"
 import { CartContext } from '@/context/CartContext'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatIndianCurrency } from './FormatAmount'
-import AddtoCart from './AddtoCart'
 import toast from 'react-hot-toast'
 
 const MyWishList = () => {
@@ -13,9 +12,11 @@ const MyWishList = () => {
     const [loading, setLoading] = useState(false)
     const [spin, setSpin] = useState(false)
 
-    const getWishList = async () => {
+    const getWishList = useCallback(async () => {
         if (!user) return;
-        setLoading(true)
+    
+        setLoading(true);
+    
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getWishlist`, {
                 method: 'POST',
@@ -23,15 +24,20 @@ const MyWishList = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ phoneNumber: user.phoneNumber }),
-            })
-            const data = await response.json()
-            setWishList(data.products || [])
+            });
+            const data = await response.json();
+            setWishList(data.products || []);
         } catch (error) {
-            console.log(error)
+            console.error('Error fetching wishlist:', error);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    }, [user]);
+    
+    useEffect(() => {
+        getWishList();
+    }, [getWishList]);
+    
 
     const removeFromWishlist = async (slug) => {
         setSpin(true)
@@ -61,34 +67,31 @@ const MyWishList = () => {
             setSpin(false)
         }
     }
-
-    useEffect(() => {
-        getWishList()
-    }, [user])
+    
 
     return (
-        <div className='min-h-screen my-14 max-w-7xl m-auto'>
+        <div className='min-h-screen md:my-14 my-2 md:max-w-7xl m-auto'>
             <div className='flex flex-col items-center gap-1 justify-center'>
-                <h3 className="text-2xl text-center mt-10 md:mt-0 font-semibold">My Wishlist</h3>
+                <h3 className="text-2xl text-center mt-6 md:mt-0 font-semibold">My Wishlist</h3>
                 <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 md:w-[12%] w-[25%]"></div>
             </div>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ul className='flex justify-center flex-col border-2 border-purple-700 mt-20'>
+                <ul className='flex justify-center flex-col border-2 border-purple-700 mx-4 mt-12 md:mt-20'>
                 {wishList.length > 0 ? (
                         wishList.map((item, index) => (
-                            <li key={index} className="flex items-center justify-between gap-8 border-t border-purple-700 px-8">
+                            <li key={index} className="flex items-center justify-between md:flex-row flex-col gap-8 border-t border-purple-700 px-3 md:px-8">
                                 <div className='w-32 h-32 m-4 rounded-lg relative overflow-hidden'>
                                     <Image className='rounded-lg object-contain' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={item.img} alt={item.title} fill={true} />
                                 </div>
                                 <div className="w-full">
-                                    <Link className='hover:underline hover:text-purple-700' href={`/product/${item.slug}`} alt={item.title}>{item.title}</Link>
+                                    <Link className='hover:underline text-purple-700 font-bold hover:text-purple-800' href={`/product/${item.slug}`} alt={item.title}>{item.title}</Link>
                                     <p>Size: <span className='font-medium'>{item.size}</span> </p>
                                     <p>Color: <span className='font-medium'>{item.color}</span> </p>
                                     <p>Price: <span className='text-purple-700 font-semibold text-lg'>₹ {formatIndianCurrency(item.price)}</span> </p>
                                 </div>
-                                <div className='w-52 flex items-center gap-2'>
+                                <div className='md:w-52 mb-2 md:mb-0 flex items-center  gap-2'>
                                     <button onClick={() => { removeFromWishlist(item.slug) }} className="disabled:opacity-25 flex items-center justify-center gap-1 text-white bg-purple-700 border-0 py-2 px-6 focus:outline-none transition-colors duration-300 ease-in-out hover:bg-red-700 rounded">
                                         Remove
                                     </button>

@@ -174,6 +174,7 @@ const Checkoutpage = () => {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
                 amount: parseFloat(subTotal - discount) * 100, // Apply discount
                 currency: 'INR',
+                phone: phone,   
                 name: 'CodesCloth',
                 description: 'Test Transaction',
                 image: Logo,
