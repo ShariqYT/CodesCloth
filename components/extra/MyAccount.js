@@ -97,9 +97,9 @@ const MyAccount = () => {
     }
     return (
         <div>
-            <div className="mb-20 md:mb-0 items-center gap-10 flex flex-col min-h-screen relative">
-                <div className='flex flex-col items-center gap-1 justify-center'>
-                    <h3 className="text-2xl text-center mt-10 md:mt-32 font-semibold">My Account</h3>
+            <div className="my-16 md:my-12 items-center gap-10 flex flex-col min-h-screen relative">
+                <div className='flex flex-col mb-8 md:mb-24 items-center gap-1 justify-center'>
+                    <h3 className="text-2xl text-center  font-semibold">My Account</h3>
                     <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
                 </div>
                 <div className="md:w-full w-80 container ">

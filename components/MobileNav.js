@@ -63,18 +63,18 @@ const MobileNav = () => {
                     <path d="M7.5 17C9.8317 14.5578 14.1432 14.4428 16.5 17M14.4951 9.5C14.4951 10.8807 13.3742 12 11.9915 12C10.6089 12 9.48797 10.8807 9.48797 9.5C9.48797 8.11929 10.6089 7 11.9915 7C13.3742 7 14.4951 8.11929 14.4951 9.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
                 {isOpen && (
-                    <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-white text-black'} w-full absolute ${user ? 'top-[-9.5rem] p-4' : "top-[-4.2rem]"} border-2 border-purple-700 left-0 flex flex-col rounded-lg shadow-xl font-semibold transform transition-transform duration-200 ease-in-out`}>
+                    <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-white text-black'} w-full absolute ${user ? 'top-[-12rem] p-4' : "top-[-4.2rem]"} border-2 border-purple-700 left-0 flex flex-col rounded-lg shadow-xl font-semibold transform transition-transform duration-200 ease-in-out`}>
                         <ul className='flex flex-col gap-4 items-center font-bold'>
                             {!user ? (
-                                <Link href='/sign-in'>
-                                    <li className='cursor-pointer w-[100vw] p-4 [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800' onClick={handleItemClick}>
+                                <Link onClick={handleItemClick} href='/sign-in'>
+                                    <li className='cursor-pointer w-[100vw] p-4 [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800'>
                                         Sign in
                                     </li>
                                 </Link>
                             ) : (
                                 <>
-                                    <Link href={`/myaccount`}>
-                                        <li className='cursor-pointer w-[100vw] flex gap-2 justify-center items-center [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800' onClick={handleItemClick}>
+                                    <Link onClick={handleItemClick} href={`/myaccount`}>
+                                        <li className='cursor-pointer w-[100vw] flex gap-2 justify-center items-center [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800'>
                                             <svg className='w-6' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                                                 <path d="M10.5 22H6.59087C5.04549 22 3.81631 21.248 2.71266 20.1966C0.453365 18.0441 4.1628 16.324 5.57757 15.4816C8.12805 13.9629 11.2057 13.6118 14 14.4281" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                 <path d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z" stroke="currentColor" strokeWidth="1.5" />
@@ -83,8 +83,8 @@ const MobileNav = () => {
                                             My Account
                                         </li>
                                     </Link>
-                                    <Link href={`/my-orders`}>
-                                        <li className='cursor-pointer w-[100vw] flex gap-2 justify-center items-center [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800' onClick={handleItemClick}>
+                                    <Link onClick={handleItemClick} href={`/my-orders`}>
+                                        <li className='cursor-pointer w-[100vw] flex gap-2 justify-center items-center [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800'>
                                             <svg className='w-6' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                                                 <path d="M20 12.5C19.9751 12.4136 19.9499 12.326 19.9244 12.2373C18.8875 8.63723 17.4956 7.5 13.4291 7.5H9.65019C5.74529 7.5 4.23479 8.48796 3.1549 12.2373C2.18223 15.6144 1.6959 17.3029 2.20436 18.6124C2.51576 19.4143 3.06862 20.1097 3.79294 20.6104C5.17171 21.5636 8.63187 22.0381 12 21.9976" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                                                 <path d="M7 8V6.36364C7 3.95367 9.01472 2 11.5 2C13.9853 2 16 3.95367 16 6.36364V8" stroke="currentColor" strokeWidth="1.5" />
@@ -92,6 +92,14 @@ const MobileNav = () => {
                                                 <path d="M10.5 11H12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                                             </svg>
                                             My Orders
+                                        </li>
+                                    </Link>
+                                    <Link onClick={handleItemClick} href={`/my-wishlist`}>
+                                        <li className='cursor-pointer w-[100vw] flex gap-2 justify-center items-center [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6' fill="none" >
+                                                <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+                                            My Wishlist
                                         </li>
                                     </Link>
                                     <li onClick={() => {

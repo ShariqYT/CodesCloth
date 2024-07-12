@@ -74,6 +74,14 @@ const UserMenu = ({ auth, isDarkMode, toggleDropdown, dropdownOpen, setDropdownO
             </Link>
           </li>
           <li className='p-1'>
+            <Link className='hover:text-purple-700 flex items-center gap-2 transition-colors duration-200 ease-in-out' href='/my-wishlist'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6' fill="none" >
+                <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              My Wishlist
+            </Link>
+          </li>
+          <li className='p-1'>
             <p
               onClick={() => {
                 signOut(auth)
@@ -173,7 +181,7 @@ const Navbar = () => {
   // }
 
   return (
-    <nav className={`flex ${loading ? '-translate-y-32': 'translate-y-0'} transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+    <nav className={`flex ${loading ? '-translate-y-32' : 'translate-y-0'} transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
       <Logo />
       <MenuItems />
       <div className='md:flex justify-center hidden gap-5 items-center'>

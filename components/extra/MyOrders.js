@@ -43,14 +43,14 @@ const MyOrders = () => {
                 if (phoneNumber) {
                     fetchOrders(phoneNumber);
                 } else {
-                    console.error("User phone number not available");
+                    toast.error("User phone number not available", { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
                 }
             }
         });
     }, [auth, router]);
 
     return (
-        <section className="w-full min-h-screen py-8 antialiased  ">
+        <section className="w-full min-h-screen py-8 antialiased">
             <div className='flex flex-col items-center gap-1 justify-center'>
                 <h3 className="text-2xl text-center mt-10 md:mt-1 font-semibold">My Orders</h3>
                 <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 md:w-[4%] w-[25%]"></div>

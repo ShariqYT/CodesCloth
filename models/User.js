@@ -8,6 +8,7 @@ const UserSchema = new Schema({
     pincode: { type: Number, default: 0 },
     phone: { type: Number, required: true, unique: true },
     password: { type: String },
+    wishlist: { type: Array, default: [] },
 });
 
 export default mongoose.models.User || model("User", UserSchema);

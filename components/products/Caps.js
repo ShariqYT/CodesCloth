@@ -12,12 +12,12 @@ const Caps = ({ products }) => {
         return colors.map((color) => {
             let buttonClasses;
             if (color.toLowerCase() === 'black' || color.toLowerCase() === 'white') {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-5 h-5 focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             } else {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-5 h-5 focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             }
             return (
-                <button key={color} className={buttonClasses}></button>
+                <button key={color} title={color} className={buttonClasses}></button>
             );
         });
     };
@@ -25,7 +25,7 @@ const Caps = ({ products }) => {
 
     return (
         <section className="body-font min-h-screen">
-            <div className="container px-5 py-24 mx-auto">
+            <div className="max-w-7xl px-5 py-24 mx-auto">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {Object.keys(products).length === 0 && (
                         <div className="flex flex-col justify-center items-center">
@@ -37,20 +37,20 @@ const Caps = ({ products }) => {
                         </div>
                     )}
                     {Object.keys(products).map((item) => (
-                        <Link key={item} href={`/product/${products[item].slug}`} className="md:w-1/5 shadow-lg m-6 border rounded-lg border-gray-200 p-4 w-full">
-                            <div className="flex h-60 justify-center items-center relative rounded-lg overflow-hidden">
-                                <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={products[item].img} alt="tshirt" />
+                        <Link key={item} href={`/product/${products[item].slug}`} className="md:w-1/5 shadow-lg md:m-4 my-2 border rounded-lg border-gray-200 p-2 w-2/4">
+                            <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
+                                <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={products[item].img} alt="caps" />
                             </div>
                             <div className="mt-4">
-                                <h3 className="text-xs tracking-widest title-font mb-1">Caps</h3>
-                                <h2 className="title-font text-lg truncate font-medium">{products[item].title}</h2>
-                                <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-2xl`}>₹{formatIndianCurrency(products[item].price)}</p>
+                                <h3 className="md:text-[12px] text-[10px] tracking-widest  mb-1">Caps</h3>
+                                <h2 className="md:text-lg truncate font-medium">{products[item].title}</h2>
+                                <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-lg md:text-2xl`}>₹{formatIndianCurrency(products[item].price)}</p>
                                 <div className='mt-1'>
-                                    {products[item].size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>S</span>}
-                                    {products[item].size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>M</span>}
-                                    {products[item].size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>L</span>}
-                                    {products[item].size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>XL</span>}
-                                    {products[item].size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} px-1 mx-1`}>XXL</span>}
+                                    {products[item].size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>S</span>}
+                                    {products[item].size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>M</span>}
+                                    {products[item].size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>L</span>}
+                                    {products[item].size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XL</span>}
+                                    {products[item].size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XXL</span>}
                                 </div>
                                 <div className='mt-1'>
                                     {renderColorButtons(products[item].color)}

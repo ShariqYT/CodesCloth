@@ -7,12 +7,17 @@ export async function POST(request) {
         await connectDB();
 
         const { phoneNumber } = await request.json();
-        const user = new User({
-            phone: phoneNumber
-        });
-        await user.save();
-        return NextResponse.json({ user }, { status: 200 });
+        const userExist = await User.findOne({ phone: phoneNumber });
+        if (!userExist) {
+            const user = new User({
+                phone: phoneNumber
+            });
+            await user.save();
+            return NextResponse.json({ user }, { status: 200 });
+        }
+
+        return null;
     } catch (err) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-    }   
+    }
 }

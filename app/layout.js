@@ -23,7 +23,7 @@ export const metadata = {
     siteName: 'CodesCloth',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_URL}/img/logo-2.png`,
+        url: `${process.env.NEXT_PUBLIC_URL}/logo-2.png`,
         width: 800,
         height: 600,
       },

@@ -25,9 +25,10 @@ const SizeandColor = ({ product, variants }) => {
                 {colors.map((col) => (
                     variants[col][size] && (
                         <button
+                            title={col}
                             key={col}
                             onClick={() => { refreshVariant(size, col) }}
-                            className={`border-2 ml-1 bg-${col.toLowerCase()}${(col.toLowerCase() === 'black' || col.toLowerCase() === 'white' ? '' : '-500')} rounded-full w-6 h-6 focus:outline-none ${color === col ? 'border-black' : 'border-gray-300'}`}
+                            className={`border-2 ml-1 bg-${col.toLowerCase()}${(col.toLowerCase() === 'black' || col.toLowerCase() === 'white' ? '' : '-500')} rounded-full w-5 h-5 focus:outline-none ${color === col ? 'border-black' : 'border-gray-300'}`}
                         ></button>
                     )
                 ))}
