@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
 
 export async function POST(request) {
     try {
-        const { amount, currency, name, city, state, email, address, phone, pincode, oid, cart, subTotal } = await request.json();
+        const { amount, currency, name, city, state, email, address, phone, pincode, oid, cart, subTotal, user } = await request.json();
         await connectDB();
 
         const options = {
@@ -19,6 +19,10 @@ export async function POST(request) {
             currency: currency,
             receipt: 'rcp1',
         };
+
+        if(!user){
+            return NextResponse.json({ success: false, error: 'Sign-In Required' }, { status: 400 });
+        }
         const order = await razorpay.orders.create(options);
 
         let sumTotal = 0;

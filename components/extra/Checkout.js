@@ -11,7 +11,7 @@ import Logo from '@/public/logo-2.png';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 
 const Checkoutpage = () => {
-    const { subTotal, cart, clearCart } = useContext(CartContext);
+    const { subTotal, cart, clearCart, user } = useContext(CartContext);
     const [spin, setSpin] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -63,6 +63,11 @@ const Checkoutpage = () => {
                 break;
             case 'promocode':
                 setPromocode(value.toUpperCase());
+                break;
+            case 'phone':
+                if (value.length <= 10) {
+                    setPhone(value);
+                }
                 break;
             case 'pincode':
                 if (value.length <= 6) {
@@ -142,7 +147,8 @@ const Checkoutpage = () => {
                     name,
                     pincode,
                     city,
-                    state
+                    state,
+                    user
                 }),
             });
 
@@ -161,20 +167,20 @@ const Checkoutpage = () => {
     };
     const processPayment = async (e) => {
         e.preventDefault();
-        
+
         try {
             const orderId = await createOrderId();
             if (!orderId) {
                 setSpin(false);
                 return;
             }
-            
+
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
                 amount: parseFloat(subTotal - discount) * 100, // Apply discount
                 currency: 'INR',
-                phone: phone,   
+                phone: phone,
                 name: 'CodesCloth',
                 description: 'Test Transaction',
                 image: Logo,
@@ -230,7 +236,7 @@ const Checkoutpage = () => {
     const inrTotal = formatIndianCurrency(subTotal - discount);
     return (
         <div className='h-fit container shadow-2xl rounded-xl mb-24 border-2 border-purple-700 m-auto my-20'>
-            
+
             <Script id='razorpay-checkout-js' src='https://checkout.razorpay.com/v1/checkout.js' />
             <h1 className='text-4xl font-bold text-center my-8'>Checkout</h1>
             <div className='flex flex-col md:flex-row my-20'>
@@ -288,7 +294,6 @@ const Checkoutpage = () => {
                                 Phone Number
                             </label>
                             <input
-                                readOnly
                                 name='phone'
                                 value={phone}
                                 onChange={handleChange}
@@ -388,10 +393,10 @@ const Checkoutpage = () => {
                         </div>
                         <button
                             onClick={processPayment}
-                            disabled={!subTotal || disabled}
+                            disabled={!subTotal || disabled || phone.length < 10}
                             className='bg-purple-700 hover:bg-purple-900 disabled:opacity-25 flex items-center justify-center gap-1 text-white py-2 px-4 rounded-lg mt-4 w-full'
                         >
-                           {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}{spin?'':'Proceed to Payment'}
+                            {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}{spin ? '' : 'Proceed to Payment'}
                         </button>
                         <div className='mt-10'>
                             <label className='font-semibold' htmlFor='promocode'>
@@ -408,7 +413,7 @@ const Checkoutpage = () => {
                                     placeholder='Enter Code'
                                     className='outline-none bg-transparent focus:border-purple-700 rounded-lg border-2 py-2 px-3'
                                 />
-                                <button type='button' onClick={checkPromocodes} disabled={discount} className='disabled:opacity-25 bg-purple-700 hover:bg-purple-900 flex justify-center items-center gap-1 text-white py-2 px-4 rounded-lg'>{isApplying && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>}{isApplying?'Applying...':'Apply'}</button>
+                                <button type='button' onClick={checkPromocodes} disabled={discount} className='disabled:opacity-25 bg-purple-700 hover:bg-purple-900 flex justify-center items-center gap-1 text-white py-2 px-4 rounded-lg'>{isApplying && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}{isApplying ? 'Applying...' : 'Apply'}</button>
                             </div>
                         </div>
                     </div>

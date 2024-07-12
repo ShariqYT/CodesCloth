@@ -9,7 +9,7 @@ const Wishlist = ({ slug }) => {
 
     const saveWishlist = async () => {
         if (!user) {
-            toast.error('You need to be logged in to save items to your wishlist.')
+            toast.error('Sign-In Required', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } })
             return
         }
         try {
@@ -30,7 +30,6 @@ const Wishlist = ({ slug }) => {
             }
         } catch (error) {
             toast.error('An error occurred while saving the wishlist.', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } })
-            console.error('Error:', error)
         }
     }
 
