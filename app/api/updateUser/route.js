@@ -9,13 +9,14 @@ export async function POST(request) {
 
         const updatedUser = await User.findOneAndUpdate(
             {
-                phone: phone,
+                $or: [{ phone: phone }, { email: email }],
             },
             {
                 name: name,
                 email: email,
                 address: address,
                 pincode: pincode,
+                phone: phone
             },
             {
                 new: true,

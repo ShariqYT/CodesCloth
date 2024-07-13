@@ -44,7 +44,7 @@ const ProductSlug = async ({ params }) => {
         <div className="container mx-auto flex justify-center items-center md:items-start flex-col md:flex-row px-5 md:py-24 py-16">
 
           <div className="flex w-80 h-80 md:h-96 md:w-96 mt-10 justify-center items-center relative rounded-lg">
-            <Image className="rounded-lg object-cover md:hover:scale-[1.7] hover:shadow-lg transition-all duration-200 ease-in-out" fill={true} sizes="(min-width: 780px) 369px, 320px" src={product.img} alt="tshirt" />
+            <Image className="rounded-lg object-cover shadow-lg transition-all duration-200 ease-in-out" fill={true} sizes="(min-width: 780px) 369px, 320px" src={product.img} alt="tshirt" />
           </div>
           <div className="md:w-1/2 w-full md:pl-10 md:py-6 mt-6 md:mt-0">
             <h2 className="text-sm title-font tracking-widest">CodesCloth</h2>

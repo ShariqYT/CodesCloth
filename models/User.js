@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     email: { type: String, unique: true, default: '' },
     address: { type: String, default: '' },
     pincode: { type: Number, default: 0 },
-    phone: { type: Number, required: true, unique: true },
+    phone: { type: Number, required: true, unique: true, default: 0 },
     password: { type: String },
     wishlist: { type: Array, default: [] },
 });

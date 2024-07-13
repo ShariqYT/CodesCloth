@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation'
 import { toast, Toaster } from 'react-hot-toast'
@@ -12,7 +12,6 @@ const LoginPage = () => {
     const [otp, setOtp] = useState('')
     const [confirmationResult, setConfirmationResult] = useState(null)
     const [otpSent, setOtpSent] = useState(false)
-    const [userLoggedIn, setUserLoggedIn] = useState(false)
 
     const auth = getAuth(app)
     const router = useRouter()
@@ -21,8 +20,6 @@ const LoginPage = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 router.push('/myaccount')
-            } else {
-                setUserLoggedIn(false)
             }
         })
         return () => unsubscribe()
@@ -70,7 +67,6 @@ const LoginPage = () => {
     const handleOtpSubmit = async () => {
         try {
             const result = await confirmationResult.confirm(otp)
-            showToast('Logged in successfully', 'success')
             await fetch('/api/createUser', {
                 method: 'POST',
                 headers: {
@@ -78,17 +74,37 @@ const LoginPage = () => {
                 },
                 body: JSON.stringify({ phoneNumber })
             })
+            showToast('Logged in successfully with Phone Number', 'success')
             router.push('/myaccount')
         } catch (err) {
             showToast('Wrong OTP entered', 'error')
         }
     }
+
+    const handleGoogleLogin = async () => {
+        try {
+            const provider = new GoogleAuthProvider()
+            const result = await signInWithPopup(auth, provider)
+            console.log(result)
+            await fetch('/api/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userEmail: result.user.email })
+            })
+            showToast('Logged in successfully with Google', 'success')
+            router.push('/myaccount')
+        } catch (err) {
+            showToast('Failed to log in with Google', 'error')
+        }
+    }
+
     return (
-        <div className="min-h-screen flex flex-col mt-32 sm:px-6 md:px-8 px-6">
-            
+        <div className="min-h-screen flex flex-col mt-8 md:mt-32 sm:px-6 md:px-8 px-6">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <Image className="mx-auto object-contain w-32" src={Logo}  alt="Logo" />
-                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold">
+                <Image className="mx-auto object-contain w-24 md:w-32" src={Logo} alt="Logo" />
+                <h2 className="mt-6 text-center text-2xl md:text-3xl leading-9 font-extrabold">
                     Sign in to your account
                 </h2>
             </div>
@@ -109,6 +125,22 @@ const LoginPage = () => {
                             {otp ? 'Submit' : 'Send OTP'}
                         </button>
                     </span>
+                    {!otpSent && (<>
+                        <div
+                            className="fter:h-px my-4 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+                            <button type="button"
+                                className="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100">
+                                OR
+                            </button>
+                        </div>
+                        <span className="w-full flex justify-center items-center rounded-md shadow-sm mt-4">
+                            <button onClick={handleGoogleLogin} type="button" className="w-full px-4 py-2 border flex justify-center items-center gap-2 border-purple-700 rounded-lg hover:border-2  hover:text-slate-900 hover:shadow transition-all duration-300 ease-in-out">
+                                <Image className="w-6 h-6" width={1} height={1} src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+                                <span className='text-sm flex items-center justify-center'>Sign-In with Google</span>
+                            </button>
+                        </span>
+                    </>
+                    )}
                 </div>
             </div>
         </div>

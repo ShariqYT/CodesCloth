@@ -5,12 +5,30 @@ import User from "@/models/User";
 export async function POST(request) {
     try {
         await connectDB();
-        const { userPhone } = await request.json();
-        const user = await User.findOne({ phone: userPhone });
-        const { name, email, address, pincode } = user;
+        const { user } = await request.json();
+        console.log(user);
 
-        return NextResponse.json({ success: true, name, email, address, pincode} , { status: 200 });
+        // Determine if the user input is an email or phone number
+        const query = {};
+        if (isNaN(user)) {
+            query.email = user;
+        } else {
+            query.phone = Number(user);
+        }
+
+        console.log(query);
+        const userFind = await User.findOne(query);
+        console.log(userFind);
+
+        if (!userFind) {
+            return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
+        }
+
+        const { name, email, address, pincode, phone } = userFind;
+
+        return NextResponse.json({ success: true, name, email, address, pincode, phone }, { status: 200 });
     } catch (err) {
-        return NextResponse.json({ error: err }, { status: 500 });
+        console.error("Error occurred:", err);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
