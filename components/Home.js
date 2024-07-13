@@ -82,11 +82,7 @@ const Home = () => {
                             <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
-                    <Link href={'/mousepads'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
-                            <Image src={Mousepad} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mousepad" />
-                        </div>
-                    </Link>
+                    
                     <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
                         <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />

@@ -103,7 +103,6 @@ const AddProducts = () => {
           <option className='text-black' value="tshirts">Tshirts</option>
           <option className='text-black' value="hoodies">Hoodies</option>
           <option className='text-black' value="mugs">Mugs</option>
-          <option className='text-black' value="mousepads">Mousepads</option>
           <option className='text-black' value="caps">Caps</option>
         </select>
       </div>

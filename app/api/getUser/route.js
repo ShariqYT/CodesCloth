@@ -20,10 +20,6 @@ export async function POST(request) {
         const userFind = await User.findOne(query);
         console.log(userFind);
 
-        if (!userFind) {
-            return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
-        }
-
         const { name, email, address, pincode, phone } = userFind;
 
         return NextResponse.json({ success: true, name, email, address, pincode, phone }, { status: 200 });

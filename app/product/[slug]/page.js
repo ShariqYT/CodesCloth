@@ -6,6 +6,15 @@ import SizeandColor from '@/components/extra/SizeandColor';
 import BuyNow from '@/components/extra/BuyNow';
 import ErrorPage from '@/app/not-found';
 import Wishlist from '@/components/extra/Wishlist';
+import ProductSlider from '@/components/extra/ProductSlider';
+
+async function getProducts(category) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
 
 export async function generateMetadata({ params }) {
   const { product } = await oneProduct(params.slug);
@@ -32,6 +41,7 @@ async function oneProduct(slug) {
 const ProductSlug = async ({ params }) => {
   const { product, variants } = await oneProduct(params.slug);
   const { slug } = params;
+  const products = await getProducts('tshirts');
 
   if (!product) {
     return <ErrorPage />;
@@ -85,6 +95,7 @@ const ProductSlug = async ({ params }) => {
         <div className='container mx-auto p-4 md:my-10 my-4'>
           <h1 className='text-xl font-semibold'>About the Product</h1>
           <p className="leading-relaxed  mt-2 text-xs md:text-base">{product.desc}</p>
+          <ProductSlider slug={slug} products={products} />
         </div>
       </section>
     </>

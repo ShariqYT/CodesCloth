@@ -21,7 +21,7 @@ const Logo = () => {
 const MenuItems = () => {
   const pathname = usePathname();
   const { isDarkMode } = useDarkMode();
-  const categories = ['tshirts', 'hoodies', 'mugs', 'mousepads', 'caps'];
+  const categories = ['tshirts', 'hoodies', 'mugs', 'caps'];
 
   return (
     <ul className={`md:flex justify-center flex-col ${isDarkMode ? "text-white" : "text-gray-800"} hidden md:flex-row gap-8 items-center font-bold`}>
@@ -111,7 +111,7 @@ const UserMenu = ({ auth, isDarkMode, toggleDropdown, dropdownOpen, setDropdownO
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isDarkMode } = useDarkMode();
-  const categories = ['tshirts', 'hoodies', 'mugs', 'mousepads', 'caps'];
+  const categories = ['tshirts', 'hoodies', 'mugs', 'caps'];
 
   const handleItemClick = () => {
     setIsOpen(!isOpen)

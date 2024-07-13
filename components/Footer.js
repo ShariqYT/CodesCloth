@@ -18,7 +18,7 @@ const Footer = () => {
               <Image className="object-contain rounded-lg" src={Logo} alt="logo" />
             </div>
           </Link>
-          <p className="mt-2 px-4 py-4 text-sm text-gray-500">CodesCloth provide a variety of products like tshirts, hoodies, mugs, mousepads caps, etc. for all ages.</p>
+          <p className="mt-2 px-4 py-4 text-sm text-gray-500">CodesCloth provide a variety of products like tshirts, hoodies, mugs, caps, etc. for all ages.</p>
         </div>
         <div className="flex-grow justify-around flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left">
           <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4 text-left md:text-justify">
@@ -32,9 +32,6 @@ const Footer = () => {
               </li>
               <li className='py-1 md:py-0'>
                 <Link href={'/mugs'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">Mugs</Link>
-              </li>
-              <li className='py-1 md:py-0'>
-                <Link href={'/mousepads'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">Mousepads</Link>
               </li>
               <li className='py-1 md:py-0'>
                 <Link href={'/caps'} className="text-gray-500 py-1 md:py-0 hover:text-purple-700">Caps</Link>
