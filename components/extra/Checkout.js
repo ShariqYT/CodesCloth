@@ -31,9 +31,16 @@ const Checkoutpage = () => {
         document.title = 'Checkout | CodesCloth';
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setPhone(user.phoneNumber.split('+91')[1] || '');
-            } else {
-                setPhone('');
+                if (user.phoneNumber) {
+                    setPhone(user.phoneNumber.split('+91')[1] || '');
+                }else if(user.email) {
+                    setEmail(user.email);
+                }
+                 else {
+                    setPhone('');
+                    setEmail('');
+                }
+
             }
         });
 

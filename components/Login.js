@@ -85,7 +85,6 @@ const LoginPage = () => {
         try {
             const provider = new GoogleAuthProvider()
             const result = await signInWithPopup(auth, provider)
-            console.log(result)
             await fetch('/api/createUser', {
                 method: 'POST',
                 headers: {

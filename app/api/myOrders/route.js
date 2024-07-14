@@ -7,13 +7,22 @@ export async function POST(request) {
     try {
         await connectDB();
 
-        const user = await User.findOne({ phone: 8545994449 });
+        const { user } = await request.json();
+        let userFind;
 
-        if (!user) {
-            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        if (isNaN(user)) {
+            userFind = await User.findOne({ email: user });
+        } else {
+            userFind = await User.findOne({ phone: user.split("+91")[1] });
         }
+    
 
-        const orders = await Order.find({ phone: user.phone, status: "Paid" }).sort({ createdAt: -1 });
+        let orders;
+        if(userFind.phone) {
+            orders = await Order.find({ phone: userFind.phone });
+        } else {
+            orders = await Order.find({ email: userFind.email });
+        }
 
         return NextResponse.json({ orders }, { status: 200 });
     } catch (err) {

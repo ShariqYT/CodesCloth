@@ -12,8 +12,6 @@ export async function POST(request) {
             return NextResponse.json({ error: "Phone number or email is required" }, { status: 400 });
         }
 
-        console.log("Received data:", { phoneNumber, userEmail });
-
         let userExist;
         if (phoneNumber) {
             userExist = await User.findOne({ phone: phoneNumber });

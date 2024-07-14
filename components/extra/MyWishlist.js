@@ -1,42 +1,62 @@
 "use client"
-import { CartContext } from '@/context/CartContext'
-import React, { useContext, useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatIndianCurrency } from './FormatAmount'
 import toast from 'react-hot-toast'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { app } from '@/app/config';
+import { useRouter } from 'next/navigation'
 
 const MyWishList = () => {
-    const { user } = useContext(CartContext)
+    const auth = getAuth(app);
+    const router = useRouter();
+    const [user, setUser] = useState(null)
     const [wishList, setWishList] = useState([])
     const [loading, setLoading] = useState(false)
     const [spin, setSpin] = useState(false)
 
-    const getWishList = useCallback(async () => {
-        if (!user) return;
     
-        setLoading(true);
-    
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getWishlist`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ phoneNumber: user.phoneNumber }),
-            });
-            const data = await response.json();
-            setWishList(data.products || []);
-        } catch (error) {
-            console.error('Error fetching wishlist:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, [user]);
     
     useEffect(() => {
-        getWishList();
-    }, [getWishList]);
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                router.push('/sign-in');
+            } else {
+                const phoneNumber = user.phoneNumber;
+                const email = user.email;
+                if (phoneNumber) {
+                    setUser(phoneNumber.replace('+91', ''));
+                    getWishList(phoneNumber);
+                } else {
+                    setUser(email);
+                    getWishList(email);
+                }
+            }
+        });
+        const getWishList = async (user) => {
+            if (!user) return;
+        
+            setLoading(true);
+        
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getWishlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user }),
+                });
+                const data = await response.json();
+                setWishList(data.products || []);
+            } catch (error) {
+                console.error('Error fetching wishlist:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+    }, [auth, router]);
     
 
     const removeFromWishlist = async (slug) => {
@@ -83,7 +103,7 @@ const MyWishList = () => {
                         wishList.map((item, index) => (
                             <li key={index} className="flex items-center justify-between md:flex-row flex-col gap-8 border-t border-purple-700 px-3 md:px-8">
                                 <div className='w-32 h-32 m-4 rounded-lg relative overflow-hidden'>
-                                    <Image className='rounded-lg object-contain' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={item.img} alt={item.title} fill={true} />
+                                    <Image priority className='rounded-lg object-contain' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={item.img} alt={item.title} fill={true} />
                                 </div>
                                 <div className="w-full">
                                     <Link className='hover:underline text-purple-700 font-bold hover:text-purple-800' href={`/product/${item.slug}`} alt={item.title}>{item.title}</Link>

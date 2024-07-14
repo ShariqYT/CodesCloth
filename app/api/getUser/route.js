@@ -6,7 +6,6 @@ export async function POST(request) {
     try {
         await connectDB();
         const { user } = await request.json();
-        console.log(user);
 
         // Determine if the user input is an email or phone number
         const query = {};
@@ -15,10 +14,7 @@ export async function POST(request) {
         } else {
             query.phone = Number(user);
         }
-
-        console.log(query);
         const userFind = await User.findOne(query);
-        console.log(userFind);
 
         const { name, email, address, pincode, phone } = userFind;
 

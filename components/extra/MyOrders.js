@@ -6,21 +6,20 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 const MyOrders = () => {
     const auth = getAuth(app);
     const router = useRouter();
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        const fetchOrders = async (phoneNumber) => {
+        const fetchOrders = async (user) => {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/myOrders`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ phoneNumber }),
+                    body: JSON.stringify({ user }),
                 });
 
                 if (!response.ok) {
@@ -38,10 +37,11 @@ const MyOrders = () => {
                 router.push('/sign-in');
             } else {
                 const phoneNumber = user.phoneNumber;
+                const email = user.email;
                 if (phoneNumber) {
                     fetchOrders(phoneNumber);
                 } else {
-                    toast.error("User phone number not available", { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+                    fetchOrders(email);
                 }
             }
         });
@@ -122,7 +122,7 @@ const MyOrders = () => {
                                     <Link href="#" className="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-purple-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">View details</Link>
                                 </div>
                             </div> */}
-                    {!orders && (<div className='flex items-center gap-2 justify-center flex-col'>
+                    {orders.length===0 && (<div className='flex items-center gap-2 justify-center flex-col'>
                         <svg className='w-12 h-12 mt-32 md:mt-52' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                             <path d="M11 22C10.1818 22 9.40019 21.6698 7.83693 21.0095C3.94564 19.3657 2 18.5438 2 17.1613C2 16.7742 2 10.0645 2 7M11 22L11 11.3548M11 22C11.6167 22 12.12 21.8124 13 21.4372M20 7V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M16 15L19 18M19 18L22 21M19 18L16 21M19 18L22 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -133,11 +133,11 @@ const MyOrders = () => {
                         <div className='text-center'>No orders placed yet</div>
                     </div>
                     )}
-                    {orders.map((order, index) => {
+                    {orders.map((order) => {
                         const date = new Date(order.createdAt);
                         let options = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
                         return (
-                            <div key={index} className='flex w-full justify-center flex-col my-6 rounded-lg border-2 border-purple-700'>
+                            <div key={order._id} className='flex w-full justify-center flex-col my-6 rounded-lg border-2 border-purple-700'>
                                 <div className="md:flex text-center md:justify-evenly items-center gap-4 py-6 px-3">
                                     {Object.values(order.products).map((key, index) => {
                                         return (
@@ -174,7 +174,7 @@ const MyOrders = () => {
                                 </div>
                                 <div className="mt-2 flex justify-center items-center pb-2 text-base font-semibold text-gray-900 ">
                                     {Object.values(order.products).slice(0, 5).map(product => (
-                                        <div key={product.title} className='md:w-32 md:h-32 w-16 h-16 relative overflow-hidden flex justify-center items-center'>
+                                        <div key={product.name} className='md:w-32 md:h-32 w-16 h-16 relative overflow-hidden flex justify-center items-center'>
                                             <Image priority src={product.img} alt={""} sizes='(100vw - 2rem)' fill={true} />
                                         </div>
                                     ))}

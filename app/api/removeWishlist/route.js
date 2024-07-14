@@ -7,10 +7,11 @@ export async function POST(request) {
     try {
         await connectDB();
         const { user, slug: productId } = await request.json();
-        const userPhone = user.phoneNumber.split("+91")[1];
-        const u = await User.findOne({ phone: userPhone });
-        if (!u) {
-            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        let userFind;
+        if (isNaN(user)) {
+            userFind = await User.findOne({ email: user });
+        } else {
+            userFind = await User.findOne({ phone: user });
         }
 
         const product = await Product.findOne({ slug: productId });
@@ -18,8 +19,8 @@ export async function POST(request) {
             return NextResponse.json({ error: "Product not found" }, { status: 404 });
         }
 
-        u.wishlist = u.wishlist.filter((p) => p !== productId);
-        await u.save();
+        userFind.wishlist = userFind.wishlist.filter((p) => p !== productId);
+        await userFind.save();
         return NextResponse.json({ success: true, message: "Product removed from wishlist" }, { status: 200 });
     } catch (err) {
         return NextResponse.json({ error: err.message }, { status: 500 });
