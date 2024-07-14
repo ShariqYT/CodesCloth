@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
         <meta name="googlebot" content={`index=${metadata.robots.googleBot.index}, follow=${metadata.robots.googleBot.follow}, max-video-preview=${metadata.robots.googleBot['max-video-preview']}, max-image-preview=${metadata.robots.googleBot['max-image-preview']}, max-snippet=${metadata.robots.googleBot['max-snippet']}`} />
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1310009680056426"
-          crossorigin="anonymous"></script>
+          crossOrigin="anonymous"></script>
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
       </head>
       <body>
