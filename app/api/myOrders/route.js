@@ -23,6 +23,10 @@ export async function POST(request) {
         } else {
             orders = await Order.find({ email: userFind.email });
         }
+        if(!orders) {
+            return NextResponse.json({ error: "No orders found" }, { status: 404 });
+        }
+
 
         return NextResponse.json({ orders }, { status: 200 });
     } catch (err) {

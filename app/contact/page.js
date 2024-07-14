@@ -24,7 +24,7 @@ const Contact = () => {
     })
     const result = await res.json()
     if (result.success) {
-      toast.success('Message sent successfully', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })
+      toast.success(result.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } })
       setName('')
       setEmail('')
       setMessage('')
