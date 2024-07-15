@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { useDarkMode } from '@/context/DarkModeContext';
-import Logo from '@/public/logo.png';
+import Logo from '@/public/logo3.png';
 
 
 const Footer = () => {
@@ -15,10 +15,10 @@ const Footer = () => {
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
           <Link href={'/'} className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
             <div className="flex justify-center items-center rounded overflow-hidden">
-              <Image className="object-contain rounded-lg" src={Logo} alt="logo" />
+              <Image className="object-contain h-20 rounded-lg" src={Logo} alt="logo" />
             </div>
           </Link>
-          <p className="mt-2 px-4 py-4 text-sm text-gray-500">CodesCloth provide a variety of products like tshirts, hoodies, mugs, caps, etc. for all ages.</p>
+          <p className="mt-2 px-4 text-center py-4 text-sm text-gray-500">CodesCloth provide a variety of products like tshirts, hoodies, mugs, caps, etc. for all ages.</p>
         </div>
         <div className="flex-grow justify-around flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left">
           <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4 text-left md:text-justify">

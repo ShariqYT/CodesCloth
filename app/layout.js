@@ -14,32 +14,6 @@ export const metadata = {
   title: 'CodesCloth - Wearable Codes',
   description: 'CodesCloth - Wearable Codes that motivates you.',
   keywords: 'CodesCloth, codescloth, CodesCloth.com, CodesCloth.netlify.app, codescloth.com, codescloth.netlify.app, Wearable Codes, Wearable Codes that motivates you, coding cloths, coding, cloths',
-  author: 'CodesCloth',
-  creator: 'CodesCloth',
-  openGraph: {
-    title: 'CodesCloth - Wearable Codes',
-    description: 'CodesCloth - Wearable Codes that motivates you.',
-    url: 'https://codescloth.netlify.app/',
-    siteName: 'CodesCloth',
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_URL}/logo-2.png`,
-        width: 800,
-        height: 600,
-      },
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
 };
 
 export default function RootLayout({ children }) {
@@ -50,21 +24,13 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords} />
-        <meta name="author" content={metadata.author} />
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:url" content={metadata.openGraph.url} />
-        <meta property="og:site_name" content={metadata.openGraph.siteName} />
-        <meta property="og:image" content={metadata.openGraph.images[0].url} />
-        <meta property="og:image:width" content={metadata.openGraph.images[0].width} />
-        <meta property="og:image:height" content={metadata.openGraph.images[0].height} />
-        <meta name="robots" content={`${metadata.robots.index ? 'index' : 'noindex'},${metadata.robots.follow ? 'follow' : 'nofollow'}`} />
-        <meta name="googlebot" content={`index=${metadata.robots.googleBot.index}, follow=${metadata.robots.googleBot.follow}, max-video-preview=${metadata.robots.googleBot['max-video-preview']}, max-image-preview=${metadata.robots.googleBot['max-image-preview']}, max-snippet=${metadata.robots.googleBot['max-snippet']}`} />
         <meta name="google-site-verification" content="jEAJb--5CmKi8Vki01te7J0SAjEz6dO-trepN8mHnto" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1310009680056426"
           crossOrigin="anonymous"></script>
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+        <link rel="android-chrome-512x512" sizes="512x512" href="images/android-chrome-512x512.png" />
+        <link rel="shortcut icon" href="images/favicon.png" type="image/png" />
       </head>
       <body>
         <NextTopLoader

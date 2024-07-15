@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation'
-import { toast, Toaster } from 'react-hot-toast'
-import Logo from '@/public/logo-2.png';
+import { toast } from 'react-hot-toast'
+import Logo from '@/public/logo3.png';
 
 const LoginPage = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -102,12 +102,12 @@ const LoginPage = () => {
     return (
         <div className="min-h-screen flex flex-col mt-8 md:mt-32 sm:px-6 md:px-8 px-6">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <Image className="mx-auto object-contain w-24 md:w-32" src={Logo} alt="Logo" />
+                <Image className="mx-auto object-contain w-48 md:w-52" src={Logo} alt="Logo" />
                 <h2 className="mt-6 text-center text-2xl md:text-3xl leading-9 font-extrabold">
                     Sign in to your account
                 </h2>
             </div>
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="md:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="py-8 px-4 sm:px-10">
                     <div className="mt-1 relative rounded-md shadow-sm">
                         {!otpSent ? (

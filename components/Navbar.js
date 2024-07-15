@@ -13,7 +13,7 @@ const Logo = () => {
   const { isDarkMode } = useDarkMode()
   return (
     <Link href='/'>
-      <Image unoptimized src='/logo.png' priority={true} width={1} height={1} className={`w-52 filter ${isDarkMode ? `drop-shadow-[0_0px_2px_rgb(0_0_0/_100%)]` : `drop-shadow-[0_0px_2px_rgb(0_0_0/_100%)`}`} alt='logo' />
+      <Image unoptimized src='/logo4.png' priority={true} width={1} height={1} className={`w-24 filter ${isDarkMode ? `drop-shadow-[0_0px_10px_rgba(0,0,0,1)]` : `drop-shadow-[0_0px_2px_rgb(0_0_0/_100%)`}`} alt='logo' />
     </Link>
   )
 };

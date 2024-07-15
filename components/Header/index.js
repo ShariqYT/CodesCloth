@@ -5,7 +5,7 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import Logo from '@/public/logo.png';
+import Logo from '@/public/logo3.png';
 
 
 const Header = (props) => {
