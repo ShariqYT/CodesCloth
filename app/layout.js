@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
         <meta property="og:image:height" content={metadata.openGraph.images[0].height} />
         <meta name="robots" content={`${metadata.robots.index ? 'index' : 'noindex'},${metadata.robots.follow ? 'follow' : 'nofollow'}`} />
         <meta name="googlebot" content={`index=${metadata.robots.googleBot.index}, follow=${metadata.robots.googleBot.follow}, max-video-preview=${metadata.robots.googleBot['max-video-preview']}, max-image-preview=${metadata.robots.googleBot['max-image-preview']}, max-snippet=${metadata.robots.googleBot['max-snippet']}`} />
+        <meta name="google-site-verification" content="jEAJb--5CmKi8Vki01te7J0SAjEz6dO-trepN8mHnto" />
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1310009680056426"
           crossOrigin="anonymous"></script>

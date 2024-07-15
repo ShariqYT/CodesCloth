@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { useDarkMode } from "@/context/DarkModeContext";
 import Image from 'next/image';
-import { imageRemove } from '@/actions/imageRemove';
 
 const ImageUpload = ({ setImage }) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -23,7 +22,7 @@ const ImageUpload = ({ setImage }) => {
 
   return (
     <>
-      <UploadDropzone
+      <UploadButton
         className={`mb-4 mx-8 px-7 ut-upload-icon:text-purple-700 ut-button:ut-uploading:bg-purple-400 ut-button:ut-ready:bg-purple-700 ut-button:bg-purple-700 ${isDarkMode ? "ut-allowed-content:text-white" : "ut-allowed-content:text-black"} ut-label:text-purple-700 flex cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 py-6 text-sm transition hover:border-purple-700 focus:border-solid focus:border-purple-800 focus:outline-none focus:ring-1 focus:ring-purple-800 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75`}
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
