@@ -13,7 +13,7 @@ const roboto = Roboto_Flex({ subsets: ['latin'], weight: ['100', '300', '400', '
 export const metadata = {
   title: 'CodesCloth - Wearable Codes',
   description: 'CodesCloth - Wearable Codes that motivates you.',
-  keywords: 'CodesCloth, codescloth, CodesCloth.com, CodesCloth.netlify.app, codescloth.com, codescloth.netlify.app, Wearable Codes, Wearable Codes that motivates you, coding cloths, coding, cloths',
+  keywords: 'CodesCloth, codescloth, CodesCloth.com, CodesCloth.netlify.app, codescloth.com, codescloth.netlify.app, Wearable Codes, Wearable Codes that motivates you, coding cloths, coding, cloths, codescloth, codes cloth, codes, codescloth netlify, codes clothing shop, coding cloth, coding tshirts, coding hoodies',
 };
 
 export default function RootLayout({ children }) {

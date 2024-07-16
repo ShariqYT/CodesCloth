@@ -7,7 +7,8 @@ export const getAllPromocodes = async () => {
     try {
         await connectDB();
         const promocodes = await PromoCodes.find({});
-        return promocodes
+        const finalPromocodes = JSON.parse(JSON.stringify(promocodes))
+        return finalPromocodes
     } catch (err) {
         console.log(err)
     }

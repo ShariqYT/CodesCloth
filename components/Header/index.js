@@ -2,7 +2,7 @@
 import Link from "next/link";
 import DropdownUser from "./DropdownUser";
 import { useDarkMode } from "@/context/DarkModeContext";
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Logo from '@/public/logo3.png';
@@ -13,13 +13,13 @@ const Header = (props) => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const isAdminRoute = pathname.startsWith('/admin/admin-signin');
-  
+
   return (
     <header className={`sticky top-0 z-[999] flex w-full ${isDarkMode ? 'bg-black drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'bg-white drop-shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
-      <div className={isAdminRoute ? "flex items-center justify-between px-4 py-4 w-full shadow-2 md:px-6 2xl:px-11" :`flex flex-grow items-center md:justify-end justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11`}>
+      <div className={isAdminRoute ? "flex items-center justify-between px-4 py-4 w-full shadow-2 md:px-6 2xl:px-11" : `flex flex-grow items-center md:justify-end justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11`}>
         <div className={isAdminRoute ? "" : `flex items-center gap-2 sm:gap-4 lg:hidden`}>
           {/* <!-- Hamburger Toggle BTN --> */}
-          {isAdminRoute ? <Link href={'/'}><Image priority className="w-52" src={Logo} alt="Logo" /></Link>:(<button
+          {isAdminRoute ? <Link href={'/'}><Image priority className="w-24" src={Logo} alt="Logo" /></Link> : (<button
             aria-controls="sidebar"
             onClick={(e) => {
               e.stopPropagation();
@@ -60,7 +60,7 @@ const Header = (props) => {
 
         <Link className="hover:underline" href={'/'} target="_blank">
           <p className="w-full">Dashboard ↗</p>
-          </Link>
+        </Link>
 
         <div className="flex items-center md:gap-3 ">
           <ul className="flex items-center gap-2 w-fit ">

@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { formatIndianCurrency } from './FormatAmount'
 import { useDarkMode } from '@/context/DarkModeContext'
 

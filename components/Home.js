@@ -38,6 +38,7 @@ const Home = () => {
     if (Date.now() > promocode[1]?.expiry) {
         setPromocode('');
     }
+    const expiryDate = promocode[1]?.expiry ? new Date(promocode[1].expiry) : null;
 
     return (
         <main className='overflow-x-hidden'>
@@ -62,7 +63,7 @@ const Home = () => {
                             {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}
                             Copy Code</button>
                     </div>
-                    <p className="text-sm z-20 relative">Valid Till: {promocode[1]?.expiry.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-sm z-20 relative">Valid Till: {expiryDate ? expiryDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}</p>
                     <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
                     <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
                 </div>
@@ -77,26 +78,26 @@ const Home = () => {
                     <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
                 </div>
 
-                <div className='grid md:grid-cols-3 grid-cols-2 place-items-center gap-4 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
+                <div className='grid md:grid-cols-3 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
 
                     <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2 `}`}>
-                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Cap} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="caps" />
                         </div>
                     </Link>
                     <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
 
                     <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
                         </div>
                     </Link>
                     <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
-                        <div className='p-2 w-44 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
+                        <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
                     </Link>
