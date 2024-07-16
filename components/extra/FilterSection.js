@@ -178,7 +178,7 @@ const FilterSection = () => {
             </svg>
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`md:hidden fixed z-30 bg-[rgba(0,0,0,0.8)] w-screen h-screen transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'opacity-0'
+                className={`md:hidden fixed z-30 bg-[rgba(0,0,0,0.8)] w-screen h-screen transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-[0px]' : 'opacity-0 translate-y-[500px]'
                     }`}></div>
             <div
                 className={`md:hidden fixed z-50 w-full h-1/2 ${isDarkMode ? 'bg-black' : 'bg-white'} 
