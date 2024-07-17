@@ -3,7 +3,7 @@ import InboxTable from '@/components/Tables/Inbox'
 import React from 'react'
 
 export const metadata = {
-    title: 'Admin - Inbox | CodesCloth',
+    title: 'Admin - Inbox',
 }
 
 const Inbox = async() => {

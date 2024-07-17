@@ -2,7 +2,7 @@ import MyWishList from '@/components/extra/MyWishlist'
 import React from 'react'
 
 export const metadata = {
-    title: 'My Wishlist | CodesCloth',
+    title: 'My Wishlist',
 }
 const myWishlist = () => {
 

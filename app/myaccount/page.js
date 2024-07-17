@@ -2,7 +2,7 @@ import MyAccount from "@/components/extra/MyAccount"
 import React from "react"
 
 export const metadata = {
-    title: 'My Account | CodesCloth',
+    title: 'My Account',
 }
 
 const Myaccount = () => {

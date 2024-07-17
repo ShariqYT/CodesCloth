@@ -1,7 +1,7 @@
 import MyOrders from '@/components/extra/MyOrders';
 
 export const metadata = {
-  title: 'My Orders | CodesCloth',
+  title: 'My Orders',
 };
 
 const Myorders = () => {

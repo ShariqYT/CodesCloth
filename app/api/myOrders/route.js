@@ -19,9 +19,9 @@ export async function POST(request) {
 
         let orders;
         if(userFind.phone) {
-            orders = await Order.find({ phone: userFind.phone });
+            orders = await Order.find({ phone: userFind.phone }).sort({ createdAt: -1 });
         } else {
-            orders = await Order.find({ email: userFind.email });
+            orders = await Order.find({ email: userFind.email }).sort({ createdAt: -1 });
         }
         if(!orders) {
             return NextResponse.json({ error: "No orders found" }, { status: 404 });

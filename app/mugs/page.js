@@ -2,7 +2,7 @@ import React from 'react'
 import Mugs from '@/components/products/Mugs';
 
 export const metadata = {
-  title: 'Mugs - CodesCloth',
+  title: 'Mugs',
 };
 
 const mugs = async () => {

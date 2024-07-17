@@ -2,7 +2,7 @@ import React from 'react'
 import Tshirts from '@/components/products/Tshirts';
 
 export const metadata = {
-  title: 'Tshirts - CodesCloth',
+  title: 'Tshirts',
 };
 
 const tshirts = async () => {

@@ -2,7 +2,7 @@ import Checkout from "@/components/extra/Checkout";
 import React from "react";
 
 export const metadata = {
-    title: 'Checkout | CodesCloth',
+    title: 'Checkout',
 };
 
 const CheckoutPage = async() => {

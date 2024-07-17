@@ -2,7 +2,7 @@ import MyCart from '@/components/extra/MyCart'
 import React from 'react'
 
 export const metadata = {
-    title: 'My Cart | CodesCloth',
+    title: 'My Cart',
 }
 
 const mycart = () => {

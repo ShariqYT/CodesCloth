@@ -4,7 +4,7 @@ import AllProduct from '@/components/Tables/AllProduct'
 import { getAllProducts } from '@/actions/Admin/getAllProducts'
 
 export const metadata = {
-  title: 'Admin - View Products | CodesCloth',
+  title: 'Admin - View Products',
 }
 
 const AllProducts = async() => {

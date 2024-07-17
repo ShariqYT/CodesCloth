@@ -4,7 +4,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'Admin - Gallery | CodesCloth',
+  title: 'Admin - Gallery',
 }
 
 const Gallery = async () => {

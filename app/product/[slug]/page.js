@@ -20,6 +20,10 @@ export async function generateMetadata({ params }) {
   const { product } = await oneProduct(params.slug);
   return {
     title: product ? `${product.title} (${product.size}/${product.color}) | CodesCloth` : 'Product not found',
+    openGraph: {
+      title: product ? `${product.title} (${product.size}/${product.color}) | CodesCloth` : 'Product not found',
+      images: product ? [product.img] : [],
+    }
   };
 }
 

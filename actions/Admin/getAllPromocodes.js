@@ -1,9 +1,9 @@
 "use server"
-
+import { cache } from "react";
 import connectDB from "@/db/connectDB";
 import PromoCodes from "@/models/PromoCodes";
 
-export const getAllPromocodes = async () => {
+export const getAllPromocodes = cache(async () => {
     try {
         await connectDB();
         const promocodes = await PromoCodes.find({});
@@ -12,4 +12,4 @@ export const getAllPromocodes = async () => {
     } catch (err) {
         console.log(err)
     }
-}
+})

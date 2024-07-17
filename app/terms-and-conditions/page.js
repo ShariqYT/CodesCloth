@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Terms and Conditions',
+};
+
 const TermsAndConditions = () => {
   return (
     <div class="max-w-4xl my-20 mx-auto p-8 shadow-md">

@@ -10,7 +10,7 @@ async function getProducts(category) {
 }
 
 export const metadata = {
-  title: 'Hoodies | CodesCloth',
+  title: 'Hoodies',
 };
 
 const hoodies = async () => {

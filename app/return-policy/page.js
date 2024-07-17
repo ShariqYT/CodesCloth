@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 
+export const metadata = {
+  title: 'Return Policy',
+};
+
 const ReturnPolicy = () => {
   return (
     <div class="max-w-4xl mx-auto my-20 p-6 rounded-lg shadow-md">

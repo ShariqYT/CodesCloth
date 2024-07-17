@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Shipping Policy',
+};
+
 const ShippingPolicy = () => {
   return (
     <div class="max-w-4xl my-20 mx-auto p-8 shadow-md">
