@@ -34,11 +34,6 @@ export default function RootLayout({ children }) {
         <meta name="google-site-verification" content="jEAJb--5CmKi8Vki01te7J0SAjEz6dO-trepN8mHnto" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1310009680056426"
           crossOrigin="anonymous"></script>
-        <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#603cba" />
-        <meta name="msapplication-TileColor" content="#603cba" />
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body>

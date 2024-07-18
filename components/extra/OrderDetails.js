@@ -1,29 +1,32 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useEffect, useState, useContext } from 'react';
-import { useRouter, useSearchParams, redirect } from 'next/navigation';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
-import { CartContext } from '@/context/CartContext';
 import { useDarkMode } from '@/context/DarkModeContext';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { app } from '@/app/config';
+import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 const OrderDetails = () => {
+  const router = useRouter();
   const { isDarkMode } = useDarkMode();
-  const {user} = useContext(CartContext)
   const [order, setOrder] = useState({});
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const searchParams = useSearchParams();
-  const router = useRouter();
   const id = searchParams.get('id');
 
-  useEffect(() => {
-    if(!user){
-      return redirect('/');
-    }
-  }, [user]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push('/sign-in');
+      }
+    });
     const orderCreatedAt = order?.createdAt || 0;
     let options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
     const d = new Date(orderCreatedAt);
@@ -42,7 +45,7 @@ const OrderDetails = () => {
     if (id) {
       fetchOrder();
     }
-  }, [id, order?.createdAt]);
+  }, [id, order?.createdAt, router]);
 
   const product = order?.products || [];
   const total = order?.amount || 0;
@@ -54,7 +57,7 @@ const OrderDetails = () => {
         <h2 className="font-manrope font-bold text-3xl md:text-4xl leading-10  text-center">
           Payment Successful
         </h2>
-        <p className={`mt-4 font-normal text-sm md:text-lg md:leading-8 ${isDarkMode?'text-gray-300':'text-gray-500'} mb-11 text-center`}>Thanks for making a purchase you can check your order summary from below</p>
+        <p className={`mt-4 font-normal text-sm md:text-lg md:leading-8 ${isDarkMode ? 'text-gray-300' : 'text-gray-500'} mb-11 text-center`}>Thanks for making a purchase you can check your order summary from below</p>
         <div className="main-box border border-purple-700 rounded-xl pt-6 max-w-xl max-md:mx-auto md:max-w-full">
           <div className="flex flex-col md:flex-row md:items-center justify-between px-6 pb-6 border-b border-gray-200">
             <div className="data">
@@ -85,8 +88,8 @@ const OrderDetails = () => {
                     <div className="flex flex-col md:flex-row justify-between w-full">
                       <div className="flex items-center">
                         <div>
-                          <h2 className="font-semibold md:text-xl leading-8  md:mb-3">
-                            {product[key].name}({product[key].size}/{product[key].variant})</h2>
+                          <Link href={`/product/${key}`} className="font-semibold hover:text-purple-700 hover:underline md:text-xl leading-8  md:mb-3">
+                            {product[key].name} ({product[key].size}/{product[key].variant})</Link>
                           <div className="flex items-center ">
                             <p className="font-semibold text-base leading-7  ">Qty: <span>{product[key].qty}</span></p>
                           </div>

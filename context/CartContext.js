@@ -27,18 +27,6 @@ export const CartProvider = ({ children }) => {
         }
     }, [router]);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser('');
-            }
-        });
-    
-        return () => unsubscribe();
-      }, []);
-
     const saveCart = (myCart) => {
         localStorage.setItem('cart', JSON.stringify(myCart));
         let subTotal = 0;

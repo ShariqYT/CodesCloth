@@ -9,7 +9,7 @@ export async function POST(request) {
         const { phoneNumber, userEmail } = await request.json();
 
         if (!phoneNumber && !userEmail) {
-            return NextResponse.json({ error: "Phone number or email is required" }, { status: 400 });
+            return NextResponse.json({ error: "Phone number or email is required" }, { status: 200 });
         }
 
         let userExist;

@@ -21,7 +21,7 @@ export async function POST(request) {
         };
 
         if(!user){
-            return NextResponse.json({ success: false, error: 'Sign-In Required' }, { status: 400 });
+            return NextResponse.json({ success: false, error: 'Sign-In Required' }, { status: 200 });
         }
         const order = await razorpay.orders.create(options);
 
@@ -32,7 +32,7 @@ export async function POST(request) {
 
             // Check if cartItem has necessary properties
             if (!cartItem || typeof cartItem.price !== 'number' || typeof cartItem.qty !== 'number') {
-                return NextResponse.json({ success: false, error: 'Invalid cart item structure' }, { status: 400 });
+                return NextResponse.json({ success: false, error: 'Invalid cart item structure' }, { status: 200 });
             }
 
             sumTotal += cartItem.price * cartItem.qty;

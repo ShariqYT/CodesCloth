@@ -106,6 +106,10 @@ const Home = () => {
             </section>
             {/* End of Collections */}
 
+            {/* Popular products */}
+            
+            {/* End of Popular products */}
+
             {/* Services */}
             <section className="text-gray-600 md:my-32 my-20 body-font flex items-center justify-center md:flex-row flex-col md:container mx-auto">
                 <div data-aos="zoom-in-right" className="p-4 w-full md:w-1/3">

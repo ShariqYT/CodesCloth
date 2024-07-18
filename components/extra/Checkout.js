@@ -11,8 +11,9 @@ import Logo from '@/public/logo-2.png';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 
 const Checkoutpage = () => {
-    const { subTotal, cart, clearCart, user } = useContext(CartContext);
+    const { subTotal, cart, clearCart } = useContext(CartContext);
     const [spin, setSpin] = useState(false);
+    const [user, setUser] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
@@ -28,24 +29,42 @@ const Checkoutpage = () => {
     const router = useRouter();
 
     useEffect(() => {
+        const fetchUser = async () => {
+            const getUser = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: user?.email || user?.phoneNumber?.split('+91')[1] || '',}),
+            })
+
+            const data = await getUser.json();
+            if (data.success) {
+                setName(data.name || '');
+                setPhone(data.phone || '');
+                setAddress(data.address || '');
+            }
+        }
         document.title = 'Checkout | CodesCloth';
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
+                setUser(user);
                 if (user.phoneNumber) {
                     setPhone(user.phoneNumber.split('+91')[1] || '');
-                }else if(user.email) {
+                } else if (user.email) {
                     setEmail(user.email);
                 }
-                 else {
+                else {
                     setPhone('');
                     setEmail('');
                 }
 
             }
         });
-
+        fetchUser();
         return () => unsubscribe();
-    }, [auth, router]);
+    }, [auth, router, user]);
 
     useEffect(() => {
         if (name && email && address && phone && pincode && subTotal > 0) {
@@ -76,28 +95,30 @@ const Checkoutpage = () => {
                     setPhone(value);
                 }
                 break;
-            case 'pincode':
-                if (value.length <= 6) {
-                    try {
+                case 'pincode':
+                    if (value.length <= 6) {
                         setPincode(value);
-                        let response = await fetch(`https://api.postalpincode.in/pincode/${value}`);
-                        let data = await response.json();
-                        if (data[0]?.PostOffice && data[0].PostOffice.length > 0) {
-                            setState(data[0].PostOffice[0].State);
-                            setCity(data[0].PostOffice[0].Block);
-                        } else {
+                        try {
+                            let response = await fetch(`https://api.postalpincode.in/pincode/${value}`);
+                            let data = await response.json();
+                
+                            if (data[0]?.PostOffice?.length > 0) {
+                                setState(data[0].PostOffice[0].State);
+                                setCity(data[0].PostOffice[0].Block);
+                            } else {
+                                setState('');
+                                setCity('');
+                            }
+                        } catch (error) {
                             setState('');
                             setCity('');
                         }
-                    } catch (error) {
+                    } else {
                         setState('');
                         setCity('');
                     }
-                } else {
-                    setState('');
-                    setCity('');
-                }
-                break;
+                    break;
+                
             default:
                 break;
         }
@@ -222,6 +243,7 @@ const Checkoutpage = () => {
                 prefill: {
                     name,
                     email,
+                    contact: phone,
                 },
                 theme: {
                     color: '#5500ff',
@@ -400,7 +422,7 @@ const Checkoutpage = () => {
                         </div>
                         <button
                             onClick={processPayment}
-                            disabled={!subTotal || disabled || phone.length < 10}
+                            disabled={!subTotal || disabled || phone.length < 10 || pincode.length < 6}
                             className='bg-purple-700 hover:bg-purple-900 disabled:opacity-25 flex items-center justify-center gap-1 text-white py-2 px-4 rounded-lg mt-4 w-full'
                         >
                             {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}{spin ? '' : 'Proceed to Payment'}

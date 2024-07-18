@@ -9,6 +9,6 @@ const UserSchema = new Schema({
     phone: { type: Number, required: true, unique: true, default: 0 },
     password: { type: String },
     wishlist: { type: Array, default: [] },
-});
+}, { timestamps: true });
 
 export default mongoose.models.User || model("User", UserSchema);

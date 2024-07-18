@@ -47,7 +47,7 @@ export const POST = async (req) => {
                 if (promoCode) {
                     await PromoCodes.updateOne({ code: promocode }, { $inc: { used: 1 } });
                 } else {
-                    return NextResponse.json({ success: false, error: 'Invalid discount code' }, { status: 400 });
+                    return NextResponse.json({ success: false, error: 'Invalid discount code' }, { status: 200 });
                 }
             }
             await Order.findOneAndUpdate({ orderId: orderCreationId }, { status: "Paid", paymentInfo: JSON.stringify(body), transactionId: razorpayPaymentId });
@@ -59,7 +59,7 @@ export const POST = async (req) => {
         } else {
             // Handle case where payment verification fails (user closed the window)
             await Order.findOneAndUpdate({ orderId: orderCreationId }, { status: "Failed" });
-            return NextResponse.json({ success: false, error: "Payment verification failed" }, { status: 400 });
+            return NextResponse.json({ success: false, error: "Payment verification failed" }, { status: 200 });
         }
     } catch (error) {
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });

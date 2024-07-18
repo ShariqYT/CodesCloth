@@ -10,7 +10,7 @@ export async function GET(req) {
         const orderId = url.search.split('=')[1];
 
         if (!orderId) {
-            return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });
+            return NextResponse.json({ error: 'Order ID is required' }, { status: 200 });
         }
 
         const order = await Order.findOne({ _id: orderId });

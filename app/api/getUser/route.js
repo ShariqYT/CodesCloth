@@ -7,20 +7,14 @@ export async function POST(request) {
         await connectDB();
         const { user } = await request.json();
 
-        // Determine if the user input is an email or phone number
-        const query = {};
-        if (isNaN(user)) {
-            query.email = user;
-        } else {
-            query.phone = Number(user);
-        }
+        
+        const query = isNaN(user) ? { email: user } : { phone: Number(user) };
         const userFind = await User.findOne(query);
 
         const { name, email, address, pincode, phone } = userFind;
 
         return NextResponse.json({ success: true, name, email, address, pincode, phone }, { status: 200 });
     } catch (err) {
-        console.error("Error occurred:", err);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 200 });
     }
 }

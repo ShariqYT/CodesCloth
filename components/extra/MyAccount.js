@@ -107,6 +107,7 @@ const MyAccount = () => {
         });
         let res = await u.json();
         if (res.success) {
+            router.push('/');
             toast.success(res.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
         } else {
             toast.error(res.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });

@@ -7,7 +7,8 @@ export const getAllUsers = async () => {
     try {
         await connectDB();
         const users = await User.find({});
-        return users
+        const finalUsers = JSON.parse(JSON.stringify(users))
+        return finalUsers
     } catch (err) {
         console.log(err)
     }

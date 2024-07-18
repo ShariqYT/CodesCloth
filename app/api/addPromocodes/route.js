@@ -15,21 +15,21 @@ export async function POST(request) {
   } = await request.json();
 
   if (!code || !discountAmount || !expiry || !discountType) {
-    return new Response(JSON.stringify({ error: 'All required fields (code, discountAmount, discountType, expiry) must be provided' }), { status: 400 });
+    return new Response(JSON.stringify({ error: 'All required fields (code, discountAmount, discountType, expiry) must be provided' }), { status: 200 });
   }
 
   if (!['fixed', 'percentage'].includes(discountType)) {
-    return new Response(JSON.stringify({ error: 'Invalid discount type. Must be either "fixed" or "percentage".' }), { status: 400 });
+    return new Response(JSON.stringify({ error: 'Invalid discount type. Must be either "fixed" or "percentage".' }), { status: 200 });
   }
 
   if (limit < 0) {
-    return new Response(JSON.stringify({ error: 'Limit must be a non-negative number.' }), { status: 400 });
+    return new Response(JSON.stringify({ error: 'Limit must be a non-negative number.' }), { status: 200 });
   }
 
   try {
     const existingPromoCode = await PromoCodes.findOne({ code });
     if (existingPromoCode) {
-      return new Response(JSON.stringify({ error: 'Promo code already exists' }), { status: 400 });
+      return new Response(JSON.stringify({ error: 'Promo code already exists' }), { status: 200 });
     }
 
     const newPromoCode = new PromoCodes({

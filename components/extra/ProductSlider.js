@@ -12,9 +12,9 @@ const ProductSlider = ({ products }) => {
         return colors.map((color, index) => {
             let buttonClasses;
             if (color.toLowerCase() === 'black' || color.toLowerCase() === 'white') {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-3 md:w-4 h-3 md:h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             } else {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-3 md:w-4 h-3 md:h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             }
             return (
                 <button key={index} title={color} className={buttonClasses}></button>
@@ -24,7 +24,7 @@ const ProductSlider = ({ products }) => {
 
 
     return (
-        <div className='my-10 container'>
+        <div className='my-10 md:container'>
             <h1 className='text-2xl p-4 font-semibold'>Other T-Shirts</h1>
             <div id="productSlider" className="flex items-center pb-12 overflow-x-scroll scrollbar-hide">
                 {Object.values(products).map((product, index) => (
@@ -37,11 +37,11 @@ const ProductSlider = ({ products }) => {
                             <h2 className="md:text-md truncate font-medium">{product.title}</h2>
                             <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-lg md:text-lg`}>₹{formatIndianCurrency(product.price)}</p>
                             <div className='mt-1'>
-                                {product.size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>S</span>}
-                                {product.size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>M</span>}
-                                {product.size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>L</span>}
-                                {product.size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XL</span>}
-                                {product.size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XXL</span>}
+                                {product.size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-xs md:text-sm px-1 mx-1`}>S</span>}
+                                {product.size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-xs md:text-sm px-1 mx-1`}>M</span>}
+                                {product.size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-xs md:text-sm px-1 mx-1`}>L</span>}
+                                {product.size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-xs md:text-sm px-1 mx-1`}>XL</span>}
+                                {product.size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-xs md:text-sm px-1 mx-1`}>XXL</span>}
                             </div>
                             <div className='mt-1'>
                                 {renderColorButtons(product.color)}

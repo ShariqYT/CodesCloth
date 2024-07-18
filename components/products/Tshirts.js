@@ -6,6 +6,7 @@ import { useDarkMode } from '@/context/DarkModeContext';
 import { formatIndianCurrency } from '../extra/FormatAmount';
 import FilterSection, { convertStringToQueriesObject, convertValidStringQueries } from '../extra/FilterSection';
 import { useSearchParams } from 'next/navigation';
+import ReviewComponent from '../extra/ReviewComponent';
 
 const Tshirts = () => {
     const { isDarkMode } = useDarkMode();
@@ -69,6 +70,7 @@ const Tshirts = () => {
                                 <div className="mt-4">
                                     <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">CODESCLOTH</h3>
                                     <h2 className="md:text-lg truncate font-medium">{product.title}</h2>
+                                    <ReviewComponent productId={product.slug} />
                                     <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-lg md:text-2xl`}>₹{formatIndianCurrency(product.price)}</p>
                                     <div className='mt-1'>
                                         {product.size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>S</span>}
