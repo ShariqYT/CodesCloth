@@ -16,6 +16,9 @@ export const metadata = {
     default: 'CodesCloth - Wearable Codes',
     template: '%s | CodesCloth',
   },
+  verification: {
+    google: "google-site-verification=jEAJb--5CmKi8Vki01te7J0SAjEz6dO-trepN8mHnto",
+  },
   keywords: 'CodesCloth, codescloth, CodesCloth.com, CodesCloth.netlify.app, codescloth.com, codescloth.netlify.app, Wearable Codes, Wearable Codes that motivates you, coding cloths, coding, cloths, codescloth, codes cloth, codes, codescloth netlify, codes clothing shop, coding cloth, coding tshirts, coding hoodies',
   description: 'CodesCloth - Wearable Codes that motivates you. Clothshop for coders, clothes for coders, codes cloth for coders, clothing for coders, coding clothes, coding tshirts, coding hoodies',
   openGraph: {

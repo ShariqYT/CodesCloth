@@ -121,7 +121,7 @@ const MyAccount = () => {
                     <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
                 </div>
 
-                <div className="md:w-full w-96 container ">
+                <div className="md:w-full w-80 md:container ">
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="name" className="text-sm font-medium block mb-2">Full Name</label>

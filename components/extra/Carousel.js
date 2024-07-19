@@ -112,8 +112,8 @@ const CarouselIndicators = ({ totalSlides, currentSlideIndex }) => {
                     style={{ boxShadow: '0px 0px 50px 1px #000000' }}
                     key={index}
                     className={cn(
-                        "h-3 w-3 md:w-4 md:h-4 rounded-full mx-1 border-2 border-white",
-                        index === currentSlideIndex ? "bg-black h-4 w-4 md:h-5 md:w-5" : "bg-white"
+                        "h-3 w-3 md:w-4 md:h-4 rounded-full mx-1 border-2 border-white transition-all duration-1000 ease-in-out",
+                        index === currentSlideIndex ? "bg-black h-4 w-8 md:h-4 md:w-8" : "bg-white"
                     )}
                 />
             ))}

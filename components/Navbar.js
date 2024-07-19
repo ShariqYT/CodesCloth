@@ -120,7 +120,7 @@ const MobileMenu = () => {
   return (
     <div className='md:hidden'>
       <button
-        onClick={() => setIsOpen(prev => !prev)}
+        onClick={() => setIsOpen(!isOpen)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         className='bg-purple-700 py-1.5 px-3 rounded-lg'
         aria-label='User menu'
@@ -131,8 +131,8 @@ const MobileMenu = () => {
           <path d="M20 19L4 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      {isOpen && (
-        <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-transform duration-200 ease-in-out`}>
+      
+        <div onClick={() => setIsOpen(!isOpen)} className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] !z-10 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} ${isOpen ? 'translate-x-0' : '-translate-x-[500px]'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-all duration-300 ease-in-out`}>
           <ul className='flex flex-col gap-4 items-center font-bold'>
             {categories.map(category => (
               <Link href={`/${category}`} key={category}>
@@ -143,7 +143,6 @@ const MobileMenu = () => {
             ))}
           </ul>
         </div>
-      )}
     </div>
   );
 };
@@ -181,7 +180,7 @@ const Navbar = () => {
   // }
 
   return (
-    <nav className={`flex ${loading ? '-translate-y-32' : 'translate-y-0'} transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+    <nav className={`flex ${loading ? '-translate-y-32' : 'translate-y-0'} border-b-4 md:border-4 border-purple-900 transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
       <Logo />
       <MenuItems />
       <div className='md:flex justify-center hidden gap-5 items-center'>
