@@ -12,7 +12,6 @@ import Image from 'next/image';
 import Banner1 from '@/public/banner/1.webp';
 import Banner2 from '@/public/banner/2.webp';
 import Banner3 from '@/public/banner/3.webp';
-import Banner4 from '@/public/banner/4.webp';
 import Banner5 from '@/public/banner/5.webp';
 import Banner6 from '@/public/banner/6.webp';
 import MBanner1 from '@/public/banner/mobileVersion/1.webp';

@@ -6,10 +6,10 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { toast } from 'react-hot-toast';
 import { useDarkMode } from '@/context/DarkModeContext';
-import Tshirt from '@/public/collections/tshirt.png';
-import Mug from '@/public/collections/mugs.png';
-import Cap from '@/public/collections/caps.png';
-import Hoodie from '@/public/collections/hoodies.png';
+import Tshirt from '@/public/collections/tshirt.webp';
+import Mug from '@/public/collections/mugs.webp';
+import Cap from '@/public/collections/caps.webp';
+import Hoodie from '@/public/collections/hoodies.webp';
 import { getAllPromocodes } from '@/actions/Admin/getAllPromocodes';
 import CarouselComponent from './extra/Carousel';
 
@@ -27,12 +27,11 @@ const Home = () => {
         async function getAllPromoCodes() {
             const promo = await getAllPromocodes();
             setPromocode(promo);
+            setLoading(false);
         }
 
         getAllPromoCodes();
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        
     }, [])
 
     if (Date.now() > promocode[1]?.expiry) {

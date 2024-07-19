@@ -39,7 +39,7 @@ const ReviewComponent = ({ productId }) => {
                     </svg>
                 ))}
                 <span className='ml-3 md:block hidden'>{averageRating.toFixed(1)}</span><span className='ml-2 md:block hidden'>•</span>
-                <span className="ml-2 md:block hidden">{totalReviews} {totalReviews === 1 ? 'Review' : 'Reviews'}</span>
+                <span className="ml-2 md:block hidden text-purple-500">{totalReviews} {totalReviews <= 1 ? 'Review' : 'Reviews'}</span>
                 <span className="ml-4 md:hidden text-sm">{totalReviews}</span>
             </span>
         </div>

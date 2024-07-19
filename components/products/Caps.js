@@ -6,7 +6,6 @@ import { useDarkMode } from '@/context/DarkModeContext';
 import { formatIndianCurrency } from '../extra/FormatAmount';
 import FilterSection, { convertStringToQueriesObject, convertValidStringQueries } from '../extra/FilterSection';
 import { useSearchParams } from 'next/navigation';
-import Loading from '@/app/loading';
 import ReviewComponent from '../extra/ReviewComponent';
 
 const Caps = () => {
@@ -28,14 +27,13 @@ const Caps = () => {
 
         fetchFilteredProducts('caps');
     }, [searchParams]);
-
     const renderColorButtons = (colors) => {
         return colors.map((color) => {
             let buttonClasses;
             if (color.toLowerCase() === 'black' || color.toLowerCase() === 'white') {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()} rounded-full w-3 md:w-4 h-3 md:h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             } else {
-                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-4 h-4 transition-all duration-300 ease-in-out focus:outline-none`;
+                buttonClasses = `border-2 border-gray-300 ml-1 bg-${color.toLowerCase()}-500 rounded-full w-3 md:w-4 h-3 md:h-4 transition-all duration-300 ease-in-out focus:outline-none`;
             }
             return (
                 <button key={color} title={`Color: ${color}`} className={buttonClasses}></button>
@@ -44,7 +42,7 @@ const Caps = () => {
     };
 
     return (
-        <section className="flex  min-h-screen">
+        <section className="flex min-h-screen">
             <FilterSection />
             {loading ? (
                 <div className='flex justify-center items-center'>
@@ -62,30 +60,52 @@ const Caps = () => {
                                 <p className='min-h-screen'>Sorry, all the Caps are currently out of stock. New stock coming soon. Stay Tuned!</p>
                             </div>
                         )}
-                        {products.map((product, index) => (
-
-                            <Link key={index} href={`/product/${product.slug}`} className="md:w-72 shadow-lg md:m-4 my-2 border rounded-lg border-gray-200 p-2 w-44">
-                                <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
-                                    <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="tshirt" />
-                                </div>
-                                <div className="mt-4">
-                                    <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">CODESCLOTH</h3>
-                                    <h2 className="md:text-lg truncate font-medium">{product.title}</h2>
-                                    <ReviewComponent productId={product.slug} />
-                                    <p className={`mt-1 text-purple-600 tracking-wider font-semibold drop-shadow-[0_0_20px_rgba(255,255,255,1)] text-lg md:text-2xl`}>₹{formatIndianCurrency(product.price)}</p>
-                                    <div className='mt-1'>
-                                        {product.size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>S</span>}
-                                        {product.size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>M</span>}
-                                        {product.size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>L</span>}
-                                        {product.size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XL</span>}
-                                        {product.size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XXL</span>}
+                        {products.map((product, index) => {
+                            const discountPercentage = Math.round((1 - product.price / product.originalPrice) * 100);
+                            return (
+                                <Link key={index} href={`/product/${product.slug}`} className="md:w-72 shadow-lg md:m-4 my-2 border rounded-lg border-gray-200 p-2 w-44">
+                                    <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
+                                        <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="caps" />
                                     </div>
-                                    <div className='mt-1'>
-                                        {renderColorButtons(product.color)}
+                                    <div className="mt-4">
+                                        <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">CODESCLOTH</h3>
+                                        <h2 className="md:text-lg truncate font-medium">{product.title}</h2>
+                                        <ReviewComponent productId={product.slug} />
+                                        {product.availableQty > 0 ? (
+                                            <div>
+                                                {product.originalPrice && product.originalPrice > product.price ? (
+                                                    <div className="flex flex-col justify-center">
+                                                        <p className="font-medium text-purple-600 text-xl md:text-2xl">
+                                                            <span className="font-normal text-sm md:text-lg pr-2 text-red-500">-{discountPercentage}% </span>
+                                                             ₹ {formatIndianCurrency(product.price)}
+                                                        </p>
+                                                        <p className="font-medium text-purple-400 text-sm md:text-md line-through mr-2">
+                                                            ₹ {formatIndianCurrency(product.originalPrice)}
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    <p className="font-semibold text-purple-600 text-xl">
+                                                        ₹ {formatIndianCurrency(product.price)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <p className="title-font font-medium text-3xl text-red-500">Out of Stock!</p>
+                                        )}
+                                        <div className='mt-1'>
+                                            {product.size.includes('S') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>S</span>}
+                                            {product.size.includes('M') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>M</span>}
+                                            {product.size.includes('L') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>L</span>}
+                                            {product.size.includes('XL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XL</span>}
+                                            {product.size.includes('XXL') && <span className={`border ${isDarkMode ? 'border-white' : 'border-black'} text-sm px-1 mx-1`}>XXL</span>}
+                                        </div>
+                                        <div className='mt-1'>
+                                            {renderColorButtons(product.color)}
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            )
+                        })}
                     </div>
                 </div>
             )}

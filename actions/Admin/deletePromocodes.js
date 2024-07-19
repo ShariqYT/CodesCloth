@@ -4,7 +4,7 @@ import PromoCodes from "@/models/PromoCodes";
 
 export const deletePromocodes = async (id) => {
     try {
-        await connectDB(); // Ensure MongoDB connection is established
+        await connectDB();
 
         // Attempt to delete the promo code by its ID
         const deletedPromocode = await PromoCodes.findByIdAndDelete(id);
