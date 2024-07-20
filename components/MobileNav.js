@@ -9,6 +9,8 @@ import { app } from '@/app/config';
 import { Toaster, toast } from 'react-hot-toast';
 import { useDarkMode } from '@/context/DarkModeContext';
 import { CartContext } from '@/context/CartContext';
+import SearchBar from './extra/Search';
+import { Search } from 'lucide-react';
 
 const MobileNav = () => {
     const pathname = usePathname();
@@ -48,6 +50,8 @@ const MobileNav = () => {
                     </svg>
                 )}
             </button>
+
+            <SearchBar />
 
             <Link href={'/my-cart'} className={`p-1 ${pathname === '/my-cart' ? 'bg-purple-700 rounded-xl px-4' : ''}`}>
                 <Image unoptimized src={'/cart.gif'} className={`w-8 scale-x-[-1] relative ${isDarkMode ? 'cart-svg' : ''} icon`} width={500} height={500} alt='cart' />

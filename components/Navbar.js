@@ -8,13 +8,16 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { app } from '@/app/config'
 import toast from 'react-hot-toast'
 import { useDarkMode } from '@/context/DarkModeContext';
+import SearchBar from './extra/Search'
 
 const Logo = () => {
   const { isDarkMode } = useDarkMode()
   return (
-    <Link href='/'>
-      <Image unoptimized src='/logo4.png' priority={true} width={1} height={1} className={`w-24 filter ${isDarkMode ? `drop-shadow-[0_0px_10px_rgba(0,0,0,1)]` : `drop-shadow-[0_0px_2px_rgb(0_0_0/_100%)`}`} alt='logo' />
-    </Link>
+    <>
+      <Link href='/'>
+        <Image unoptimized src='/logo4.png' priority={true} width={1} height={1} className={`w-24 filter ${isDarkMode ? `drop-shadow-[0_0px_10px_rgba(0,0,0,1)]` : `drop-shadow-[0_0px_2px_rgb(0_0_0/_100%)`}`} alt='logo' />
+      </Link>
+    </>
   )
 };
 
@@ -131,18 +134,18 @@ const MobileMenu = () => {
           <path d="M20 19L4 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      
-        <div onClick={() => setIsOpen(!isOpen)} className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] !z-10 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} ${isOpen ? 'translate-x-0' : '-translate-x-[500px]'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-all duration-300 ease-in-out`}>
-          <ul className='flex flex-col gap-4 items-center font-bold'>
-            {categories.map(category => (
-              <Link href={`/${category}`} key={category}>
-                <li className='cursor-pointer [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800' onClick={handleItemClick}>
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </li>
-              </Link>
-            ))}
-          </ul>
-        </div>
+
+      <div onClick={() => setIsOpen(!isOpen)} className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] !z-10 text-white' : 'bg-[rgba(255,255,255,1)] text-black'} ${isOpen ? 'translate-x-0' : '-translate-x-[500px]'} w-full absolute top-20 border-2  border-purple-700 left-0 flex flex-col p-4 rounded-lg shadow-xl font-semibold  transform  transition-all duration-300 ease-in-out`}>
+        <ul className='flex flex-col gap-4 items-center font-bold'>
+          {categories.map(category => (
+            <Link href={`/${category}`} key={category}>
+              <li className='cursor-pointer [text-shadow:_0_0px_20px_rgb(255_255_255_/_100%)] hover:text-purple-800' onClick={handleItemClick}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </li>
+            </Link>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
@@ -169,21 +172,12 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  // if (loading) {
-  //   return (
-  //     <nav className={`animate-pulse flex justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
-  //     <p className='w-52 h-10 bg-gray-300 icon p-2 rounded-full'></p>
-  //     <p className='w-96 h-10 bg-gray-300 icon p-2 rounded-full'></p>
-  //     <p className='w-8 h-10 bg-gray-300 icon p-2 rounded-full'></p>
-  //   </nav>
-  //   );
-  // }
-
   return (
-    <nav className={`flex ${loading ? '-translate-y-32' : 'translate-y-0'} border-b-4 md:border-4 border-purple-900 transition-all duration-1000 ease-in-out justify-between z-50 items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+    <nav className={`flex ${loading ? '-translate-y-32' : 'translate-y-0'} border-b-4 md:border-4 border-purple-900 transition-all duration-1000 ease-in-out justify-between z-[9999] items-center md:flex-row md:px-8 md:py-4 py-4 px-6 md:my-3 md:mx-32 md:rounded-full sticky top-0 md:top-3 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.3)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.2)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
       <Logo />
       <MenuItems />
       <div className='md:flex justify-center hidden gap-5 items-center'>
+        <SearchBar />
         <button onClick={toggleDarkMode}>
           {!isDarkMode ? (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-8 icon' color="#000000" fill="none">

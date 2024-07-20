@@ -42,6 +42,7 @@ const Checkoutpage = () => {
             const data = await getUser.json();
             if (data.success) {
                 setName(data.name || '');
+                setEmail(data.email || '');
                 setPhone(data.phone || '');
                 setAddress(data.address || '');
             }
@@ -502,7 +503,7 @@ const Checkoutpage = () => {
                                                 alt='Product Image'
                                                 fill={true}
                                                 sizes='100%'
-                                                className='rounded-lg object-cover'
+                                                className='rounded-lg object-contain bg-white'
                                             />
                                         </div>
                                         <div className='md:px-8'>

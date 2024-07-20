@@ -57,19 +57,19 @@ const PopularProducts = () => {
             <div className='relative'>
                 <CarouselContent className="m-0 w-[99vw] rounded-xl h-[89vh]">
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner1} alt="Banner 1" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner1} alt="Banner 1" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner2} alt="Banner 2" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner2} alt="Banner 2" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner3} alt="Banner 3" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner3} alt="Banner 3" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner5} alt="Banner 5" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner5} alt="Banner 5" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner6} alt="Banner 6" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner6} alt="Banner 6" />
                     </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="absolute h-5 w-5 md:h-10 md:w-10 top-1/2 left-5" onClick={handlePrev} />

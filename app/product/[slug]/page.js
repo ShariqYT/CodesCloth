@@ -62,7 +62,7 @@ const ProductSlug = async ({ params }) => {
         <div className="container mx-auto flex justify-center items-center md:items-start flex-col md:flex-row px-5 md:py-24 py-16">
           <div className="flex w-80 h-80 md:h-96 md:w-96 mt-10 justify-center items-center relative rounded-lg">
             <Image
-              className="rounded-lg object-cover shadow-lg transition-all duration-200 ease-in-out"
+              className="rounded-lg object-contain bg-white shadow-lg transition-all duration-200 ease-in-out"
               fill={true}
               sizes="(min-width: 780px) 369px, 320px"
               src={product.img}

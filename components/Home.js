@@ -12,8 +12,16 @@ import Cap from '@/public/collections/caps.webp';
 import Hoodie from '@/public/collections/hoodies.webp';
 import { getAllPromocodes } from '@/actions/Admin/getAllPromocodes';
 import CarouselComponent from './extra/Carousel';
+import { getBestSellingProducts } from '@/actions/Admin/getBestSellingProducts';
+import BestSellingProducts from './extra/BestSellingProducts';
+
+const getBestProducts = async () => {
+    const response = await getBestSellingProducts();
+    return response
+}
 
 const Home = () => {
+    const [bestProducts, setBestProducts] = useState([]);
     const { isDarkMode } = useDarkMode()
     const [loading, setLoading] = useState(true);
     const [spin, setSpin] = useState(false);
@@ -24,6 +32,10 @@ const Home = () => {
             once: true,
         })
         window.scrollTo(0, 0)
+
+        getBestProducts().then((res) => {
+            setBestProducts(JSON.parse(res));
+        })
         async function getAllPromoCodes() {
             const promo = await getAllPromocodes();
             setPromocode(promo);
@@ -31,7 +43,7 @@ const Home = () => {
         }
 
         getAllPromoCodes();
-        
+
     }, [])
 
     if (Date.now() > promocode[1]?.expiry) {
@@ -79,23 +91,23 @@ const Home = () => {
 
                 <div className='grid md:grid-cols-3 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
 
-                    <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2 `}`}>
+                    <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1 rounded-lg ${isDarkMode ? `` : `border-2 `}`}>
                         <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Cap} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="caps" />
                         </div>
                     </Link>
-                    <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
+                    <Link href={'/mugs'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1 rounded-lg ${isDarkMode ? `` : `border-2`}`}>
                         <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Mug} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="mugs" />
                         </div>
                     </Link>
 
-                    <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
+                    <Link href={'/tshirts'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1 rounded-lg ${isDarkMode ? `` : `border-2`}`}>
                         <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Tshirt} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="tshirt" />
                         </div>
                     </Link>
-                    <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1  ${isDarkMode ? `` : `border-2`}`}>
+                    <Link href={'/hoodies'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1 rounded-lg ${isDarkMode ? `` : `border-2`}`}>
                         <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
@@ -106,7 +118,19 @@ const Home = () => {
             {/* End of Collections */}
 
             {/* Popular products */}
-            
+            <section className='md:container mt-4 flex justify-center items-center flex-col mx-auto'>
+                <div data-aos="fade-right" className="container px-5 flex items-center justify-center flex-col py-24 mx-auto">
+                <div className='flex flex-col items-center justify-center'>
+                    <h1 data-aos="fade-down" className='text-xl md:text-4xl font-bold'>BEST SELLING PRODUCTS</h1>
+                    <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[80%]"></div>
+                </div>
+                <div className='grid md:grid-cols-4 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
+                        {bestProducts.map((product, index) => (
+                            <BestSellingProducts key={index} product={product} />
+                        ))}
+                    </div>
+                </div>
+            </section>
             {/* End of Popular products */}
 
             {/* Services */}

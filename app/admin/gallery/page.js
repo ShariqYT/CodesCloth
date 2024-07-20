@@ -25,7 +25,7 @@ const Gallery = async () => {
             alt={product.title}
             width={200}
             height={200}
-            className="md:h-40 md:w-40 w-full h-full m-10 shadow-xl rounded-lg hover:scale-[2] transition-all duration-200 ease-in-out object-cover"
+            className="md:h-40 md:w-40 w-full h-full m-10 shadow-xl rounded-lg hover:scale-[2] transition-all duration-200 ease-in-out object-contain bg-white"
           />
         ))}
       </div>

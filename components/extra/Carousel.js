@@ -65,34 +65,34 @@ const CarouselComponent = () => {
         >
             {/* Desktop Carousel */}
             <div className='relative'>
-                <CarouselContent className="m-0 w-[99vw] rounded-xl h-[89vh]">
+                <CarouselContent className="m-0 md:w-[99vw] mt-10 md:mt-0 rounded-xl md:h-[89vh]">
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner1} alt="Banner 1" />
-                        <Image className='rounded-xl object-contain h-full block md:hidden' src={MBanner1} alt="Banner 1" />
+                        <Image className='rounded-xl object-cover bg-white h-full hidden md:block' src={Banner1} alt="Banner 1" />
+                        <Image className='rounded-xl object-contain bg-white h-full block md:hidden' src={MBanner1} alt="Banner 1" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner2} alt="Banner 2" />
-                        <Image className='rounded-xl object-contain h-full block md:hidden' src={MBanner2} alt="Banner 2" />
+                        <Image className='rounded-xl object-cover bg-white h-full hidden md:block' src={Banner2} alt="Banner 2" />
+                        <Image className='rounded-xl object-contain bg-white h-full block md:hidden' src={MBanner2} alt="Banner 2" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner3} alt="Banner 3" />
-                        <Image className='rounded-xl object-contain h-full block md:hidden' src={MBanner4} alt="Banner 4" />
+                        <Image className='rounded-xl object-cover bg-white h-full hidden md:block' src={Banner3} alt="Banner 3" />
+                        <Image className='rounded-xl object-contain bg-white h-full block md:hidden' src={MBanner4} alt="Banner 4" />
                     </CarouselItem>
                     {/* <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner4} alt="Banner 4" />
+                        <Image className='rounded-xl object-contain bg-white h-full hidden md:block' src={Banner4} alt="Banner 4" />
                     </CarouselItem> */}
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner5} alt="Banner 5" />
-                        <Image className='rounded-xl object-contain h-full block md:hidden' src={MBanner5} alt="Banner 5" />
+                        <Image className='rounded-xl object-cover bg-white h-full hidden md:block' src={Banner5} alt="Banner 5" />
+                        <Image className='rounded-xl object-contain bg-white h-full block md:hidden' src={MBanner5} alt="Banner 5" />
                     </CarouselItem>
                     <CarouselItem className="w-full p-0 h-full rounded-xl" >
-                        <Image className='rounded-xl object-cover h-full hidden md:block' src={Banner6} alt="Banner 6" />
-                        <Image className='rounded-xl object-contain h-full block md:hidden' src={MBanner6} alt="Banner 6" />
+                        <Image className='rounded-xl object-cover bg-white h-full hidden md:block' src={Banner6} alt="Banner 6" />
+                        <Image className='rounded-xl object-contain bg-white h-full block md:hidden' src={MBanner6} alt="Banner 6" />
                     </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="absolute h-5 w-5 md:h-10 md:w-10 top-1/2 left-5" onClick={handlePrev} />
                 <CarouselNext className="absolute h-5 w-5 md:h-10 md:w-10 top-1/2 right-5" onClick={handleNext} />
-                <Link href={'/tshirts'} className='absolute bottom-32 left-32 md:bottom-52 md:left-[46%]'>
+                <Link href={'/tshirts'} className='absolute bottom-12 left-32 md:bottom-52 md:left-[46%]'>
                     <button className={`${isDarkMode ? 'bg-black text-white shadow-[0_0_20px_rgba(0,0,0,.4)]' : 'bg-white text-black shadow-[0_0_20px_rgba(0,0,0,.4)]'} md:hover:scale-[1.2] transition-all duration-300 ease-in-out py-2 px-4 md:text-2xl text-lg rounded-lg`}>SHOP NOW</button>
                 </Link>
                 <CarouselIndicators
@@ -106,7 +106,7 @@ const CarouselComponent = () => {
 
 const CarouselIndicators = ({ totalSlides, currentSlideIndex }) => {
     return (
-        <div className="absolute bottom-20 md:bottom-32 left-0 right-0 flex items-center justify-center">
+        <div className="absolute bottom-2 md:bottom-32 left-0 right-0 flex items-center justify-center">
             {Array.from({ length: totalSlides }).map((_, index) => (
                 <span
                     style={{ boxShadow: '0px 0px 50px 1px #000000' }}

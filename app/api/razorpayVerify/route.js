@@ -53,7 +53,7 @@ export const POST = async (req) => {
             await Order.findOneAndUpdate({ orderId: orderCreationId }, { status: "Paid", paymentInfo: JSON.stringify(body), transactionId: razorpayPaymentId });
             const products = order.products;
             for (let slug in products) {
-                await Product.findOneAndUpdate({ slug: slug }, { $inc: { availableQty: -products[slug].qty } });
+                await Product.findOneAndUpdate({ slug: slug }, { $inc: { availableQty: -products[slug].qty, sold: products[slug].qty } });
             }
             return NextResponse.json({ success: true, message: "Payment verified successfully", order }, { status: 200 });
         } else {

@@ -51,7 +51,7 @@ const ImageUpload = ({ setImage }) => {
                 alt={"Image"}
                 width={200}
                 height={200}
-                className={`h-32 w-32 hover:scale-[2] ${isDarkMode? 'shadow-[1px_1px_20px_rgba(255,255,255,.6)]' : 'shadow-[0_0_20px_rgba(0,0,0,.3)]'} transition-all duration-200 object-cover rounded-md`}
+                className={`h-32 w-32 hover:scale-[2] ${isDarkMode? 'shadow-[1px_1px_20px_rgba(255,255,255,.6)]' : 'shadow-[0_0_20px_rgba(0,0,0,.3)]'} transition-all duration-200 object-contain bg-white rounded-md`}
               />
               <p onClick={handleRemove} className='text-center mt-2 text-red-500 underline cursor-pointer'>Remove</p>
             </div>

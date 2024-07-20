@@ -65,7 +65,7 @@ const Mugs = () => {
                             return (
                                 <Link key={index} href={`/product/${product.slug}`} className="md:w-72 shadow-lg md:m-4 my-2 border rounded-lg border-gray-200 p-2 w-44">
                                     <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
-                                        <Image className="rounded-lg object-cover" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="mugs" />
+                                        <Image className="rounded-lg object-contain bg-white" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="mugs" />
                                     </div>
                                     <div className="mt-4">
                                         <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">CODESCLOTH</h3>

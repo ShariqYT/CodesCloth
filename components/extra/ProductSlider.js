@@ -29,8 +29,8 @@ const ProductSlider = ({ products }) => {
             <div id="productSlider" className="flex items-center pb-12 overflow-x-scroll scrollbar-hide">
                 {Object.values(products).map((product, index) => (
                     <Link key={index} href={`/product/${product.slug}`} className="md:w-52 shadow-lg mx-4 border rounded-lg border-gray-200 p-2 w-2/4">
-                        <div className="flex h-24 justify-center items-center relative rounded-lg">
-                            <Image className="rounded-lg object-contain" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="tshirt" />
+                        <div className="flex h-32 justify-center items-center relative rounded-lg">
+                            <Image className="rounded-lg object-contain bg-white" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt="tshirt" />
                         </div>
                         <div className="mt-4">
                             <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">T-Shirts</h3>
