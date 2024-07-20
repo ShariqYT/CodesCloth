@@ -76,7 +76,7 @@ export default function RootLayout({ children }) {
           <meta key={index} name={tag.name} content={tag.content} />
         ))}
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <NextTopLoader
           color="#41008c"
           height={3}

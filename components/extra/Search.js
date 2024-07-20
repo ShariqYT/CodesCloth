@@ -50,7 +50,7 @@ const SearchBar = () => {
     }, [show])
 
     return (
-        <>
+        <div>
             <button
                 onClick={() => setShow(!show)}
                 className='md:border-2 border-purple-700 transition-all duration-1000 ease-in-out hover:rotate-[360deg] p-1 rounded-full'>
@@ -58,7 +58,7 @@ const SearchBar = () => {
             </button>
             <div
                 onClick={() => setShow(false)}
-                className={`transform transition-transform duration-500 ease-in-out z-10 w-[23.42rem] h-[100vh] md:w-[100vw] md:h-[100vh] bg-[rgba(0,0,0,0.8)] fixed -top-[38.7rem] left-0 md:-top-4 md:-left-[8.25rem] ${show ? 'translate-y-0 ' : 'md:-translate-y-[80rem] translate-y-[50rem]'}`}>
+                className={`transform transition-transform duration-500 ease-in-out z-10 w-[23.42rem] h-[100vh] md:w-[100vw] md:h-[100vh] overflow-x-hidden bg-[rgba(0,0,0,0.8)] fixed -top-[38.7rem] left-0 md:-top-4 md:-left-[8.25rem] ${show ? 'translate-x-0 md:translate-y-0 block ' : 'md:-translate-y-[80rem] md:translate-x-0 -translate-x-[50rem] hidden '}`}>
             </div>
             <input
                 ref={inputRef}
@@ -67,7 +67,7 @@ const SearchBar = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleInputKeyDown}
-                className={`transform transition-transform text-black duration-500 ease-in-out w-[23rem] h-12 md:w-[50vw] z-20 md:h-[6vh] border-2 fixed outline-none bottom-[30rem] md:-bottom-20 right-1 md:right-[23%] border-purple-700 px-4 md:px-8 rounded-xl ${show ? 'translate-y-0' : 'translate-y-[40rem] md:-translate-y-[20rem]'}`}
+                className={`transform overflow-x-hidden transition-transform text-black duration-500 ease-in-out w-[23rem] h-12 md:w-[50vw] z-20 md:h-[6vh] border-2 fixed outline-none bottom-[30rem] md:-bottom-20 right-1 md:right-[23%] border-purple-700 px-4 md:px-8 rounded-xl ${show ? 'translate-x-0 md:translate-y-0' : '-translate-x-[40rem] md:translate-x-0 md:-translate-y-[20rem]'}`}
             />
             {show && results.length > 0 ? (
                 <div className="fixed -top-96 left-2 md:top-[10rem] rounded-xl md:left-80 right-0 text-black bg-white z-30 max-w-[22.5rem] md:max-w-[60rem] max-h-[50vh] overflow-y-auto">
@@ -89,7 +89,7 @@ const SearchBar = () => {
                     )}
                 </>
             )}
-        </>
+        </div>
     )
 }
 
