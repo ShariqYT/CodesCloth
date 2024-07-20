@@ -119,7 +119,7 @@ const ProductSlug = async ({ params }) => {
           <ProductSlider slug={slug} products={products} />
 
           <h1 className="text-xl font-semibold mt-20">Customer Reviews</h1>
-          <div className="flex flex-col md:flex-row mt-10 mb-20 gap-12 p-4">
+          <div className="flex flex-col md:flex-row mt-10 mb-20 gap-12 md:p-4">
             <ReviewForm productId={product.slug} />
             <div className="border-2 border-gray-200 rounded-full"></div>
             <ProductsReviews productId={product.slug} />

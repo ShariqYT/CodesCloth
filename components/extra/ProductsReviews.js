@@ -35,7 +35,7 @@ const ProductsReviews = ({ productId }) => {
             {reviews.length > 0 ? (
                 reviews.map(review => {
                     return (
-                        <article key={review._id} className="p-6 mb-6 rounded-lg border-2 border-purple-700 shadow-lg">
+                        <article key={review._id} className="md:p-6 p-4 mb-6 rounded-lg border-2 border-purple-700 shadow-lg">
                             <div className="flex items-center mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 me-4 rounded-full" fill="none">
                                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
