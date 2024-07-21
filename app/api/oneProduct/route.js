@@ -9,28 +9,27 @@ export async function GET(request) {
         const { searchParams } = new URL(request.url);
         const slug = searchParams.get('slug');
         if (!slug) {
-            return NextResponse.json({ error: 'Slug is required' }, { status: 200 });
+            return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
         }
 
-        let product = await Product.findOne({ slug });
+        const product = await Product.findOne({ slug });
         if (!product) {
             return NextResponse.json({ error: 'Product not found' }, { status: 404 });
         }
 
-        let variants = await Product.find({ title: product.title });
-        let colorSizeSlug = {};
-        for (let item of variants) {
-            if (Object.keys(colorSizeSlug).includes(item.color)) {
-                colorSizeSlug[item.color][item.size] = { slug: item.slug };
-            } else {
+        const variants = await Product.find({ title: product.title });
+        const colorSizeSlug = {};
+
+        for (const item of variants) {
+            if (!colorSizeSlug[item.color]) {
                 colorSizeSlug[item.color] = {};
-                colorSizeSlug[item.color][item.size] = { slug: item.slug };
             }
+            colorSizeSlug[item.color][item.size] = { slug: item.slug };
         }
 
         return NextResponse.json({ product, variants: colorSizeSlug });
     } catch (err) {
-        ('Error fetching products:', err);
+        console.error('Error fetching product:', err);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

@@ -1,3 +1,5 @@
+"use server"
+
 import connectDB from "@/db/connectDB";
 import Inbox from "@/models/Inbox";
 import { NextResponse } from "next/server";
@@ -7,24 +9,26 @@ export async function POST(request) {
         await connectDB();
 
         const { name, email, message } = await request.json();
+        
         if (!name || !email || !message) {
-            return NextResponse.json({ success: false, error: "All fields are required" }, { status: 200 });
+            return NextResponse.json({ success: false, error: "All fields are required" }, { status: 400 });
         }
-        
-        const alreadyExists = await Inbox.findOne({ email: email });
-        if (alreadyExists) {
-            const updateMessage = await Inbox.findOneAndUpdate(
-                { email: email },
-                { $push: { message: message } },
-                { new: true }
-            );
-            return NextResponse.json({ inbox: updateMessage, success: "Success", message: "Thank you for contacting us!" }, { status: 200 });
+
+        const updateData = { $push: { message: message } };
+        let responseMessage;
+
+        let inbox = await Inbox.findOneAndUpdate({ email: email }, updateData, { new: true });
+        if (!inbox) {
+            inbox = new Inbox({ name, email, message: [message] });
+            await inbox.save();
+            responseMessage = "Thank you for contacting us!";
+        } else {
+            responseMessage = "Message added successfully!";
         }
-        
-        const inbox = new Inbox({ name: name, email: email, message: [message] });
-        await inbox.save();
-        return NextResponse.json({ inbox: inbox, success: "Success", message: "Thank you for contacting us!" }, { status: 200 });
+
+        return NextResponse.json({ inbox, success: true, message: responseMessage }, { status: 200 });
     } catch (err) {
+        console.error(err);  // Log the error for server-side debugging
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import ECommerce from '@/components/Dashboard/E-commerce';
 
+// Metadata settings to prevent indexing by search engines
 export const metadata = {
   title: 'Admin - Dashboard',
   robots: {
@@ -13,7 +14,7 @@ export const metadata = {
     },
     noarchive: true,
   }
-}
+};
 
 const AdminDashboard = () => {
   return (

@@ -1,7 +1,6 @@
 import "./globals.css";
 import { CartProvider } from '@/context/CartContext';
 import NextTopLoader from "nextjs-toploader";
-import MobileNav from "@/components/MobileNav";
 import { DarkModeProvider } from '@/context/DarkModeContext';
 import ClientOnlyLayout from "@/components/ClientOnlyLayouts";
 import SessionWrapper from "@/components/SessionWrapper";
@@ -91,7 +90,6 @@ export default function RootLayout({ children }) {
                 {children}
               </SessionWrapper>
             </ClientOnlyLayout>
-            <MobileNav />
           </CartProvider>
         </DarkModeProvider>
       </body>

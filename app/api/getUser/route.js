@@ -7,14 +7,18 @@ export async function POST(request) {
         await connectDB();
         const { user } = await request.json();
 
-        
         const query = isNaN(user) ? { email: user } : { phone: Number(user) };
         const userFind = await User.findOne(query);
+
+        if (!userFind) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
 
         const { name, email, address, pincode, phone } = userFind;
 
         return NextResponse.json({ success: true, name, email, address, pincode, phone }, { status: 200 });
     } catch (err) {
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 200 });
+        console.error(err); // Log error for debugging
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

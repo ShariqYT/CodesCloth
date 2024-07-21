@@ -14,7 +14,7 @@ import { Search } from 'lucide-react';
 
 const MobileNav = () => {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
+    const [show, setShow] = useState(false);
     const [user, setUser] = useState(null);
     const { isDarkMode, toggleDarkMode } = useDarkMode();
     const { cart } = useContext(CartContext);
@@ -26,11 +26,11 @@ const MobileNav = () => {
     }, [auth]);
 
     const handleItemClick = () => {
-        setIsOpen(!isOpen);
+        setShow(!show);
     };
 
     return (
-        <div className={`md:hidden flex justify-between z-[99999] items-center px-5 py-1 sticky bottom-0 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.4)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.3)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
+        <div className={`md:hidden w-full flex justify-between z-[99999] items-center px-5 py-1 fixed bottom-0 ${isDarkMode ? 'bg-[rgba(0,0,0,0.6)]' : 'bg-[rgba(255,255,255,0.4)]'} backdrop-blur ${isDarkMode ? 'shadow-[0_0_50px_rgba(255,255,255,0.3)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.2)]'}`}>
             <Link href={'/'} className={`p-1 ${pathname === '/' ? 'bg-purple-700 rounded-xl px-4' : ''}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-8 icon' color="#000000" fill="#ffffff">
                     <path d="M9.06165 4.82633L3.23911 9.92134C2.7398 10.3583 3.07458 11.1343 3.76238 11.1343C4.18259 11.1343 4.52324 11.4489 4.52324 11.8371V15.0806C4.52324 17.871 4.52324 19.2662 5.46176 20.1331C6.40029 21 7.91082 21 10.9319 21H13.0681C16.0892 21 17.5997 21 18.5382 20.1331C19.4768 19.2662 19.4768 17.871 19.4768 15.0806V11.8371C19.4768 11.4489 19.8174 11.1343 20.2376 11.1343C20.9254 11.1343 21.2602 10.3583 20.7609 9.92134L14.9383 4.82633C13.5469 3.60878 12.8512 3 12 3C11.1488 3 10.4531 3.60878 9.06165 4.82633Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -51,8 +51,6 @@ const MobileNav = () => {
                 )}
             </button>
 
-            <SearchBar />
-
             <Link href={'/my-cart'} className={`p-1 ${pathname === '/my-cart' ? 'bg-purple-700 rounded-xl px-4' : ''}`}>
                 <Image unoptimized src={'/cart.gif'} className={`w-8 scale-x-[-1] relative ${isDarkMode ? 'cart-svg' : ''} icon`} width={500} height={500} alt='cart' />
                 <div className='w-5 h-5 bg-purple-700 flex md:hidden absolute bottom-7 right-28 rounded-full text-white justify-center items-center'>
@@ -60,13 +58,13 @@ const MobileNav = () => {
                 </div>
             </Link>
 
-            <button className={`p-1 ${['/myaccount', '/sign-in', '/my-orders'].includes(pathname) ? 'bg-purple-700 rounded-xl px-4' : ''}`} onClick={() => setIsOpen(prev => !prev)}
-                onBlur={() => setTimeout(() => setIsOpen(false), 200)}>
+            <button className={`p-1 ${['/myaccount', '/sign-in', '/my-orders'].includes(pathname) ? 'bg-purple-700 rounded-xl px-4' : ''}`} onClick={() => setShow(prev => !prev)}
+                onBlur={() => setTimeout(() => setShow(false), 200)}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-8 icon' color="#000000" fill="#ffffff">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                     <path d="M7.5 17C9.8317 14.5578 14.1432 14.4428 16.5 17M14.4951 9.5C14.4951 10.8807 13.3742 12 11.9915 12C10.6089 12 9.48797 10.8807 9.48797 9.5C9.48797 8.11929 10.6089 7 11.9915 7C13.3742 7 14.4951 8.11929 14.4951 9.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                {isOpen && (
+                {show && (
                     <div className={`${isDarkMode ? 'bg-[rgba(0,0,0,1)] z-50 text-white' : 'bg-white text-black'} w-full absolute ${user ? 'top-[-12rem] p-4' : "top-[-4.2rem]"} border-2 border-purple-700 left-0 flex flex-col rounded-lg shadow-xl font-semibold transform transition-transform duration-200 ease-in-out`}>
                         <ul className='flex flex-col gap-4 items-center font-bold'>
                             {!user ? (

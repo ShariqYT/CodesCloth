@@ -10,9 +10,12 @@ const MyOrders = () => {
     const auth = getAuth(app);
     const router = useRouter();
     const [orders, setOrders] = useState([]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchOrders = async (user) => {
+            setLoading(true);
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/myOrders`, {
                     method: 'POST',
@@ -21,17 +24,20 @@ const MyOrders = () => {
                     },
                     body: JSON.stringify({ user }),
                 });
-
+    
                 if (!response.ok) {
                     throw new Error('Failed to fetch orders');
                 }
-
+    
                 const data = await response.json();
                 setOrders(data.orders);
             } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
-
+    
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 router.push('/sign-in');
@@ -49,14 +55,17 @@ const MyOrders = () => {
 
     return (
         <section className="w-full min-h-screen py-8 antialiased">
+            
             <div className='flex flex-col items-center gap-1 justify-center'>
                 <h3 className="text-2xl text-center mt-10 md:mt-1 font-semibold">My Orders</h3>
                 <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 md:w-[4%] w-[25%]"></div>
             </div>
+            
             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                 <div className="mx-auto max-w-4xl">
 
-
+                {loading && <div className="text-center">Loading...</div>}
+                {error && <div className="text-red-500 text-center mt-4">{error}</div>}
                     {/* <div className="flex flex-wrap items-center gap-y-4 py-6">
                                 <dl className="w-1/2 sm:w-1/4 md:w-auto md:flex-1">
                                     <dd className="mt-2 text-base font-semibold text-gray-900 ">

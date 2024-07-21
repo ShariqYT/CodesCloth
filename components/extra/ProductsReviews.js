@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getAllUsers } from '@/actions/Admin/getAllUsers';
@@ -6,21 +6,29 @@ import { getAllUsers } from '@/actions/Admin/getAllUsers';
 const ProductsReviews = ({ productId }) => {
     const [reviews, setReviews] = useState([]);
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchUsersAndReviews = async () => {
             try {
-                const fetchedUsers = await getAllUsers();
-                setUsers(fetchedUsers);
+                const [fetchedUsers, reviewRes] = await Promise.all([
+                    getAllUsers(),
+                    fetch(`/api/reviews?productId=${productId}`)
+                ]);
 
-                const res = await fetch(`/api/reviews?productId=${productId}`);
-                if (!res.ok) {
+                if (!reviewRes.ok) {
                     throw new Error('Failed to fetch reviews');
                 }
-                const data = await res.json();
-                setReviews(data);
+
+                const reviewData = await reviewRes.json();
+                setUsers(fetchedUsers);
+                setReviews(reviewData);
             } catch (error) {
+                setError('Error fetching data');
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -29,6 +37,13 @@ const ProductsReviews = ({ productId }) => {
         }
     }, [productId]);
 
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div className='w-full'>
@@ -53,7 +68,9 @@ const ProductsReviews = ({ productId }) => {
                                 <p className='px-2 text-gray-300'> | <span className='text-purple-700 font-medium px-2 text-sm'> Verified Purchase </span></p>
                             </div>
                             <h3 className="ms-2 text-sm font-semibold">{review.title}</h3>
-                            <footer className="mb-5 text-sm"><p>Reviewed in India on {new Date(review.date).toLocaleTimeString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</p></footer>
+                            <footer className="mb-5 text-sm">
+                                <p>Reviewed in India on {new Date(review.date).toLocaleTimeString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</p>
+                            </footer>
                             <p className="mb-2 text-md whitespace-pre-line">{review.comment}</p>
                         </article>
                     );

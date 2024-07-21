@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
+import MobileNav from '@/components/MobileNav';
 
 export const metadata = {
   title: 'Admin',
@@ -11,6 +12,7 @@ const AdminLayout =  ({ children }) => {
         <DefaultLayout>
           {children}
         </DefaultLayout>
+        <MobileNav />
     </>
   );
 };

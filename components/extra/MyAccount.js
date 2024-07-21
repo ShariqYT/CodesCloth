@@ -19,17 +19,10 @@ const MyAccount = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                if (user.phoneNumber) {
-                    setPhone(user.phoneNumber.split('+91')[1] || '');
-                    getUser(user.phoneNumber.split('+91')[1] || '');
-                } else {
-                    setEmail(user.email || '');
-                    getUser(user.email || '');
-                }
+                const userIdentifier = user.phoneNumber ? user.phoneNumber.split('+91')[1] : user.email || '';
+                getUser(userIdentifier);
             } else {
                 router.push('/sign-in');
-                setPhone('');
-                setEmail('');
             }
         });
 
@@ -37,27 +30,30 @@ const MyAccount = () => {
     }, [auth, router]);
 
     const getUser = async (user) => {
-        let u = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ user }),
-        });
-        let res = await u.json();
-        if (res.success) {
-            setName(res.name);
-            setEmail(res.email);
-            setPhone(res.phone || '');
-            setAddress(res.address);
-            setPincode(res.pincode || '');
-        }else{
-            toast.error(res.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+        try {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user }),
+            });
+            let result = await response.json();
+            if (result.success) {
+                setName(result.name);
+                setEmail(result.email);
+                setPhone(result.phone || '');
+                setAddress(result.address);
+                setPincode(result.pincode || '');
+            } else {
+                toast.error(result.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+            }
+        } catch (error) {
+            toast.error('Failed to fetch user data', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
         }
-
     };
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
 
         switch (name) {
@@ -71,12 +67,12 @@ const MyAccount = () => {
                 setAddress(value);
                 break;
             case 'phone':
-                if (value.length <= 10) {
+                if (/^\d{0,10}$/.test(value)) {
                     setPhone(value);
                 }
                 break;
             case 'pincode':
-                if (value.length <= 6) {
+                if (/^\d{0,6}$/.test(value)) {
                     setPincode(value);
                 }
                 break;
@@ -91,65 +87,65 @@ const MyAccount = () => {
             toast.error('All fields are required', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
             return;
         }
-        const data = {
-            name,
-            email,
-            address,
-            pincode,
-            phone
-        }
-        let u = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/updateUser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        let res = await u.json();
-        if (res.success) {
-            router.push('/');
-            toast.success(res.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
-        } else {
-            toast.error(res.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+        const data = { name, email, address, pincode, phone };
+        try {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/updateUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            let result = await response.json();
+            if (result.success) {
+                toast.success(result.message, { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
+                router.push('/');
+            } else {
+                toast.error(result.message, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+            }
+        } catch (error) {
+            toast.error('Failed to update user data', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
         }
     }
-    return (
-        <div>
-            <div className="my-16 md:my-12 items-center gap-10 flex flex-col min-h-screen relative">
-                <div className='flex flex-col mb-8 md:mb-24 items-center gap-1 justify-center'>
-                    <h3 className="text-2xl text-center  font-semibold">My Account</h3>
-                    <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
-                </div>
 
-                <div className="md:w-full w-80 md:container ">
-                    <div className="grid grid-cols-6 gap-6">
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="name" className="text-sm font-medium block mb-2">Full Name</label>
-                            <input value={name} onChange={handleChange} type="text" name="name" id="name" className={`shadow-sm outline-none ${isDarkMode ? "bg-black" : "bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} placeholder=" John Doe" required />
-                        </div>
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="email" className="text-sm font-medium block mb-2">Email <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                            <input value={email} onChange={handleChange} type="email" name="email" id="email" className={`shadow-sm outline-none ${isDarkMode ? "bg-black" : "bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} placeholder="email@example.com" required />
-                        </div>
-                        <div className="col-span-full">
-                            <label htmlFor="address" className="text-sm font-medium block mb-2">Address</label>
-                            <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className={`${isDarkMode ? "bg-black" : "bg-white"} border-2 focus:border-purple-700 resize-none border-gray-300 sm:text-sm rounded-lg outline-none block w-full p-2.5`} placeholder="Your address"></textarea>
-                        </div>
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="phone" className="text-sm font-medium block mb-2">Phone Number <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                            <input type="number" name="phone" id="phone" className={`shadow-sm outline-none ${isDarkMode ? "bg-black" : "bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} placeholder='Enter 10-digit number' value={phone} onChange={handleChange} />
-                        </div>
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="pincode" className="text-sm font-medium block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
-                            <input type="number" maxLength={6} name="pincode" id="pincode" className={`shadow-sm outline-none ${isDarkMode ? "bg-black" : "bg-white"} border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5`} value={pincode} onChange={handleChange} placeholder='Enter 6-digit pincode' required />
-                        </div>
+    return (
+        <div className={`my-16 md:my-12 flex flex-col items-center gap-10 min-h-screen relative ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+            <div className='flex flex-col mb-8 md:mb-24 items-center gap-1 justify-center'>
+                <h3 className="text-2xl font-semibold">My Account</h3>
+                <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[75%]"></div>
+            </div>
+
+            <div className="md:w-full w-80 md:container ">
+                <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-6">
+                    <div className="col-span-6 sm:col-span-3">
+                        <label htmlFor="name" className="text-sm font-medium block mb-2">Full Name</label>
+                        <input value={name} onChange={handleChange} type="text" name="name" id="name" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder="John Doe" required />
                     </div>
-                </div>
-                <p className='text-sm text-red-700'>Note: Please update your details here to continue</p>
-                <button type="submit" onClick={handleSubmit} className="text-white mx-6 bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save all</button>
+                    <div className="col-span-6 sm:col-span-3">
+                        <label htmlFor="email" className="text-sm font-medium block mb-2">Email <span className='text-sm font-normal'>(cannot be updated)</span></label>
+                        <input value={email} onChange={handleChange} type="email" name="email" id="email" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder="email@example.com" readOnly />
+                    </div>
+                    <div className="col-span-full">
+                        <label htmlFor="address" className="text-sm font-medium block mb-2">Address</label>
+                        <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className="border-2 border-gray-300 focus:border-purple-700 resize-none rounded-lg outline-none block w-full p-2.5" placeholder="Your address"></textarea>
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                        <label htmlFor="phone" className="text-sm font-medium block mb-2">Phone Number <span className='text-sm font-normal'>(cannot be updated)</span></label>
+                        <input type="text" name="phone" id="phone" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder='Enter 10-digit number' value={phone} onChange={handleChange} maxLength={10} />
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                        <label htmlFor="pincode" className="text-sm font-medium block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
+                        <input type="text" name="pincode" id="pincode" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" value={pincode} onChange={handleChange} placeholder='Enter 6-digit pincode' maxLength={6} />
+                    </div>
+                    <div className="col-span-full flex flex-col items-center justify-center gap-4">
+                        <p className='text-sm text-red-700 text-center'>Note: Please update your details here to continue</p>
+                        <button type="submit" className="text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save all</button>
+                    </div>
+
+                </form>
             </div>
         </div>
     )
 }
 
-export default MyAccount
+export default MyAccount;

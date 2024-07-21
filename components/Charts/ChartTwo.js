@@ -1,107 +1,107 @@
-"use client"
-import React from "react"
-import dynamic from "next/dynamic"
-import { useDarkMode } from "@/context/DarkModeContext"
+"use client";
+import React, { useMemo } from "react";
+import dynamic from "next/dynamic";
+import { useDarkMode } from "@/context/DarkModeContext";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-  ssr: false
-})
+  ssr: false,
+});
 
 const ChartTwo = () => {
-  const { isDarkMode } = useDarkMode()
-  const options = {
-    colors: ["#7e22ce", "#f472b6"],
-    chart: {
-      fontFamily: "Satoshi, sans-serif",
-      type: "bar",
-      height: 335,
-      stacked: true,
-      toolbar: {
-        show: false
-      },
-      zoom: {
-        enabled: false
-      }
-    },
+  const { isDarkMode } = useDarkMode();
 
-    responsive: [
+  const options = useMemo(() => {
+    return {
+      colors: ["#7e22ce", "#f472b6"],
+      chart: {
+        fontFamily: "Satoshi, sans-serif",
+        type: "bar",
+        height: 335,
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+        zoom: {
+          enabled: false,
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 1536,
+          options: {
+            plotOptions: {
+              bar: {
+                borderRadius: 0,
+                columnWidth: "25%",
+              },
+            },
+          },
+        },
+      ],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          borderRadius: 0,
+          columnWidth: "25%",
+          borderRadiusApplication: "end",
+          borderRadiusWhenStacked: "last",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      xaxis: {
+        categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        labels: {
+          style: {
+            colors: isDarkMode ? "#fff" : "#000",
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: isDarkMode ? "#fff" : "#000",
+          },
+        },
+      },
+      legend: {
+        position: "top",
+        horizontalAlign: "left",
+        fontFamily: "Satoshi",
+        fontWeight: 500,
+        fontSize: "14px",
+        labels: {
+          colors: isDarkMode ? "#fff" : "#000",
+        },
+        markers: {
+          radius: 99,
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+    };
+  }, [isDarkMode]);
+
+  const series = useMemo(() => {
+    return [
       {
-        breakpoint: 1536,
-        options: {
-          plotOptions: {
-            bar: {
-              borderRadius: 0,
-              columnWidth: "25%"
-            }
-          }
-        }
-      }
-    ],
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        borderRadius: 0,
-        columnWidth: "25%",
-        borderRadiusApplication: "end",
-        borderRadiusWhenStacked: "last"
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-
-    xaxis: {
-      categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      labels: {
-        style: {
-          colors: isDarkMode ? "#fff" : "#000",
-        }
-      }
-    },
-
-    yaxis: {
-      labels: {
-        style: {
-          colors: isDarkMode ? "#fff" : "#000",
-        }
-      }
-    },
-    legend: {
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "Satoshi",
-      fontWeight: 500,
-      fontSize: "14px",
-      labels: {
-        colors: isDarkMode ? "#fff" : "#000",
+        name: "Sales",
+        data: [44, 55, 41, 67, 22, 43, 65],
       },
-      markers: {
-        radius: 99
-      }
-    },
-    fill: {
-      opacity: 1
-    },
-
-  }
-  const series = [
-    {
-      name: "Sales",
-      data: [44, 55, 41, 67, 22, 43, 65]
-    },
-    {
-      name: "Revenue",
-      data: [13, 23, 20, 8, 13, 27, 15]
-    }
-  ]
+      {
+        name: "Revenue",
+        data: [13, 23, 20, 8, 13, 27, 15],
+      },
+    ];
+  }, []);
 
   return (
-    <div className="col-span-12 rounded-lg border-2 border-purple-700 p-7 shadow  xl:col-span-4">
+    <div className="col-span-12 rounded-lg border-2 border-purple-700 p-7 shadow xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
-          <h4 className="text-xl font-semibold ">
-            Profit this week
-          </h4>
+          <h4 className="text-xl font-semibold">Profit this week</h4>
         </div>
         <div>
           <div className="relative z-20 inline-block">
@@ -153,7 +153,7 @@ const ChartTwo = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChartTwo
+export default ChartTwo;

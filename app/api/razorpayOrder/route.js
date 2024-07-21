@@ -11,54 +11,67 @@ const razorpay = new Razorpay({
 
 export async function POST(request) {
     try {
+        // Parse the request body
         const { amount, currency, name, city, state, email, address, phone, pincode, oid, cart, subTotal, user } = await request.json();
+        
+        // Connect to the database
         await connectDB();
 
+        // Check if user is authenticated
+        if (!user) {
+            return NextResponse.json({ success: false, error: 'Sign-In Required' }, { status: 401 }); // Use 401 Unauthorized status
+        }
+
+        // Prepare Razorpay order options
         const options = {
-            amount: amount * 100,
+            amount: amount * 100, // Convert to paise
             currency: currency,
-            receipt: 'rcp1',
+            receipt: `rcp-${Date.now()}`, // Use timestamp for unique receipt
         };
 
-        if(!user){
-            return NextResponse.json({ success: false, error: 'Sign-In Required' }, { status: 200 });
-        }
+        // Create an order with Razorpay
         const order = await razorpay.orders.create(options);
 
         let sumTotal = 0;
 
+        // Validate cart items
         for (let itemSlug in cart) {
             const cartItem = cart[itemSlug];
 
-            // Check if cartItem has necessary properties
+            // Validate cart item structure
             if (!cartItem || typeof cartItem.price !== 'number' || typeof cartItem.qty !== 'number') {
-                return NextResponse.json({ success: false, error: 'Invalid cart item structure' }, { status: 200 });
+                return NextResponse.json({ success: false, error: 'Invalid cart item structure' }, { status: 400 }); // Use 400 Bad Request status
             }
 
             sumTotal += cartItem.price * cartItem.qty;
             const product = await Product.findOne({ slug: itemSlug });
 
+            // Check if the product exists
             if (!product) {
-                return NextResponse.json({ success: false, error: `Product not found: ${itemSlug}` }, { status: 200 });
+                return NextResponse.json({ success: false, error: `Product not found: ${itemSlug}` }, { status: 404 }); // Use 404 Not Found status
             }
 
+            // Check stock and price consistency
             if (product.availableQty < cartItem.qty) {
-                return NextResponse.json({ success: false, error: `Product out of stock: ${itemSlug}`, clearCart: true }, { status: 200 });
+                return NextResponse.json({ success: false, error: `Product out of stock: ${itemSlug}`, clearCart: true }, { status: 400 });
             }
 
             if (product.price !== cartItem.price) {
-                return NextResponse.json({ success: false, error: `Price changed for product: ${itemSlug}`, clearCart: true }, { status: 200 });
+                return NextResponse.json({ success: false, error: `Price changed for product: ${itemSlug}`, clearCart: true }, { status: 400 });
             }
         }
 
+        // Validate subtotal
         if (sumTotal !== subTotal) {
-            return NextResponse.json({ success: false, error: 'Subtotal mismatch. Please try again later', clearCart: true }, { status: 200 });
+            return NextResponse.json({ success: false, error: 'Subtotal mismatch. Please try again later', clearCart: true }, { status: 400 });
         }
 
+        // Validate pincode
         if (pincode.length !== 6) {
-            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter a valid pincode', clearCart: false }, { status: 200 });
+            return NextResponse.json({ success: false, error: 'Invalid PinCode. Please enter a valid pincode', clearCart: false }, { status: 400 });
         }
 
+        // Create and save the new order
         const newOrder = new Order({
             orderId: order.id,
             oid: oid,
@@ -80,6 +93,6 @@ export async function POST(request) {
 
     } catch (error) {
         console.error('Error creating order:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ success: false, error: error.message || 'An unexpected error occurred' }, { status: 500 });
     }
 }

@@ -16,12 +16,21 @@ const addProducts = async (productData) => {
     const data = await response.json();
 
     if (data.success) {
-      toast.success('Product added successfully!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
+      toast.success('Product added successfully!', {
+        duration: 5000,
+        style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' }
+      });
     } else {
-      toast.error(data.error, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+      toast.error(data.error, {
+        duration: 5000,
+        style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' }
+      });
     }
   } catch (error) {
-    toast.error('Failed to add product', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+    toast.error('Failed to add product', {
+      duration: 5000,
+      style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' }
+    });
   }
 };
 
@@ -76,7 +85,10 @@ const AddProducts = () => {
 
   const handleRemoveVariant = (indexToRemove) => {
     if (variants.length === 1) {
-      toast.error('Atleast one variant is required', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
+      toast.error('At least one variant is required', {
+        duration: 5000,
+        style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' }
+      });
       return;
     }
     const updatedVariants = variants.filter((_, index) => index !== indexToRemove);
@@ -84,22 +96,20 @@ const AddProducts = () => {
   };
 
   return (
-    <form className="border-2 my-10 w-80 md:w-full md:mx-auto border-purple-700 container mx-auto shadow-md rounded-lg" onSubmit={handleSubmit}>
+    <form className="border-2 my-10 w-80 md:w-full md:mx-auto border-purple-700 container mx-auto shadow-md rounded-lg p-7" onSubmit={handleSubmit}>
+      <h4 className="text-xl font-semibold mb-6">Add Product</h4>
 
-      <div className="p-7">
-        <h4 className="text-xl font-semibold">Add Product</h4>
-      </div>
-
-      <div className="mb-4 pt-7 px-7 border-purple-700 border-t">
+      <div className="mb-4 border-t pt-4">
         <label className="block text-sm font-bold mb-2" htmlFor="productType">Product Type (LowerCase)</label>
         <select
-          className='w-full px-3 py-2 bg-transparent border  border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700'
+          className='w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700'
           name="productType"
           value={productType}
           onChange={(e) => setProductType(e.target.value)}
           id="productType"
+          required
         >
-          <option className='text-black' default hidden>---Select Product Type---</option>
+          <option className='text-black' hidden>---Select Product Type---</option>
           <option className='text-black' value="tshirts">Tshirts</option>
           <option className='text-black' value="hoodies">Hoodies</option>
           <option className='text-black' value="mugs">Mugs</option>
@@ -107,7 +117,7 @@ const AddProducts = () => {
         </select>
       </div>
 
-      <div className="mb-4 px-7">
+      <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="productTitle">Product Title</label>
         <input
           className="w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700"
@@ -120,7 +130,7 @@ const AddProducts = () => {
         />
       </div>
 
-      <div className="mb-4 px-7">
+      <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="description">Description</label>
         <textarea
           className="w-full resize-none px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700"
@@ -134,8 +144,8 @@ const AddProducts = () => {
       </div>
 
       {variants.map((variant, index) => (
-        <div key={index} className="mb-4 px-7">
-          <h4 className="text-md font-semibold">Variant {index + 1}</h4>
+        <div key={index} className="mb-4">
+          <h4 className="text-md font-semibold mb-2">Variant {index + 1}</h4>
 
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2" htmlFor={`slug-${index}`}>Product Slug</label>
@@ -153,13 +163,14 @@ const AddProducts = () => {
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2" htmlFor={`size-${index}`}>Size</label>
             <select
-              className='w-full px-3  py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700'
+              className='w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700'
               name={`size-${index}`}
               value={variant.size}
               onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
               id={`size-${index}`}
+              required
             >
-              <option className='text-black' default hidden>---Select Product Size---</option>
+              <option className='text-black' hidden>---Select Product Size---</option>
               <option className='text-black' value="S">S</option>
               <option className='text-black' value="M">M</option>
               <option className='text-black' value="L">L</option>
@@ -176,63 +187,62 @@ const AddProducts = () => {
               value={variant.color}
               onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
               id={`color-${index}`}
+              required
             >
-              <option className="text-black" default hidden>
-                ---Select Product Color---
-              </option>
+              <option className="text-black" hidden>---Select Product Color---</option>
               <option className="color-option" value="Black">
-                <span className="color-swatch bg-black"></span>Black
+                Black
               </option>
               <option className="color-option" value="Blue">
-                <span className="color-swatch bg-blue-500"></span>Blue
+                Blue
               </option>
               <option className="color-option" value="Cyan">
-                <span className="color-swatch bg-cyan-500"></span>Cyan
+                Cyan
               </option>
               <option className="color-option" value="Gray">
-                <span className="color-swatch bg-gray-500"></span>Gray
+                Gray
               </option>
               <option className="color-option" value="Green">
-                <span className="color-swatch bg-green-500"></span>Green
+                Green
               </option>
               <option className="color-option" value="Indigo">
-                <span className="color-swatch bg-indigo-500"></span>Indigo
+                Indigo
               </option>
               <option className="color-option" value="Fuchsia">
-                <span className="color-swatch bg-fuchsia-500"></span>Light Pink
+                Light Pink
               </option>
               <option className="color-option" value="Lime">
-                <span className="color-swatch bg-lime-500"></span>Lime Green
+                Lime Green
               </option>
               <option className="color-option" value="Orange">
-                <span className="color-swatch bg-orange-500"></span>Orange
+                Orange
               </option>
               <option className="color-option" value="Pink">
-                <span className="color-swatch bg-pink-500"></span>Pink
+                Pink
               </option>
               <option className="color-option" value="Purple">
-                <span className="color-swatch bg-purple-500"></span>Purple
+                Purple
               </option>
               <option className="color-option" value="Red">
-                <span className="color-swatch bg-red-500"></span>Red
+                Red
               </option>
               <option className="color-option" value="Rose">
-                <span className="color-swatch bg-rose-500"></span>Rose Red
+                Rose Red
               </option>
               <option className="color-option" value="Sky">
-                <span className="color-swatch bg-sky-500"></span>Sky Blue
+                Sky Blue
               </option>
               <option className="color-option" value="Teal">
-                <span className="color-swatch bg-teal-500"></span>Teal
+                Teal
               </option>
               <option className="color-option" value="Violet">
-                <span className="color-swatch bg-violet-500"></span>Violet
+                Violet
               </option>
               <option className="color-option" value="White">
-                <span className="color-swatch bg-white border border-gray-300"></span>White
+                White
               </option>
               <option className="color-option" value="Yellow">
-                <span className="color-swatch bg-yellow-500"></span>Yellow
+                Yellow
               </option>
             </select>
           </div>
@@ -276,30 +286,29 @@ const AddProducts = () => {
       ))}
 
       {variants.length < 5 && (
-        <>
-          <button
-            type="button"
-            onClick={addVariant}
-            className="my-2 mx-7 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 outline-none transition-all duration-200 ease-in-out"
-          >
-            Add Another Variant
-          </button>
-        </>
+        <button
+          type="button"
+          onClick={addVariant}
+          className="my-2 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 transition-all duration-200 ease-in-out"
+        >
+          Add Another Variant
+        </button>
       )}
 
       <ImageUpload setImage={setImage} />
 
       <button
         type="submit"
-        className="my-10 mx-7 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 outline-none transition-all duration-200 ease-in-out"
+        className="my-10 bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-purple-800 transition-all duration-200 ease-in-out"
         disabled={loading}
       >
         {loading ? 'Adding Product...' : 'Add Product'}
       </button>
+
       <button
         type="reset"
         onClick={clearFields}
-        className="my-10 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 outline-none transition-all duration-200 ease-in-out"
+        className="my-10 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-all duration-200 ease-in-out"
       >
         Clear Fields
       </button>

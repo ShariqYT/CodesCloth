@@ -1,5 +1,5 @@
-"use client"
-import React, { createContext, useState, useEffect, useContext } from 'react';
+"use client";
+import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 
 const DarkModeContext = createContext();
 
@@ -14,7 +14,7 @@ export const DarkModeProvider = ({ children }) => {
         }
     }, []);
 
-    const toggleDarkMode = () => {
+    const toggleDarkMode = useCallback(() => {
         setIsDarkMode((prevMode) => {
             const newMode = !prevMode;
             localStorage.setItem('darkMode', newMode);
@@ -25,10 +25,15 @@ export const DarkModeProvider = ({ children }) => {
             }
             return newMode;
         });
-    };
+    }, []);
+
+    const contextValue = useMemo(() => ({
+        isDarkMode,
+        toggleDarkMode
+    }), [isDarkMode, toggleDarkMode]);
 
     return (
-        <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+        <DarkModeContext.Provider value={contextValue}>
             {children}
         </DarkModeContext.Provider>
     );

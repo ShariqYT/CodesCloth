@@ -7,17 +7,28 @@ export async function POST(request) {
     try {
         await connectDB();
         const { user } = await request.json();
-        let userFind;
 
-        if (isNaN(user)) {
-            userFind = await User.findOne({ email: user });
-        } else {
-            userFind = await User.findOne({ phone: user.split("+91")[1] });
+        if (!user) {
+            return NextResponse.json({ error: "User parameter is required" }, { status: 400 });
         }
 
-        const products = await Product.find({ slug: { $in: userFind.wishlist } });
+        let userFind;
+        if (isNaN(user)) {
+            userFind = await User.findOne({ email: user }).exec();
+        } else {
+            const phone = user.replace("+91", ""); // Adjust this if needed
+            userFind = await User.findOne({ phone }).exec();
+        }
+
+        if (!userFind) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
+
+        const products = await Product.find({ slug: { $in: userFind.wishlist } }).exec();
+        
         return NextResponse.json({ products }, { status: 200 });
     } catch (err) {
-        return NextResponse.json({ error: err }, { status: 500 });
+        console.error("Error in getWishlist API:", err);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 }

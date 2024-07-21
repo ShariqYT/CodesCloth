@@ -408,7 +408,7 @@ const Checkoutpage = () => {
                                             </svg>
                                         </button>
                                     </span>
-                                    <span className='text-green-500'>- ₹ {inrDiscount}</span>
+                                    <span className='text-green-600'>- ₹ {inrDiscount}</span>
                                 </div>
                             )}
                             <div className='flex justify-between mb-2'>

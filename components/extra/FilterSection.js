@@ -94,20 +94,23 @@ const FilterSection = () => {
         const type = e.target.type;
 
         let selectedQueries = { ...selectedFilterQueries };
-        if (selectedQueries[name]) {
-            if (type === "radio") {
-                selectedQueries[name] = [value];
-            } else if (selectedQueries[name].includes(value)) {
-                selectedQueries[name] = selectedQueries[name].filter((query) => query !== value);
-                if (!checkValidQuery(selectedQueries[name])) {
-                    delete selectedQueries[name];
+        if (type === "radio") {
+            selectedQueries[name] = [value];
+        } else {
+            if (selectedQueries[name]) {
+                if (selectedQueries[name].includes(value)) {
+                    selectedQueries[name] = selectedQueries[name].filter((query) => query !== value);
+                    if (!checkValidQuery(selectedQueries[name])) {
+                        delete selectedQueries[name];
+                    }
+                } else {
+                    selectedQueries[name].push(value);
                 }
             } else {
-                selectedQueries[name].push(value);
+                selectedQueries[name] = [value];
             }
-        } else {
-            selectedQueries[name] = [value];
         }
+
         router.push(`?${convertValidStringQueries(selectedQueries)}`, {
             scroll: false
         });
@@ -140,7 +143,6 @@ const FilterSection = () => {
                 {filterOptions.map((filter) => (
                     <div key={filter.id} className="mb-6 ">
                         <h3 className="text-lg font-semibold mb-2">{filter.title}</h3>
-
                         <div>
                             {filter.options.map((option) => (
                                 <div key={option}>
@@ -148,7 +150,7 @@ const FilterSection = () => {
                                         <input
                                             type={filter.type}
                                             name={filter.id}
-                                            value={option}
+                                            value={option.toLowerCase()}
                                             id={`${filter.id}-${option}`}
                                             checked={isChecked(filter.id, option)}
                                             onChange={handleSelectFilterOption}
@@ -164,8 +166,8 @@ const FilterSection = () => {
                                                 borderRadius: filter.id === 'colors' ? '100%' : 'none'
                                             }}
                                         ></div>
-
-                                        {option}</label>
+                                        {option}
+                                    </label>
                                 </div>
                             ))}
                         </div>
@@ -173,42 +175,28 @@ const FilterSection = () => {
                 ))}
             </div>
             {/* Mobile Filter */}
-            <svg onClick={() => setIsOpen(!isOpen)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='rounded-lg border-2 transition-all duration-300 ease-in-out border-purple-700 w-8 h-8 md:hidden cursor-pointer absolute -right-[22rem] top-4' fill="none">
-                <path d="M8.85746 12.5061C6.36901 10.6456 4.59564 8.59915 3.62734 7.44867C3.3276 7.09253 3.22938 6.8319 3.17033 6.3728C2.96811 4.8008 2.86701 4.0148 3.32795 3.5074C3.7889 3 4.60404 3 6.23433 3H17.7657C19.396 3 20.2111 3 20.672 3.5074C21.133 4.0148 21.0319 4.8008 20.8297 6.37281C20.7706 6.83191 20.6724 7.09254 20.3726 7.44867C19.403 8.60062 17.6261 10.6507 15.1326 12.5135C14.907 12.6821 14.7583 12.9567 14.7307 13.2614C14.4837 15.992 14.2559 17.4876 14.1141 18.2442C13.8853 19.4657 12.1532 20.2006 11.226 20.8563C10.6741 21.2466 10.0043 20.782 9.93278 20.1778C9.79643 19.0261 9.53961 16.6864 9.25927 13.2614C9.23409 12.9539 9.08486 12.6761 8.85746 12.5061Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <svg onClick={() => setIsOpen(!isOpen)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='rounded-lg border-2 transition-all duration-300 ease-in-out hover:scale-[1.2] hover:bg-gray-300 cursor-pointer md:hidden p-2' fill="none">
+                <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <div
-                onClick={() => setIsOpen(!isOpen)}
-                className={`md:hidden fixed z-30 bg-[rgba(0,0,0,0.8)] w-screen h-screen transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-[0px]' : 'opacity-0 translate-y-[500px]'
-                    }`}></div>
-            <div
-                className={`md:hidden fixed z-50 w-full h-1/2 ${isDarkMode ? 'bg-black' : 'bg-white'} 
-                    transition-all duration-300 ease-in-out transform ${isOpen ? 'translate-y-0' : 'translate-y-[400px]'}
-                    ml-4 my-20 -bottom-4 right-0 border-2 border-purple-700 rounded-lg p-8 shadow-lg overflow-y-auto`}
-            >
-                <div className='flex items-center justify-between mb-10'>
-                    <h2 className="text-2xl font-semibold">Filter Options</h2>
-                    <div className='flex gap-4'>
-                        <svg onClick={clearFilters} className='cursor-pointer hover:scale-[1.2] hover:text-red-600 transition-all duration-300 ease-in-out w-7 h-7 flex items-center justify-center' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+            {isOpen && (
+                <div className='absolute w-full top-16 bg-white shadow-lg p-4 md:hidden'>
+                    <div className='flex items-center justify-between mb-6'>
+                        <h2 className="text-xl font-semibold">Filter Options</h2>
+                        <svg onClick={() => setIsOpen(false)} className='cursor-pointer hover:scale-[1.2] hover:text-red-600 transition-all duration-300 ease-in-out w-7 h-7 flex items-center justify-center' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                             <path d="M20.9987 4.5C20.9869 4.06504 20.8956 3.75346 20.672 3.5074C20.2111 3 19.396 3 17.7657 3H6.23433C4.60404 3 3.7889 3 3.32795 3.5074C2.86701 4.0148 2.96811 4.8008 3.17033 6.3728C3.22938 6.8319 3.3276 7.09253 3.62734 7.44867C4.59564 8.59915 6.36901 10.6456 8.85746 12.5061C9.08486 12.6761 9.23409 12.9539 9.25927 13.2614C9.53961 16.6864 9.79643 19.0261 9.93278 20.1778C10.0043 20.782 10.6741 21.2466 11.226 20.8563C12.1532 20.2006 13.8853 19.4657 14.1141 18.2442C14.1986 17.7934 14.3136 17.0803 14.445 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M21 7L15 13M21 13L15 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <svg onClick={() => setIsOpen(!isOpen)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-7 cursor-pointer' fill="none">
-                            <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
                     </div>
-                </div>
-                {filterOptions.map((filter) => (
-                    <div key={filter.id} className="mb-6 ">
-                        <h3 className="text-lg font-semibold mb-2">{filter.title}</h3>
-
-                        <div>
-                            {filter.options.map((option) => (
-                                <div key={option}>
-                                    <label htmlFor={`${filter.id}-${option}`} className='flex cursor-pointer items-center mb-1'>
+                    {filterOptions.map((filter) => (
+                        <div key={filter.id} className="mb-4">
+                            <h3 className="text-lg font-semibold mb-2">{filter.title}</h3>
+                            <div>
+                                {filter.options.map((option) => (
+                                    <div key={option} className="flex items-center mb-2">
                                         <input
                                             type={filter.type}
                                             name={filter.id}
-                                            value={option}
+                                            value={option.toLowerCase()}
                                             id={`${filter.id}-${option}`}
                                             checked={isChecked(filter.id, option)}
                                             onChange={handleSelectFilterOption}
@@ -224,16 +212,16 @@ const FilterSection = () => {
                                                 borderRadius: filter.id === 'colors' ? '100%' : 'none'
                                             }}
                                         ></div>
-
-                                        {option}</label>
-                                </div>
-                            ))}
+                                        {option}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-        </div >
-    );
+                    ))}
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default FilterSection;

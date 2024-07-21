@@ -1,11 +1,11 @@
-import React from "react"
-import ChartOne from "../Charts/ChartOne"
-import ChartTwo from "../Charts/ChartTwo"
-import CardDataStats from "../CardDataStats"
-import { getAllOrders } from "@/actions/Admin/getAllOrders"
-import { getAllUsers } from "@/actions/Admin/getAllUsers"
-import { getAllProducts } from "@/actions/Admin/getAllProducts"
-import { formatIndianCurrency } from "../extra/FormatAmount"
+import React from "react";
+import ChartOne from "../Charts/ChartOne";
+import ChartTwo from "../Charts/ChartTwo";
+import CardDataStats from "../CardDataStats";
+import { getAllOrders } from "@/actions/Admin/getAllOrders";
+import { getAllUsers } from "@/actions/Admin/getAllUsers";
+import { getAllProducts } from "@/actions/Admin/getAllProducts";
+import { formatIndianCurrency } from "../extra/FormatAmount";
 
 const ECommerce = async () => {
   const orders = await getAllOrders();
@@ -18,7 +18,7 @@ const ECommerce = async () => {
     <div className="container mx-auto flex flex-col items-center justify-center">
       <div className="flex flex-col mt-10 w-80 md:w-full md:flex-row justify-center items-center gap-4">
         <CardDataStats title="Total Users" total={users.length} levelUp>
-          <svg
+        <svg
             className="fill-purple-700"
             width="22"
             height="18"
@@ -41,7 +41,7 @@ const ECommerce = async () => {
           </svg>
         </CardDataStats>
         <CardDataStats title="Total Products" total={products.length} levelUp>
-          <svg
+        <svg
             className="fill-purple-700"
             width="22"
             height="22"
@@ -63,7 +63,7 @@ const ECommerce = async () => {
           <p className="text-purple-500 text-2xl font-normal">₹</p>
         </CardDataStats>
         <CardDataStats title="Total Orders" total={orders.length} levelUp>
-          <svg
+        <svg
             className="fill-purple-700"
             width="20"
             height="22"
@@ -90,11 +90,9 @@ const ECommerce = async () => {
       <div className="mt-4 grid w-80 md:w-full grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne total={total} />
         <ChartTwo />
-        <div className="col-span-12 xl:col-span-8">
-        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ECommerce
+export default ECommerce;

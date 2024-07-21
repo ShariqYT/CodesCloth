@@ -1,8 +1,10 @@
-import connectDB from "@/db/connectDB"
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import Admin from "@/models/Admin"
-import bcrypt from 'bcryptjs'
+"use server"
+
+import connectDB from "@/db/connectDB";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import Admin from "@/models/Admin";
+import bcrypt from 'bcryptjs';
 
 const handler = NextAuth({
     providers: [
@@ -13,21 +15,24 @@ const handler = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                await connectDB();
+                await connectDB();  // Ensure DB is connected
                 try {
-                    const user = await Admin.findOne({ email: credentials.email })
+                    const user = await Admin.findOne({ email: credentials.email });
 
                     if (!user) {
-                        throw new Error("No admin found")
+                        throw new Error("No admin found with this email");
                     }
-                    const passwordMatch = await bcrypt.compare(credentials.password, user.password)
+                    
+                    const passwordMatch = await bcrypt.compare(credentials.password, user.password);
+                    
                     if (passwordMatch) {
-                        return user
+                        return user;
                     } else {
-                        throw new Error("Incorrect Password")
+                        throw new Error("Incorrect password");
                     }
                 } catch (error) {
-                    throw new Error(error)
+                    console.error('Authentication error:', error);  // Log error for debugging
+                    throw new Error("Authentication failed");
                 }
             }
         })
@@ -43,18 +48,22 @@ const handler = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.user = user
+                token.user = user;
             }
-            return token
+            return token;
         },
         async session({ session, token }) {
             if (token) {
-                session.user = token.user
+                session.user = token.user;
             }
-            return session
+            return session;
         }
-        
     }
-})
+});
 
-export { handler as GET, handler as POST }
+// Ensure that NEXTAUTH_SECRET is defined
+if (!process.env.NEXTAUTH_SECRET) {
+    throw new Error("NEXTAUTH_SECRET is not defined");
+}
+
+export { handler as GET, handler as POST };

@@ -6,11 +6,12 @@ export async function GET(request) {
     try {
         await connectDB();
 
-        let orders = await Order.find({});
-        return NextResponse.json({ orders: orders });
+        const orders = await Order.find({});
+
+        return NextResponse.json({ success: true, orders }, { status: 200 });
 
     } catch (err) {
-        ('Error fetching orders:', err);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        console.error('Error fetching orders:', err);
+        return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }

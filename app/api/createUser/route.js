@@ -8,10 +8,16 @@ export async function POST(request) {
 
         const { phoneNumber, userEmail } = await request.json();
 
+        // Validate input
         if (!phoneNumber && !userEmail) {
-            return NextResponse.json({ error: "Phone number or email is required" }, { status: 200 });
+            return NextResponse.json({ success: false, error: "Phone number or email is required" }, { status: 400 });
         }
 
+        if (phoneNumber && userEmail) {
+            return NextResponse.json({ success: false, error: "Only one of phone number or email should be provided" }, { status: 400 });
+        }
+
+        // Check if user exists
         let userExist;
         if (phoneNumber) {
             userExist = await User.findOne({ phone: phoneNumber });
@@ -20,14 +26,15 @@ export async function POST(request) {
         }
 
         if (!userExist) {
-            const user = new User(phoneNumber ? { phone: phoneNumber } : { email: userEmail });
-            await user.save();
-            return NextResponse.json({ message: "User created", user }, { status: 201 });
+            // Create a new user
+            const newUser = new User(phoneNumber ? { phone: phoneNumber } : { email: userEmail });
+            await newUser.save();
+            return NextResponse.json({ success: true, message: "User created successfully", user: newUser }, { status: 201 });
         }
 
-        return NextResponse.json({ message: "Welcome back" }, { status: 200 });
+        return NextResponse.json({ success: true, message: "Welcome back" }, { status: 200 });
     } catch (err) {
         console.error("Error occurred:", err);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
     }
 }
