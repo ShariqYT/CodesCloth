@@ -25,7 +25,7 @@ const BestSellingProducts = ({ product }) => {
   const sizeClass = isDarkMode ? 'border-white' : 'border-black';
 
   return (
-    <div id="productSlider" className="flex items-center overflow-x-scroll scrollbar-hide">
+    <div id="productSlider" className="flex items-center md:overflow-x-scroll scrollbar-hide">
       <Link href={`/product/${product.slug}`} className="md:w-64 shadow-lg mx-4 border rounded-lg border-gray-200 p-2 w-44">
         <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
           <Image

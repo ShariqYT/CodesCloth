@@ -119,23 +119,23 @@ const MyAccount = () => {
                 <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                         <label htmlFor="name" className="text-sm font-medium block mb-2">Full Name</label>
-                        <input value={name} onChange={handleChange} type="text" name="name" id="name" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder="John Doe" required />
+                        <input value={name} onChange={handleChange} type="text" name="name" id="name" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 bg-transparent sm:text-sm rounded-lg block w-full p-2.5" placeholder="John Doe" required />
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                         <label htmlFor="email" className="text-sm font-medium block mb-2">Email <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                        <input value={email} onChange={handleChange} type="email" name="email" id="email" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder="email@example.com" readOnly />
+                        <input value={email} onChange={handleChange} type="email" name="email" id="email" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm bg-transparent rounded-lg block w-full p-2.5" placeholder="email@example.com" readOnly />
                     </div>
                     <div className="col-span-full">
                         <label htmlFor="address" className="text-sm font-medium block mb-2">Address</label>
-                        <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className="border-2 border-gray-300 focus:border-purple-700 resize-none rounded-lg outline-none block w-full p-2.5" placeholder="Your address"></textarea>
+                        <textarea value={address} onChange={handleChange} id="address" rows={3} name='address' className="border-2 border-gray-300 focus:border-purple-700 resize-none rounded-lg bg-transparent outline-none block w-full p-2.5" placeholder="Your address"></textarea>
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                         <label htmlFor="phone" className="text-sm font-medium block mb-2">Phone Number <span className='text-sm font-normal'>(cannot be updated)</span></label>
-                        <input type="text" name="phone" id="phone" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" placeholder='Enter 10-digit number' value={phone} onChange={handleChange} maxLength={10} />
+                        <input type="text" name="phone" id="phone" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full bg-transparent p-2.5" placeholder='Enter 10-digit number' value={phone} onChange={handleChange} maxLength={10} />
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                         <label htmlFor="pincode" className="text-sm font-medium block mb-2">PinCode <span className='text-sm font-normal'>(India)</span></label>
-                        <input type="text" name="pincode" id="pincode" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full p-2.5" value={pincode} onChange={handleChange} placeholder='Enter 6-digit pincode' maxLength={6} />
+                        <input type="text" name="pincode" id="pincode" className="shadow-sm outline-none border-2 border-gray-300 focus:border-purple-700 sm:text-sm rounded-lg block w-full bg-transparent p-2.5" value={pincode} onChange={handleChange} placeholder='Enter 6-digit pincode' maxLength={6} />
                     </div>
                     <div className="col-span-full flex flex-col items-center justify-center gap-4">
                         <p className='text-sm text-red-700 text-center'>Note: Please update your details here to continue</p>

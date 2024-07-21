@@ -104,7 +104,7 @@ const ReviewForm = ({ productId }) => {
                 Leave a review
             </button>
             {open && (
-                <form onSubmit={handleSubmit} className='mt-4 w-96'>
+                <form onSubmit={handleSubmit} className='mt-4 md:w-96 flex flex-col items-center'>
                     <div className='flex items-center flex-col'>
                         <p className='text-md'>{review.rating} out of 5</p>
                         <div className="flex items-center">{renderStars()}</div>

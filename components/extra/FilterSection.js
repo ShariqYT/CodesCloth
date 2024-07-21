@@ -130,7 +130,7 @@ const FilterSection = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className='relative'>
+        <>
             {/* Desktop Filter */}
             <div className="md:block hidden w-80 h-[80vh] sticky ml-4 my-20 top-44 border-2 border-purple-700 rounded-lg p-8 shadow-lg overflow-y-auto">
                 <div className='flex items-center justify-between mb-10'>
@@ -175,14 +175,16 @@ const FilterSection = () => {
                 ))}
             </div>
             {/* Mobile Filter */}
-            <svg onClick={() => setIsOpen(!isOpen)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='rounded-lg border-2 transition-all duration-300 ease-in-out hover:scale-[1.2] hover:bg-gray-300 cursor-pointer md:hidden p-2' fill="none">
-                <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
+            <svg onClick={() => setIsOpen(!isOpen)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='cursor-pointer absolute top-5 right-5 md:hover:scale-[1.2] rounded-lg border border-purple-700 transition-all duration-300 ease-in-out w-10 h-10 flex items-center justify-center p-1 md:hidden' fill="none">
+                <path d="M8.85746 12.5061C6.36901 10.6456 4.59564 8.59915 3.62734 7.44867C3.3276 7.09253 3.22938 6.8319 3.17033 6.3728C2.96811 4.8008 2.86701 4.0148 3.32795 3.5074C3.7889 3 4.60404 3 6.23433 3H17.7657C19.396 3 20.2111 3 20.672 3.5074C21.133 4.0148 21.0319 4.8008 20.8297 6.37281C20.7706 6.83191 20.6724 7.09254 20.3726 7.44867C19.403 8.60062 17.6261 10.6507 15.1326 12.5135C14.907 12.6821 14.7583 12.9567 14.7307 13.2614C14.4837 15.992 14.2559 17.4876 14.1141 18.2442C13.8853 19.4657 12.1532 20.2006 11.226 20.8563C10.6741 21.2466 10.0043 20.782 9.93278 20.1778C9.79643 19.0261 9.53961 16.6864 9.25927 13.2614C9.23409 12.9539 9.08486 12.6761 8.85746 12.5061Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
+            <div onClick={() => setIsOpen(!isOpen)} className={`bg-[rgba(0,0,0,0.5)] fixed z-10 top-0 left-0 w-full h-screen ${isOpen ? 'block' : 'hidden'}`}></div>
             {isOpen && (
-                <div className='absolute w-full top-16 bg-white shadow-lg p-4 md:hidden'>
+                <div className={`z-[999] fixed rounded-lg right-1 bottom-14 h-80 overflow-y-auto w-[23rem] border-2 border-purple-700 ${isDarkMode ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out shadow-lg p-4 md:hidden`}>
                     <div className='flex items-center justify-between mb-6'>
                         <h2 className="text-xl font-semibold">Filter Options</h2>
-                        <svg onClick={() => setIsOpen(false)} className='cursor-pointer hover:scale-[1.2] hover:text-red-600 transition-all duration-300 ease-in-out w-7 h-7 flex items-center justify-center' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                        <svg onClick={clearFilters} className='cursor-pointer hover:scale-[1.2] hover:text-red-600 transition-all duration-300 ease-in-out w-7 h-7 flex items-center justify-center' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                             <path d="M20.9987 4.5C20.9869 4.06504 20.8956 3.75346 20.672 3.5074C20.2111 3 19.396 3 17.7657 3H6.23433C4.60404 3 3.7889 3 3.32795 3.5074C2.86701 4.0148 2.96811 4.8008 3.17033 6.3728C3.22938 6.8319 3.3276 7.09253 3.62734 7.44867C4.59564 8.59915 6.36901 10.6456 8.85746 12.5061C9.08486 12.6761 9.23409 12.9539 9.25927 13.2614C9.53961 16.6864 9.79643 19.0261 9.93278 20.1778C10.0043 20.782 10.6741 21.2466 11.226 20.8563C12.1532 20.2006 13.8853 19.4657 14.1141 18.2442C14.1986 17.7934 14.3136 17.0803 14.445 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M21 7L15 13M21 13L15 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -220,7 +222,7 @@ const FilterSection = () => {
                     ))}
                 </div>
             )}
-        </div>
+        </>
     )
 }
 

@@ -56,7 +56,7 @@ const Caps = () => {
     };
 
     return (
-        <section className="flex min-h-screen">
+        <section className="flex relative min-h-screen">
             <FilterSection />
             {loading ? (
                 <div className='flex justify-center items-center'>

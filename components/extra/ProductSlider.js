@@ -26,7 +26,7 @@ const ProductSlider = ({ products }) => {
     return (
         <div className='my-10 md:container'>
             <h1 className='text-2xl p-4 font-semibold'>Other T-Shirts</h1>
-            <div id="productSlider" className="flex items-center pb-12 overflow-x-scroll scrollbar-hide">
+            <div id="productSlider" className="flex items-center overflow-x-scroll scrollbar-hide">
                 {Object.values(products).map((product, index) => (
                     <Link
                         key={index}

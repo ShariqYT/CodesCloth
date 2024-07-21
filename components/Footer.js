@@ -19,7 +19,7 @@ const Footer = () => {
           </Link>
           <p className="mt-2 px-4 py-4 text-sm">CodesCloth provides a variety of products like t-shirts, hoodies, mugs, caps, and more for all ages.</p>
         </div>
-        <div className="flex-grow flex flex-wrap md:pl-20 md:text-left text-center -mb-10 md:mt-0 mt-10">
+        <div className="flex-grow flex flex-wrap md:pl-20 md:text-left text-center md:mt-0 mt-10">
           <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4">
             <h2 className="title-font font-bold text-purple-700 tracking-widest text-sm mb-3">SHOP</h2>
             <ul className="list-none">
@@ -51,7 +51,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+          <div className="lg:w-1/4 md:w-1/2 w-full md:pt-0 pt-12 px-4">
             <h2 className="title-font font-bold text-purple-700 tracking-widest text-sm mb-3">POLICY</h2>
             <ul className="list-none">
               <li className='py-1'>
