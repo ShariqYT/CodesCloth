@@ -7,7 +7,6 @@ import { CartContext } from '@/context/CartContext';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '@/app/config';
 import { useRouter } from 'next/navigation';
-import Logo from '@/public/logo-2.png';
 import { formatIndianCurrency } from '@/components/extra/FormatAmount';
 
 const Checkoutpage = () => {
@@ -191,6 +190,7 @@ const Checkoutpage = () => {
             }
             return data.orderId;
         } catch (error) {
+            toast.error('Failed to create Order ', { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
             return null;
         }
     };
@@ -209,10 +209,9 @@ const Checkoutpage = () => {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
                 amount: parseFloat(subTotal - discount) * 100, // Apply discount
                 currency: 'INR',
-                phone: phone,
                 name: 'CodesCloth',
                 description: 'Test Transaction',
-                image: Logo,
+                image: 'https://codescloth.netlify.app/logo-2.png,',
                 order_id: orderId,
                 handler: async function (response) {
                     const data = {
@@ -251,14 +250,11 @@ const Checkoutpage = () => {
                 },
             };
             const paymentObject = new window.Razorpay(options);
-            paymentObject.on('payment.failed', function (response) {
-                toast.error(response.error.description, { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
-            });
             paymentObject.open();
-            setSpin(false);
         } catch (error) {
-            console.error(error);
+            toast.error("Payment process failed", { duration: 5000, style: { border: '2px solid red', padding: '15px 20px', marginBottom: '40px' } });
         }
+        setSpin(false);
     };
 
     const inrSubTotal = formatIndianCurrency(subTotal);

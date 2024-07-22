@@ -9,16 +9,14 @@ export async function POST(request) {
 
         const query = isNaN(user) ? { email: user } : { phone: Number(user) };
         const userFind = await User.findOne(query);
-
         if (!userFind) {
-            return NextResponse.json({ error: "User not found" }, { status: 404 });
+            return NextResponse.json({ error: "User not found" }, { status: 200 });
         }
 
         const { name, email, address, pincode, phone } = userFind;
 
         return NextResponse.json({ success: true, name, email, address, pincode, phone }, { status: 200 });
     } catch (err) {
-        console.error(err); // Log error for debugging
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
