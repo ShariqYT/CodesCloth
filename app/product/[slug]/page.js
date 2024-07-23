@@ -2,11 +2,9 @@ import React from 'react';
 import Pincode from '@/components/Pincode';
 import Image from 'next/image';
 import AddtoCart from '@/components/extra/AddtoCart';
-import SizeandColor from '@/components/extra/SizeandColor';
 import BuyNow from '@/components/extra/BuyNow';
 import ErrorPage from '@/app/not-found';
 import Wishlist from '@/components/extra/Wishlist';
-import ProductSlider from '@/components/extra/ProductSlider';
 import ReviewForm from '@/components/extra/ReviewForm';
 import ProductsReviews from '@/components/extra/ProductsReviews';
 import ReviewComponent from '@/components/extra/ReviewComponent';
@@ -21,13 +19,6 @@ async function fetchProduct(slug) {
   return res.json();
 }
 
-async function fetchProducts(category) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to fetch products');
-  }
-  return res.json();
-}
 
 export async function generateMetadata({ params }) {
   const { product } = await fetchProduct(params.slug);
@@ -43,7 +34,6 @@ export async function generateMetadata({ params }) {
 const ProductSlug = async ({ params }) => {
   const { slug } = params;
   const { product, variants, title } = await fetchProduct(slug);
-  const products = await fetchProducts('tshirts');
 
   if (!product) {
     return <ErrorPage />;
@@ -113,7 +103,7 @@ const ProductSlug = async ({ params }) => {
       <div className="container mx-auto p-4 md:my-10 my-4">
         <h1 className="text-xl font-semibold">About the Product</h1>
         <p className="leading-relaxed mt-2 text-sm lg:text-base whitespace-pre-line">{product.desc}</p>
-        <ProductSlider slug={product.slug} products={products} />
+        
 
         <h1 className="text-xl font-semibold mt-20">Customer Reviews</h1>
         <div className="flex flex-col lg:flex-row mt-10 mb-20 gap-12 lg:p-4">
