@@ -38,7 +38,7 @@ const AddProducts = () => {
   const [productType, setProductType] = useState('');
   const [productTitle, setProductTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [variants, setVariants] = useState([{ slug: '', size: '', color: '', price: '', availableQty: '' }]);
+  const [variants, setVariants] = useState([{ slug: '', size: '', color: '', price: '', originalPrice: '', availableQty: '' }]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -56,7 +56,7 @@ const AddProducts = () => {
   };
 
   const addVariant = () => {
-    setVariants([...variants, { slug: '', size: '', color: '', price: '', availableQty: '' }]);
+    setVariants([...variants, { slug: '', size: '', color: '', price: '', originalPrice: '', availableQty: '' }]);
   };
 
   const handleSubmit = async (e) => {
@@ -79,7 +79,7 @@ const AddProducts = () => {
     setProductType('');
     setProductTitle('');
     setDescription('');
-    setVariants([{ slug: '', size: '', color: '', price: '', availableQty: '' }]);
+    setVariants([{ slug: '', size: '', color: '', price: '', originalPrice: '', availableQty: '' }]);
     setImage(null);
   };
 
@@ -196,6 +196,9 @@ const AddProducts = () => {
               <option className="color-option" value="Blue">
                 Blue
               </option>
+              <option className="color-option" value="Brown">
+                Brown
+              </option>
               <option className="color-option" value="Cyan">
                 Cyan
               </option>
@@ -248,10 +251,24 @@ const AddProducts = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor={`price-${index}`}>Price (min: ₹99)</label>
+            <label className="block text-sm font-bold mb-2" htmlFor={`original-price-${index}`}>Original Price (min: ₹99)</label>
             <input
               className="w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700"
-              id={`price-${index}`}
+              id={`original-price-${index}`}
+              type="number"
+              min="99"
+              value={variant.originalPrice}
+              placeholder='e.g. 100, 1000, 1000000'
+              onChange={(e) => handleVariantChange(index, 'originalPrice', e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2" htmlFor={`final-price-${index}`}>Final Price (min: ₹99)</label>
+            <input
+              className="w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md outline-none focus:border-2 focus:border-purple-700"
+              id={`final-price-${index}`}
               type="number"
               min="99"
               value={variant.price}

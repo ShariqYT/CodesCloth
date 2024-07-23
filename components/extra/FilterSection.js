@@ -3,7 +3,7 @@ import { ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/naviga
 import React, { useEffect, useState } from 'react'
 import { useDarkMode } from '@/context/DarkModeContext';
 
-const Colors = ["Black", "Blue", "Cyan", "Gray", "Green", "Indigo", "Light Pink", "Lime Green", "Orange", "Pink", "Purple", "Red", "Rose Red", "Sky Blue", "Teal", "Violet", "White", "Yellow"];
+const Colors = ["Black", "Blue", "Brown","Cyan", "Gray", "Green", "Indigo", "Light Pink", "Lime Green", "Orange", "Pink", "Purple", "Red", "Rose Red", "Sky Blue", "Teal", "Violet", "White", "Yellow"];
 const Sizes = ["S", "M", "L", "XL", "XXL"];
 const sortingOrder = ["Price: Low to High", "Price: High to Low"];
 
@@ -57,6 +57,7 @@ const colorNameToHex = (color) => {
     const colors = {
         "black": "#000000",
         "blue": "#0000FF",
+        "brown": "#562B00",
         "cyan": "#00FFFF",
         "gray": "#808080",
         "green": "#008000",
@@ -154,7 +155,7 @@ const FilterSection = () => {
                                             id={`${filter.id}-${option}`}
                                             checked={isChecked(filter.id, option)}
                                             onChange={handleSelectFilterOption}
-                                            className="mr-2"
+                                            className="mr-2 cursor-pointer"
                                         />
                                         <div
                                             style={{

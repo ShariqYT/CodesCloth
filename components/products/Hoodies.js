@@ -15,19 +15,23 @@ const Hoodies = () => {
     const searchParams = useSearchParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 20;
+    const maxPageButtons = 5
 
     useEffect(() => {
         const fetchFilteredProducts = async (category) => {
             setLoading(true);
             try {
                 const queryParams = convertValidStringQueries(convertStringToQueriesObject(searchParams));
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}&${queryParams}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}&page=${currentPage}&limit=${productsPerPage}&${queryParams}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                const productsArray = Object.values(data);
-                setProducts(productsArray);
+                setProducts(data.products);
+                setTotalProducts(data.totalProducts);
             } catch (error) {
                 console.error('Failed to fetch products:', error);
             } finally {
@@ -36,7 +40,8 @@ const Hoodies = () => {
         };
 
         fetchFilteredProducts('hoodies');
-    }, [searchParams]);
+    }, [searchParams, currentPage]);
+
 
     const renderColorButtons = (colors) => {
         return colors.map((color) => {
@@ -56,6 +61,36 @@ const Hoodies = () => {
             );
         });
     };
+
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    const handlePageClick = (pageNumber) => {
+        if (pageNumber !== currentPage) {
+          setCurrentPage(pageNumber);
+        }
+      };
+    
+
+    const renderPageButtons = () => {
+        const pageButtons = [];
+        const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+        const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+    
+        for (let i = startPage; i <= endPage; i++) {
+          pageButtons.push(
+            <li key={i}>
+              <p
+                className={`rounded-full px-4 py-2 cursor-pointer ${currentPage === i ? "bg-purple-700 text-white" : "hover:bg-purple-600 hover:text-white transition-all duration-200 ease-in-out"
+                  }`}
+                onClick={() => handlePageClick(i)}
+              >
+                {i}
+              </p>
+            </li>
+          );
+        }
+        return pageButtons;
+      };
 
     return (
         <section className="flex relative min-h-screen">
@@ -93,7 +128,7 @@ const Hoodies = () => {
                                                         <div className="flex flex-col justify-center">
                                                             <p className="font-medium text-purple-600 text-xl md:text-2xl">
                                                                 <span className="font-normal text-sm md:text-lg pr-2 text-red-500">-{discountPercentage}% </span>
-                                                                 ₹ {formatIndianCurrency(product.price)}
+                                                                ₹ {formatIndianCurrency(product.price)}
                                                             </p>
                                                             <p className="font-medium text-purple-400 text-sm md:text-md line-through mr-2">
                                                                 ₹ {formatIndianCurrency(product.originalPrice)}
@@ -123,6 +158,13 @@ const Hoodies = () => {
                                 );
                             })
                         )}
+                    </div>
+                    <div className="flex mt-20 justify-center">
+                        <ul className="flex flex-wrap bg-purple-200 rounded-full p-1 md:px-2 md:py-2 text-black gap-2 font-medium">
+
+                            {renderPageButtons()}
+
+                        </ul>
                     </div>
                 </div>
             )}

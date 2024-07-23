@@ -11,6 +11,8 @@ export async function GET(request) {
         const colors = url.searchParams.get('colors')?.split(',').map(color => color.charAt(0).toUpperCase() + color.slice(1).toLowerCase());
         const sizes = url.searchParams.get('sizes')?.split(',').map(size => size.toUpperCase());
         const sort = url.searchParams.get('sort');
+        const page = parseInt(url.searchParams.get('page')) || 1;  // Default to page 1
+        const limit = parseInt(url.searchParams.get('limit')) || 20;  // Default to 20 products per page
 
         // Build query object
         let query = {};
@@ -20,7 +22,7 @@ export async function GET(request) {
 
         // Fetch products from DB
         let products = await Product.find(query);
-        
+
         // Filter products based on availability and construct final products list
         let filteredProducts = products.filter(item => item.availableQty > 0)
             .reduce((acc, item) => {
@@ -46,7 +48,16 @@ export async function GET(request) {
             filteredProductsArray.sort((a, b) => b.price - a.price);
         }
 
-        return NextResponse.json(filteredProductsArray);
+        // Get total count of products for pagination
+        const totalProducts = filteredProductsArray.length;
+
+        // Apply pagination
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        const paginatedProducts = filteredProductsArray.slice(startIndex, endIndex);
+
+        // Return paginated products and total count
+        return NextResponse.json({ totalProducts, products: paginatedProducts });
     } catch (err) {
         console.error('Error fetching products:', err);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

@@ -16,6 +16,8 @@ const SlugProductColor = ({ title, product, variants }) => {
 
     const colors = Object.keys(variants);
 
+    const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+
     return (
         <div className="mt-6 pb-2">
             <div className="flex flex-col">
@@ -47,9 +49,9 @@ const SlugProductColor = ({ title, product, variants }) => {
                     <div
                         value={size}
                         onChange={(e) => { setSize(e.target.value); refreshVariant(e.target.value, color); }}
-                        className="flex gap-4 items-center rounded appearance-none py-2 focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-purple-700 "
+                        className="flex gap-4 items-center rounded appearance-none py-2 focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-purple-700"
                     >
-                        {Object.keys(variants[color]).map((sz) => (
+                        {sizeOrder.filter(sz => variants[color].hasOwnProperty(sz)).map((sz) => (
                             <button
                                 className={` ${isDarkMode && sz === size ? 'bg-purple-700' : ''} ${sz === size ? 'border-purple-700' : 'border-purple-200'} border-2 rounded-xl w-12 h-10 focus:outline-none`}
                                 key={sz}
@@ -60,7 +62,6 @@ const SlugProductColor = ({ title, product, variants }) => {
                             </button>
                         ))}
                     </div>
-
                 </div>
             </div>
         </div>

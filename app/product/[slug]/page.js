@@ -112,7 +112,7 @@ const ProductSlug = async ({ params }) => {
       </div>
       <div className="container mx-auto p-4 md:my-10 my-4">
         <h1 className="text-xl font-semibold">About the Product</h1>
-        <p className="leading-relaxed mt-2 text-sm lg:text-base">{product.desc}</p>
+        <p className="leading-relaxed mt-2 text-sm lg:text-base whitespace-pre-line">{product.desc}</p>
         <ProductSlider slug={product.slug} products={products} />
 
         <h1 className="text-xl font-semibold mt-20">Customer Reviews</h1>

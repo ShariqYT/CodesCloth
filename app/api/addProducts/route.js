@@ -17,7 +17,7 @@ export async function POST(request) {
 
         // Validate variants
         for (let variant of variants) {
-            if (!variant.size || !variant.color || !variant.price || !variant.availableQty || !variant.slug) {
+            if (!variant.size || !variant.color || !variant.price || !variant.originalPrice || !variant.availableQty || !variant.slug) {
                 return NextResponse.json({ success: false, error: "All fields in each variant are required" }, { status: 400 });
             }
         }
@@ -40,6 +40,7 @@ export async function POST(request) {
                 category: productType,
                 size: variant.size,
                 color: variant.color,
+                originalPrice: variant.originalPrice,
                 price: variant.price,
                 availableQty: variant.availableQty
             });

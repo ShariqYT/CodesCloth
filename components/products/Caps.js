@@ -15,18 +15,23 @@ const Caps = () => {
     const searchParams = useSearchParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 20;
+    const maxPageButtons = 5
 
     useEffect(() => {
         const fetchFilteredProducts = async (category) => {
             setLoading(true);
             try {
                 const queryParams = convertValidStringQueries(convertStringToQueriesObject(searchParams));
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}&${queryParams}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getProducts?category=${category}&page=${currentPage}&limit=${productsPerPage}&${queryParams}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setProducts(Object.values(data));
+                setProducts(data.products);
+                setTotalProducts(data.totalProducts);
             } catch (error) {
                 console.error('Failed to fetch products:', error);
             } finally {
@@ -35,7 +40,8 @@ const Caps = () => {
         };
 
         fetchFilteredProducts('caps');
-    }, [searchParams]);
+    }, [searchParams, currentPage]);
+
 
     const renderColorButtons = (colors) => {
         return colors.map((color) => {
@@ -46,7 +52,7 @@ const Caps = () => {
             return (
                 <button
                     key={color}
-                    aria-label={`Color: ${color}`}
+                    title={`Color: ${color}`}
                     className={clsx(
                         'border-2 border-gray-300 ml-1 rounded-full w-3 md:w-4 h-3 md:h-4 transition-all duration-300 ease-in-out focus:outline-none',
                         `bg-${colorClass}`
@@ -55,6 +61,36 @@ const Caps = () => {
             );
         });
     };
+
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    const handlePageClick = (pageNumber) => {
+        if (pageNumber !== currentPage) {
+          setCurrentPage(pageNumber);
+        }
+      };
+    
+
+    const renderPageButtons = () => {
+        const pageButtons = [];
+        const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+        const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+    
+        for (let i = startPage; i <= endPage; i++) {
+          pageButtons.push(
+            <li key={i}>
+              <p
+                className={`rounded-full px-4 py-2 cursor-pointer ${currentPage === i ? "bg-purple-700 text-white" : "hover:bg-purple-600 hover:text-white transition-all duration-200 ease-in-out"
+                  }`}
+                onClick={() => handlePageClick(i)}
+              >
+                {i}
+              </p>
+            </li>
+          );
+        }
+        return pageButtons;
+      };
 
     return (
         <section className="flex relative min-h-screen">
@@ -80,7 +116,7 @@ const Caps = () => {
                                 return (
                                     <Link key={index} href={`/product/${product.slug}`} className="md:w-72 shadow-lg md:m-4 my-2 border rounded-lg border-gray-200 p-2 w-44">
                                         <div className="flex h-32 md:h-52 justify-center items-center relative rounded-lg">
-                                            <Image className="rounded-lg object-contain bg-white" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt={product.title} />
+                                            <Image className="rounded-lg object-contain bg-white" fill={true} sizes="(min-width: 1540px) 272px, (min-width: 1280px) 220px, (min-width: 1040px) 169px, (min-width: 780px) 118px, (min-width: 680px) 550px, calc(94.44vw - 73px)" priority={true} src={product.img} alt={`Image of ${product.title}`} />
                                         </div>
                                         <div className="mt-4">
                                             <h3 className="md:text-[12px] text-[10px] tracking-widest mb-1">CODESCLOTH</h3>
@@ -92,7 +128,7 @@ const Caps = () => {
                                                         <div className="flex flex-col justify-center">
                                                             <p className="font-medium text-purple-600 text-xl md:text-2xl">
                                                                 <span className="font-normal text-sm md:text-lg pr-2 text-red-500">-{discountPercentage}% </span>
-                                                                 ₹ {formatIndianCurrency(product.price)}
+                                                                ₹ {formatIndianCurrency(product.price)}
                                                             </p>
                                                             <p className="font-medium text-purple-400 text-sm md:text-md line-through mr-2">
                                                                 ₹ {formatIndianCurrency(product.originalPrice)}
@@ -122,6 +158,13 @@ const Caps = () => {
                                 );
                             })
                         )}
+                    </div>
+                    <div className="flex mt-20 justify-center">
+                        <ul className="flex flex-wrap bg-purple-200 rounded-full p-1 md:px-2 md:py-2 text-black gap-2 font-medium">
+
+                            {renderPageButtons()}
+
+                        </ul>
                     </div>
                 </div>
             )}

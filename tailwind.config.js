@@ -20,6 +20,11 @@ module.exports = withUt({
       },
     },
     extend: {
+      colors: {
+        brown: {
+          500: '#562B00',
+        },
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
