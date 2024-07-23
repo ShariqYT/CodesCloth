@@ -8,6 +8,7 @@ import FilterSection, { convertStringToQueriesObject, convertValidStringQueries 
 import { useSearchParams } from 'next/navigation';
 import ReviewComponent from '../extra/ReviewComponent';
 import clsx from 'clsx';
+import SkeletonLoading from '../SkeletonLoading';
 
 const Tshirts = () => {
     const { isDarkMode } = useDarkMode();
@@ -61,7 +62,7 @@ const Tshirts = () => {
             <FilterSection />
             {loading ? (
                 <div className='flex justify-center items-center'>
-                    Loading...
+                    <SkeletonLoading />
                 </div>
             ) : (
                 <div className="max-w-[90rem] px-5 py-20 md:py-24 mx-auto">

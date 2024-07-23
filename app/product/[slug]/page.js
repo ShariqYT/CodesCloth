@@ -11,6 +11,7 @@ import ReviewForm from '@/components/extra/ReviewForm';
 import ProductsReviews from '@/components/extra/ProductsReviews';
 import ReviewComponent from '@/components/extra/ReviewComponent';
 import ShareButton from '@/components/extra/ShareButton';
+import SlugProductColor from '@/components/extra/SlugProductColor';
 
 async function fetchProduct(slug) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/oneProduct?slug=${slug}`, { cache: 'no-store' });
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }) {
 
 const ProductSlug = async ({ params }) => {
   const { slug } = params;
-  const { product, variants } = await fetchProduct(slug);
+  const { product, variants, title } = await fetchProduct(slug);
   const products = await fetchProducts('tshirts');
 
   if (!product) {
@@ -66,14 +67,14 @@ const ProductSlug = async ({ params }) => {
           <ShareButton />
         </div>
         <div className="md:w-1/2 w-full md:pl-10 md:py-6 mt-6 md:mt-0">
-          <h2 className="md:text-sm text-xs tracking-widest">CodesCloth</h2>
-          <h1 className="md:text-3xl text-lg font-medium mb-1">
+          <h2 className="lg:text-sm text-xs tracking-widest">CodesCloth</h2>
+          <h1 className="lg:text-3xl text-xl font-medium mb-1">
             {product.title} ({product.size}/{product.color})
           </h1>
 
           <ReviewComponent productId={product.slug} />
 
-          <SizeandColor product={product} variants={variants} />
+          <SlugProductColor title={title} product={product} variants={variants} />
 
           <div className='border md:my-8 my-4 border-gray-300 rounded-full'></div>
 
@@ -82,15 +83,15 @@ const ProductSlug = async ({ params }) => {
               {product.originalPrice && product.originalPrice > product.price ? (
                 <div className="flex flex-col justify-center">
                   <p className="font-medium text-purple-600 text-3xl">
-                    <span className="font-normal text-2xl text-red-500">-{discountPercentage}%</span> ₹{product.price}
+                    <span className="font-normal text-2xl text-red-500">-{discountPercentage}%</span> ₹ {product.price}
                   </p>
                   <p className="font-medium text-purple-400 text-xl line-through mr-2">
-                    ₹{product.originalPrice}
+                    ₹ {product.originalPrice}
                   </p>
                 </div>
               ) : (
                 <p className="title-font font-semibold text-purple-600 text-3xl">
-                  ₹{product.price}
+                  ₹ {product.price}
                 </p>
               )}
             </div>
@@ -102,7 +103,7 @@ const ProductSlug = async ({ params }) => {
           <div className='border md:my-8 my-4 border-gray-300 rounded-full'></div>
 
           <Pincode />
-          <div className="flex gap-4 mt-8 justify-center md:justify-normal items-center">
+          <div className="flex gap-4 mt-8 text-sm lg:text-lg justify-center lg:justify-normal items-center">
             <AddtoCart slug={product.slug} product={product} />
             <BuyNow slug={product.slug} product={product} />
             <Wishlist slug={product.slug} />
@@ -111,11 +112,11 @@ const ProductSlug = async ({ params }) => {
       </div>
       <div className="container mx-auto p-4 md:my-10 my-4">
         <h1 className="text-xl font-semibold">About the Product</h1>
-        <p className="leading-relaxed mt-2 text-xs md:text-base">{product.desc}</p>
+        <p className="leading-relaxed mt-2 text-sm lg:text-base">{product.desc}</p>
         <ProductSlider slug={product.slug} products={products} />
 
         <h1 className="text-xl font-semibold mt-20">Customer Reviews</h1>
-        <div className="flex flex-col md:flex-row mt-10 mb-20 gap-12 md:p-4">
+        <div className="flex flex-col lg:flex-row mt-10 mb-20 gap-12 lg:p-4">
           <ReviewForm productId={product.slug} />
           <div className="border-2 border-gray-200 rounded-full"></div>
           <ProductsReviews productId={product.slug} />

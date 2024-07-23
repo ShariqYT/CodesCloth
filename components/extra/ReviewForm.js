@@ -93,7 +93,7 @@ const ReviewForm = ({ productId }) => {
     };
 
     return (
-        <div className='flex flex-col items-center w-72'>
+        <div className='flex flex-col items-center mx-auto w-72'>
             <p className='text-sm text-red-600 mb-4 flex flex-col items-center justify-center w-48'>
                 Note: Once you leave a review, <span>you can&apos;t edit/delete it.</span>
             </p>
@@ -104,7 +104,7 @@ const ReviewForm = ({ productId }) => {
                 Leave a review
             </button>
             {open && (
-                <form onSubmit={handleSubmit} className='mt-4 md:w-96 flex flex-col items-center'>
+                <form onSubmit={handleSubmit} className='mt-4 w-full lg:w-96 flex flex-col items-center'>
                     <div className='flex items-center flex-col'>
                         <p className='text-md'>{review.rating} out of 5</p>
                         <div className="flex items-center">{renderStars()}</div>
@@ -118,7 +118,7 @@ const ReviewForm = ({ productId }) => {
                             value={review.subject}
                             onChange={(e) => setReview(prev => ({ ...prev, subject: e.target.value }))}
                             required
-                            className={`w-full p-2 border-2 bg-transparent focus:outline-none focus:border-purple-700 rounded-lg`}
+                            className={`lg:w-full w-80 p-2 border-2 bg-transparent focus:outline-none focus:border-purple-700 rounded-lg`}
                         />
                     </div>
                     <div className="mt-4 px-8">
@@ -129,7 +129,7 @@ const ReviewForm = ({ productId }) => {
                             value={review.comment}
                             onChange={(e) => setReview(prev => ({ ...prev, comment: e.target.value }))}
                             required
-                            className={`w-full p-2 border-2 rounded-lg bg-transparent focus:outline-none focus:border-purple-700 resize-none`}
+                            className={`lg:w-full w-80 p-2 border-2 rounded-lg bg-transparent focus:outline-none focus:border-purple-700 resize-none`}
                             rows={5}
                         />
                     </div>

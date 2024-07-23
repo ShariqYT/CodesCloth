@@ -27,7 +27,7 @@ export async function GET(request) {
             colorSizeSlug[item.color][item.size] = { slug: item.slug };
         }
 
-        return NextResponse.json({ product, variants: colorSizeSlug });
+        return NextResponse.json({ product, variants: colorSizeSlug, title: variants });
     } catch (err) {
         console.error('Error fetching product:', err);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

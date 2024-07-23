@@ -32,11 +32,9 @@ const SizeandColor = ({ product, variants }) => {
   bg-amber-500
   bg-orange-500
   bg-red-500
-  bg-warmGray-500
-  bg-trueGray-500
   bg-gray-500
-  bg-coolGray-500
-  bg-blueGray-500
+  bg-fuchsia-500
+  bg-rose-500
 ">
                 Your content here
             </div>

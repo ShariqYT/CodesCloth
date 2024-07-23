@@ -25,13 +25,13 @@ const ProductSlider = ({ products }) => {
 
     return (
         <div className='my-10 md:container'>
-            <h1 className='text-2xl p-4 font-semibold'>Other T-Shirts</h1>
-            <div id="productSlider" className="flex items-center overflow-x-scroll scrollbar-hide">
+            <h1 className='lg:text-2xl text-xl p-4 font-semibold'>Other T-Shirts</h1>
+            <div id="productSlider" className="flex items-center overflow-x-scroll pb-6 scrollbar-hide">
                 {Object.values(products).map((product, index) => (
                     <Link
                         key={index}
                         href={`/product/${product.slug}`}
-                        className="md:w-52 shadow-lg mx-4 border rounded-lg border-gray-200 p-2 w-2/4"
+                        className="lg:w-52 shadow-lg mx-4 border rounded-lg border-gray-200 p-2 w-48"
                     >
                         <div className="flex h-32 justify-center items-center relative rounded-lg">
                             <Image

@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
           color="#41008c"
           height={3}
           showSpinner={false}
-          zIndex={10000}
+          zIndex={1000000}
         />
         <Toaster position="bottom-center" reverseOrder={false} />
         <DarkModeProvider>

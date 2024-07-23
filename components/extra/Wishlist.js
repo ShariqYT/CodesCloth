@@ -67,7 +67,7 @@ const Wishlist = ({ slug }) => {
         <button
             onClick={saveWishlist}
             type="button"
-            className="rounded-full w-12 h-12 bg-purple-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+            className="rounded-full w-10 lg:w-12 h-10 lg:h-12 bg-purple-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 lg:ml-4"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

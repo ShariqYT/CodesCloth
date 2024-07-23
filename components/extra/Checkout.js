@@ -266,7 +266,7 @@ const Checkoutpage = () => {
             <Script id='razorpay-checkout-js' src='https://checkout.razorpay.com/v1/checkout.js' />
             <h1 className='text-4xl font-bold text-center my-8'>Checkout</h1>
             <div className='flex flex-col md:flex-row my-20'>
-                <div className='md:w-1/2 px-8 md:px-20'>
+                <div className='md:w-1/2 lg:px-20'>
                     <h2 className='mb-8 font-semibold text-2xl'>1. Delivery Details</h2>
                     <div className='grid md:grid-cols-2 gap-4'>
                         <div className='w-full'>
@@ -380,7 +380,7 @@ const Checkoutpage = () => {
                     </div>
                 </div>
                 <div className='w-1 opacity-40 rounded bg-purple-700'></div>
-                <div className='md:w-1/2 md:px-20 px-8 mt-14 md:mt-0'>
+                <div className='md:w-1/2 lg:px-20 mt-14 lg:mt-0'>
                     <h2 className='mb-8 font-semibold text-2xl'>2. Payment Details</h2>
                     <div className='h-full'>
                         <div>
@@ -424,11 +424,11 @@ const Checkoutpage = () => {
                         >
                             {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}{spin ? '' : 'Proceed to Payment'}
                         </button>
-                        <div className='mt-10'>
+                        <div className='mt-10 text-center lg:text-start'>
                             <label className='font-semibold' htmlFor='promocode'>
                                 Promo Code
                             </label>
-                            <div className='flex gap-2 items-center'>
+                            <div className='flex flex-col lg:flex-row gap-2 items-center'>
                                 <input
                                     readOnly={discount}
                                     name='promocode'
