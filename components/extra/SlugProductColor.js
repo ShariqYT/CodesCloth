@@ -20,7 +20,7 @@ const SlugProductColor = ({ title, product, variants }) => {
         <div className="mt-6 pb-2">
             <div className="flex flex-col">
                 <p className="mr-3 font-semibold">Color: <span className='text-purple-700 font-medium'>{color}</span></p>
-                <div className='grid grid-cols-5 lg:grid-cols-10 lg:gap-y-0 gap-y-2 mt-2'>
+                <div className='grid grid-cols-5 lg:gap-x-12 lg:grid-cols-10 lg:gap-y-0 gap-y-2 mt-2'>
                     {colors.map((col) => {
                         const productVariant = variants[col][size];
                         const productDetails = title.find(t => t.slug === productVariant.slug);
@@ -30,7 +30,7 @@ const SlugProductColor = ({ title, product, variants }) => {
                                 key={col}
                                 title={col}
                                 onClick={() => { setColor(col); refreshVariant(size, col); }}
-                                className={`border-2 ml-1 rounded-xl w-12 h-20 focus:outline-none ${color === col ? 'border-purple-700' : 'border-purple-200'}`}
+                                className={`border-2 rounded-xl w-16 h-20 focus:outline-none ${color === col ? 'border-purple-700' : 'border-purple-200'}`}
                                 style={{
                                     backgroundImage: `url(${productDetails.img})`,
                                     backgroundSize: 'cover',
