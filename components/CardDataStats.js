@@ -24,7 +24,7 @@ const CardDataStats = ({
 
         <span
           className={`flex items-center gap-1 text-sm font-medium ${levelUp &&
-            "text-green-500 drop-shadow-[0_0_2px_rgba(0,0,0,.2)]"} ${levelDown && "text-red-500 drop-shadow-[0_0_2px_rgba(0,0,0,.2)]"} `}
+            "text-green-600 drop-shadow-[0_0_2px_rgba(0,0,0,.2)]"} ${levelDown && "text-red-500 drop-shadow-[0_0_2px_rgba(0,0,0,.2)]"} `}
         >
           {rate}
           {levelUp && (

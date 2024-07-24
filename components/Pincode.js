@@ -85,7 +85,7 @@ const Pincode = () => {
                 <p className='text-red-500 text-sm mt-3' aria-live="polite">Service Unavailable</p>
             )}
             {service === true && (
-                <p className='text-green-700 text-sm mt-3' aria-live="polite">Service Available</p>
+                <p className='text-green-600 text-sm mt-3' aria-live="polite">Service Available</p>
             )}
         </div>
     );
