@@ -19,7 +19,7 @@
     "crypto": "^1.0.1",
     "embla-carousel-autoplay": "^8.1.6",
     "embla-carousel-react": "^8.1.6",
-    "firebase": "^10.12.2",
+    "firebase": "^10.12.5",
     "lucide-react": "^0.408.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.4.4",

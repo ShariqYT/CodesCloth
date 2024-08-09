@@ -18,7 +18,7 @@ const ShippingPolicy = () => {
       </ul>
       <h2 className="text-2xl font-semibold my-4">Order Processing Time</h2>
       <p className="mb-4">All orders are processed within 1-2 business days. Orders are not shipped or delivered on weekends or holidays.</p>
-      <h2 className="text-2xl font-semibold my-4">Shipping Confirmation and Order Tracking</h2>
+      <h2 className="text-2xl font-semibold my-4">Shipping Confirmation</h2>
       <p className="mb-4">You will receive a shipping confirmation email with your tracking number once your order has shipped.</p>
       <h2 className="text-2xl font-semibold my-4">Customs, Duties, and Taxes</h2>
       <p className="mb-4">CodesCloth is not responsible for any customs and taxes applied to your order. All fees imposed during or after shipping are the responsibility of the customer.</p>

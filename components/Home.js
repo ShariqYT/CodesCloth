@@ -1,6 +1,6 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
+"use client";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -17,69 +17,82 @@ import BestSellingProducts from './extra/BestSellingProducts';
 
 const getBestProducts = async () => {
     const response = await getBestSellingProducts();
-    return response
-}
+    return response;
+};
 
 const Home = () => {
     const [bestProducts, setBestProducts] = useState([]);
-    const { isDarkMode } = useDarkMode()
+    const { isDarkMode } = useDarkMode();
     const [loading, setLoading] = useState(true);
     const [spin, setSpin] = useState(false);
-    const [promocode, setPromocode] = useState('');
+    const [promocode, setPromocode] = useState([]);
+    const [showPromocodeBanner, setShowPromocodeBanner] = useState(true);
+
     useEffect(() => {
         AOS.init({
             duration: 1000,
             once: true,
-        })
-        window.scrollTo(0, 0)
+        });
+        window.scrollTo(0, 0);
 
         getBestProducts().then((res) => {
             setBestProducts(JSON.parse(res));
-        })
+        });
+
         async function getAllPromoCodes() {
             const promo = await getAllPromocodes();
             setPromocode(promo);
             setLoading(false);
+            
+            // Check if the promocode is expired
+            if (promo[1]?.expiry) {
+                const expiryDate = new Date(promo[1].expiry);
+                const now = new Date();
+                
+                if (now > expiryDate) {
+                    setShowPromocodeBanner(false);
+                }
+            }
         }
 
         getAllPromoCodes();
+    }, []);
 
-    }, [])
+    const handleCopyCode = () => {
+        navigator.clipboard.writeText(promocode[1]?.code);
+        setSpin(true);
+        toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } });
+        setTimeout(() => setSpin(false), 300);
+    };
 
-    if (Date.now() > promocode[1]?.expiry) {
-        setPromocode('');
-    }
     const expiryDate = promocode[1]?.expiry ? new Date(promocode[1].expiry) : null;
 
     return (
         <main className='overflow-x-hidden'>
-
             {/* SlideShow */}
             <CarouselComponent />
             {/* End of SlideShow */}
 
             {/* Discount Banner */}
-            <div className={`${loading ? '-translate-x-[2000px]' : 'translate-x-0'} transition-all duration-1000 ease-in-out container mt-12 p-4 mx-auto`}>
-                <div className="bg-gradient-to-br from-purple-900 to-purple-700 text-white text-center py-10 md:px-20 rounded-lg relative">
-                    <div className="before:blur-xl before:opacity-80 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-br before:from-purple-900 before:to-purple-500 before:z-10"></div>
-                    <h3 className="md:text-2xl z-20 font-semibold mb-4 relative">Flat Rs.100 OFF on All Products</h3>
-                    <p className="md:text-sm z-20 text-xs mb-4 relative">Claim Now Before It&apos;s Too Late</p>
-                    <div className="flex z-20 justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6 relative">
-                        <span className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
-                        <button onClick={() => { navigator.clipboard.writeText(promocode[1]?.code), setSpin(true) }} onClickCapture={() => {
-                            toast.success('Code Copied!', { duration: 5000, style: { border: '2px solid green', padding: '15px 20px', marginBottom: '40px' } }), setTimeout(() => {
-                                setSpin(false)
-                            }, 300);
-                        }} className={`border flex items-center justify-center gap-1 border-white -mr-8  transition-all duration-300 ease-in-out bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer`}>
-                            {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}
-                            Copy Code</button>
+            {showPromocodeBanner && (
+                <div className={`${loading ? '-translate-x-[2000px]' : 'translate-x-0'} transition-all duration-1000 ease-in-out container mt-12 p-4 mx-auto`}>
+                    <div className="bg-gradient-to-br from-purple-900 to-purple-700 text-white text-center py-10 md:px-20 rounded-lg relative">
+                        <div className="before:blur-xl before:opacity-80 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-br before:from-purple-900 before:to-purple-500 before:z-10"></div>
+                        <h3 className="md:text-2xl z-20 font-semibold mb-4 relative">Flat Rs.100 OFF on All Products</h3>
+                        <p className="md:text-sm z-20 text-xs mb-4 relative">Claim Now Before It&apos;s Too Late</p>
+                        <div className="flex z-20 justify-center gap-2 rounded-lg flex-col md:flex-row items-center space-x-2 mb-6 relative">
+                            <span className="border-dashed border text-white px-4 py-2 rounded-lg">{promocode[1]?.code}</span>
+                            <button onClick={handleCopyCode} className={`border flex items-center justify-center gap-1 border-white -mr-8 transition-all duration-300 ease-in-out bg-white text-purple-600 px-4 py-2 rounded-lg cursor-pointer`}>
+                                {spin && <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></path></svg>}
+                                Copy Code
+                            </button>
+                        </div>
+                        <p className="text-sm z-20 relative">Valid Till: {expiryDate ? expiryDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}</p>
+                        <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
+                        <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
                     </div>
-                    <p className="text-sm z-20 relative">Valid Till: {expiryDate ? expiryDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}</p>
-                    <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6`}></div>
-                    <div className={`w-12 h-12 ${isDarkMode ? 'bg-black' : 'bg-white'} rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6`}></div>
                 </div>
-
-            </div>
+            )}
             {/* End of Discount Banner */}
 
             {/* Collections */}
@@ -90,7 +103,6 @@ const Home = () => {
                 </div>
 
                 <div className='grid md:grid-cols-3 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
-
                     <Link href={'/caps'} data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className={`cards1 rounded-lg ${isDarkMode ? `` : `border-2 `}`}>
                         <div className='p-2 w-40 md:w-80 overflow-hidden relative rounded-xl cursor-pointer'>
                             <Image src={Cap} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="caps" />
@@ -112,19 +124,18 @@ const Home = () => {
                             <Image src={Hoodie} className=' transition-all ease-in-out duration-200 hover:scale-110 rounded-md' priority={true} alt="hoodies" />
                         </div>
                     </Link>
-
                 </div>
             </section>
             {/* End of Collections */}
 
             {/* Popular products */}
-            <section className='md:container mt-4 flex justify-center items-center flex-col mx-auto'>
+            <section className='text-gray-600 md:my-32 my-20 body-font flex items-center justify-center md:flex-row flex-col md:container mx-auto'>
                 <div data-aos="fade-right" className="container px-5 flex items-center justify-center flex-col py-24 mx-auto">
-                <div className='flex flex-col items-center justify-center'>
-                    <h1 data-aos="fade-down" className='text-xl md:text-4xl font-bold'>BEST SELLING PRODUCTS</h1>
-                    <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[80%]"></div>
-                </div>
-                <div className='grid md:grid-cols-4 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
+                    <div className='flex flex-col items-center justify-center'>
+                        <h1 data-aos="fade-down" className='text-xl md:text-4xl font-bold'>BEST SELLING PRODUCTS</h1>
+                        <div data-aos="fade-right" data-aos-duration="1000" className="border-2 rounded border-purple-600 w-[80%]"></div>
+                    </div>
+                    <div className='grid md:grid-cols-4 grid-cols-2 place-items-center gap-y-4 gap-x-12 md:gap-10 w-fit h-fit md:mt-20 mt-10'>
                         {bestProducts.map((product, index) => (
                             <BestSellingProducts key={index} product={product} />
                         ))}
@@ -164,15 +175,14 @@ const Home = () => {
                         </div>
                         <h2 className={`${isDarkMode ? 'text-white' : 'text-black'} text-lg title-font font-medium`}>Exciting Offers</h2>
                         <div className="flex-grow my-5">
-                            <p className={`${isDarkMode ? 'text-gray-400' : 'text-black'}  leading-relaxed text-base text-center`}> amazing offers & discounts on our products.</p>
+                            <p className={`${isDarkMode ? 'text-gray-400' : 'text-black'} leading-relaxed text-base text-center`}>Amazing offers & discounts on our products.</p>
                         </div>
                     </div>
                 </div>
             </section>
             {/* End of Services */}
-
         </main>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

@@ -79,9 +79,6 @@ const OrderDetails = () => {
                   {order.status}
                 </p>
               </div>
-              <button className="rounded-full px-2 py-2 md:py-4 md:px-5 font-semibold text-sm leading-7 text-white bg-purple-700 shadow-sm shadow-transparent transition-all duration-500 hover:bg-purple-800 hover:shadow-purple-600">
-                Track Your Order
-              </button>
             </div>
           </div>
           {Object.keys(product).length > 0 ? (
